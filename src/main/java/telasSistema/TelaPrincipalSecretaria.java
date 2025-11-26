@@ -52,6 +52,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 		JButton BotaoProximo = new JButton("Proximo");
 		BotaoProximo.setBounds(324, 312, 84, 20);
 		panel.add(BotaoProximo);
+		
 
 	}
 }

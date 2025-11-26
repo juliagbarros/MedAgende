@@ -174,5 +174,7 @@ public class TelaLogin extends JFrame {
 		Gerenciamento.setBounds(20, 46, 349, 39);
 		contentPane.add(Gerenciamento);
 
+		
+		
 	}
 }
