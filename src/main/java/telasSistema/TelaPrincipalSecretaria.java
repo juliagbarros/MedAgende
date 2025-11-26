@@ -33,6 +33,8 @@ public class TelaPrincipalSecretaria extends JFrame {
 		panel.add(lblBoasVindas);
 		
 		JList<String> listOpcoes = new JList<String>();
+		listOpcoes.setBackground(new Color(204, 255, 255));
+		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listOpcoes.setModel(new AbstractListModel<String>() {
 			/**
 			 * 
@@ -46,7 +48,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 				return values[index];
 			}
 		});
-		listOpcoes.setBounds(260, 143, 199, 78);
+		listOpcoes.setBounds(110, 133, 349, 113);
 		panel.add(listOpcoes);
 		
 		JButton BotaoProximo = new JButton("Proximo");

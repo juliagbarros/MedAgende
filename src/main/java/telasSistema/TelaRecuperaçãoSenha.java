@@ -43,7 +43,7 @@ public class TelaRecuperaçãoSenha extends JFrame {
 	 */
 	public TelaRecuperaçãoSenha() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 671, 313);
+		setBounds(100, 100, 728, 316);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(204, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -61,7 +61,7 @@ public class TelaRecuperaçãoSenha extends JFrame {
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Insira aqui o Email para o qual devemos enviar o Token de Recuperação:");
-		lblNewLabel_1.setBounds(35, 89, 360, 14);
+		lblNewLabel_1.setBounds(35, 89, 434, 14);
 		contentPane.add(lblNewLabel_1);
 		
 		btnNewButton = new JButton("ENVIAR");
@@ -69,15 +69,15 @@ public class TelaRecuperaçãoSenha extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(55, 146, 87, 20);
+		btnNewButton.setBounds(45, 146, 87, 20);
 		contentPane.add(btnNewButton);
 		
 		btnNewButton_1 = new JButton("REENVIAR");
-		btnNewButton_1.setBounds(152, 146, 87, 20);
+		btnNewButton_1.setBounds(142, 146, 119, 20);
 		contentPane.add(btnNewButton_1);
 		
 		lblNewLabel_2 = new JLabel("Caso ultrapasse os 60s e não tenha recebido o Token , solicite o Reenvio ou verifique se preencheu o campo corretamente.");
-		lblNewLabel_2.setBounds(25, 249, 618, 14);
+		lblNewLabel_2.setBounds(10, 252, 702, 14);
 		contentPane.add(lblNewLabel_2);
 
 	}
