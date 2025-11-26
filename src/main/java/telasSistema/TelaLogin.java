@@ -61,7 +61,7 @@ public class TelaLogin extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Digite seu e-mail:");
+		JLabel lblNewLabel = new JLabel("Digite aqui seu e-mail:");
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel.setBounds(46, 116, 105, 13);
 		panel.add(lblNewLabel);
@@ -71,12 +71,12 @@ public class TelaLogin extends JFrame {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Digite sua senha:");
+		JLabel lblNewLabel_1 = new JLabel("Digite aqui sua senha:");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel_1.setBounds(43, 151, 91, 12);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Digite sua matrícula:");
+		JLabel lblNewLabel_2 = new JLabel("Digite aqui sua matrícula:");
 		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblNewLabel_2.setBounds(43, 192, 120, 15);
 		panel.add(lblNewLabel_2);
@@ -100,7 +100,7 @@ public class TelaLogin extends JFrame {
 		btnNewButton.setBounds(156, 275, 84, 20);
 		panel.add(btnNewButton);
 		
-		JLabel lblNewLabel_3 = new JLabel("Login");
+		JLabel lblNewLabel_3 = new JLabel("LOGIN");
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 23));
 		lblNewLabel_3.setBounds(161, 23, 79, 39);
 		panel.add(lblNewLabel_3);
@@ -130,7 +130,7 @@ public class TelaLogin extends JFrame {
 		panel.add(btnCadastrar);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Bem-vindo(a) ao MedAgende!");
-		lblNewLabel_3_1.setFont(new Font("Segoe UI", Font.BOLD, 23));
+		lblNewLabel_3_1.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
 		lblNewLabel_3_1.setBounds(10, 10, 349, 68);
 		contentPane.add(lblNewLabel_3_1);
 		
