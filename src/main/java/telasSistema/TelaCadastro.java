@@ -18,10 +18,16 @@ import javax.swing.JProgressBar;
 import javax.swing.event.DocumentEvent; // Importação para DocumentListener
 import javax.swing.event.DocumentListener; // Importação para DocumentListener
 
-import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDateChooser; //Jcalendar importado
 
 import java.util.Arrays;
-import javax.swing.JCheckBoxMenuItem; // Importação para Arrays.fill (boa prática de segurança)
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JTree;
+import javax.swing.JMenuItem;
+import java.awt.Checkbox;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent; // Importação para Arrays.fill (boa prática de segurança)
 
 public class TelaCadastro extends JFrame {
 
@@ -70,21 +76,22 @@ public class TelaCadastro extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 888, 500);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(13, 117, 147));
+		contentPane.setBackground(new Color(143, 222, 239));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setLocation(420, 336);
 		addPopup(contentPane, popupMenu);
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Cadastro");
-		lblNewLabel.setBounds(350, 11, 135, 67);
-		lblNewLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 27));
+		lblNewLabel.setBounds(313, -13, 181, 67);
+		lblNewLabel.setFont(new Font("Trebuchet MS", Font.PLAIN, 35));
 		contentPane.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(57, 115, 86, 20);
+		textField.setBounds(31, 115, 112, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
@@ -94,12 +101,13 @@ public class TelaCadastro extends JFrame {
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.setToolTipText("Ex: costelinha123@gmail.com...");
 		textField_2.setBounds(31, 198, 125, 20);
 		contentPane.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(457, 115, 86, 20);
+		textField_3.setBounds(677, 115, 86, 20);
 		contentPane.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -133,8 +141,9 @@ public class TelaCadastro extends JFrame {
         
         // --- JCALENDAR ---
         dcDataNascimento = new JDateChooser();
+        dcDataNascimento.setToolTipText("Ex: 25/06/2003...");
         dcDataNascimento.setDateFormatString("dd/MM/yyyy"); // Formato da data
-        dcDataNascimento.setBounds(434, 115, 120, 20); 
+        dcDataNascimento.setBounds(444, 115, 120, 20); 
         contentPane.add(dcDataNascimento);
 		
 		table = new JTable();
@@ -142,6 +151,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(table);
 		
 		passwordField = new JPasswordField();
+		passwordField.setToolTipText("Ex: 40028922...");
 		passwordField.setBounds(233, 198, 160, 20);
 		contentPane.add(passwordField);
 		
@@ -165,6 +175,39 @@ public class TelaCadastro extends JFrame {
         progressBar.setBounds(293, 228, 72, 20); // Posição ajustada
         progressBar.setStringPainted(true); // Exibir o texto de progresso (opcional)
         contentPane.add(progressBar);
+        
+        Checkbox checkbox = new Checkbox("Médico");
+        checkbox.setBounds(31, 363, 95, 22);
+        contentPane.add(checkbox);
+        
+        Checkbox checkbox_1 = new Checkbox("Secretária");
+        checkbox_1.setBounds(132, 363, 95, 22);
+        contentPane.add(checkbox_1);
+        
+        Checkbox checkbox_1_1 = new Checkbox("Administrador");
+        checkbox_1_1.setBounds(232, 363, 95, 22);
+        contentPane.add(checkbox_1_1);
+        
+        Checkbox checkbox_2 = new Checkbox("Paciente");
+        checkbox_2.setBounds(31, 401, 95, 22);
+        contentPane.add(checkbox_2);
+        
+        JLabel lblNewLabel_10 = new JLabel("Já possui Cadastro? ");
+        lblNewLabel_10.setBounds(279, 53, 112, 14);
+        contentPane.add(lblNewLabel_10);
+        
+        JButton btnNewButton = new JButton("CADASTRAR-SE");
+        btnNewButton.setForeground(new Color(13, 242, 219));
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnNewButton.setBounds(628, 363, 120, 32);
+        contentPane.add(btnNewButton);
+        
+        JButton brnLogin = new JButton("Realizar Login");
+        brnLogin.setBounds(386, 53, 108, 19);
+        contentPane.add(brnLogin);
 
 		JLabel lblNewLabel_9 = new JLabel("Senha:");
 		lblNewLabel_9.setBounds(285, 224, 46, 14);
