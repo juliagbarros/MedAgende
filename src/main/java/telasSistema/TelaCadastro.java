@@ -17,6 +17,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JProgressBar;
 import javax.swing.event.DocumentEvent; // Importação para DocumentListener
 import javax.swing.event.DocumentListener; // Importação para DocumentListener
+
+import com.toedter.calendar.JDateChooser;
+
 import java.util.Arrays;
 import javax.swing.JCheckBoxMenuItem; // Importação para Arrays.fill (boa prática de segurança)
 
@@ -38,6 +41,7 @@ public class TelaCadastro extends JFrame {
 	private JTable table;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	private JDateChooser dcDataNascimento;
     
     // NOVOS COMPONENTES PARA FEEDBACK
     private JLabel lblStrengthFeedback; // Rótulo para texto (Fraca, Forte)
@@ -66,6 +70,7 @@ public class TelaCadastro extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 888, 500);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(13, 117, 147));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -115,13 +120,22 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("Selecione como deseja se Cadastrar:");
-		lblNewLabel_5.setBounds(315, 276, 379, 14);
+		lblNewLabel_5.setBounds(45, 336, 379, 14);
 		contentPane.add(lblNewLabel_5);
 		
 		JLabel lblNewLabel_6 = new JLabel("Digite aqui sua Matrícula");
-		lblNewLabel_6.setBounds(31, 276, 175, 14);
+		lblNewLabel_6.setBounds(654, 89, 175, 14);
 		contentPane.add(lblNewLabel_6);
 		
+		JLabel lblNewLabel_7 = new JLabel("Insira sua Data de Nascimento:");
+		lblNewLabel_7.setBounds(434, 89, 154, 14);
+		contentPane.add(lblNewLabel_7);
+        
+        // --- JCALENDAR ---
+        dcDataNascimento = new JDateChooser();
+        dcDataNascimento.setDateFormatString("dd/MM/yyyy"); // Formato da data
+        dcDataNascimento.setBounds(434, 115, 120, 20); 
+        contentPane.add(dcDataNascimento);
 		
 		table = new JTable();
 		table.setBounds(508, 303, 1, 1);
@@ -140,7 +154,7 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(lblNewLabel_8);
 		
 		
-		// CONFIGURAÇÃO DOS NOVOS COMPONENTES DE FEEDBACK
+		// configuração dos novos componentes 
         // Rótulo para feedback de texto
 		lblStrengthFeedback = new JLabel("Nível da Senha:");
 		lblStrengthFeedback.setBounds(203, 229, 100, 14); // Posição ajustada
@@ -154,17 +168,17 @@ public class TelaCadastro extends JFrame {
 
 		JLabel lblNewLabel_9 = new JLabel("Senha:");
 		lblNewLabel_9.setBounds(285, 224, 46, 14);
-		// Removido o lblNewLabel_9 para dar espaço ao novo JLabel e JProgressBar
+		// Removi o lblNewLabel_9 para dar espaço ao novo JLabel e JProgressBar
 		// contentPane.add(lblNewLabel_9); 
         
-        // CHAMADA DO MÉTODO QUE IMPLEMENTA O DocumentListener
+        // chamando o método que implementa O DocumentListener
         implementPasswordStrengthCheck();
 
 	}
 
-    // =======================================================================
-    // 1. LÓGICA DE AVALIAÇÃO DA FORÇA DA SENHA
-    // =======================================================================
+    
+    //AVALIAÇÃO DA FORÇA DA SENHA
+    
 
     /**
      * Avalia a força da senha com base em vários critérios (comprimento, tipos de caracteres).
@@ -180,7 +194,7 @@ public class TelaCadastro extends JFrame {
         }
 
         // 1. Pontua por comprimento
-        // Senhas com menos de 8 caracteres são consideradas fracas, mas pontuamos acima disso.
+        // Senhas com menos de 8 caracteres vão ser consideradas fracas, mas se for maior que isso, aumenta a segurança.
         if (password.length() >= 8) {
             score++;
         }
@@ -201,12 +215,12 @@ public class TelaCadastro extends JFrame {
         if (password.matches(".*[0-9].*")) { 
             score++;
         }
-        // Pelo menos um símbolo/caractere especial (não alfanumérico)
+        // Pelo menos um símbolo/caractere especial 
         if (password.matches(".*[^a-zA-Z0-9].*")) { 
             score++;
         }
         
-        // Define a força com base na pontuação total (máximo: 5 pontos)
+        // Define a força com base na pontuação total (máximo de 5 pontos)
         if (score >= 4) {
             return PasswordStrength.STRONG;
         } else if (score >= 2) {
@@ -216,9 +230,9 @@ public class TelaCadastro extends JFrame {
         }
     }
 
-    // =======================================================================
-    // 2. INTEGRAÇÃO SWING COM DocumentListener
-    // =======================================================================
+    // 
+    // 2. integração do SWING com DocumentListener
+    // 
 
     /**
      * Adiciona o DocumentListener ao campo de senha para atualizar o feedback em tempo real.
@@ -243,10 +257,10 @@ public class TelaCadastro extends JFrame {
             }
 
             private void checkAndUpdateUI() {
-                // Obtém a senha como String (uso temporário)
+                // recebe a senha como String (uso temporário)
                 String password = new String(passwordField.getPassword());
                 
-                // 1. Verifica se está vazio e limpa o feedback
+                // 1. verifica se está vazio e limpa o feedback
                 if (password.isEmpty()) {
                     lblStrengthFeedback.setText("Nível da Senha:");
                     lblStrengthFeedback.setForeground(Color.BLACK);
