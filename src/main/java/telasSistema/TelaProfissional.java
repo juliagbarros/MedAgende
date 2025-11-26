@@ -58,11 +58,11 @@ public class TelaProfissional extends JFrame {
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Bem-vindo(a) de volta!");
 		lblNewLabel_3_1.setFont(new Font("Segoe UI", Font.BOLD, 33));
-		lblNewLabel_3_1.setBounds(126, 10, 493, 68);
+		lblNewLabel_3_1.setBounds(160, 11, 493, 68);
 		contentPane.add(lblNewLabel_3_1);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Que tipo de profissional você é?");
-		lblNewLabel_3_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3_1_1.setFont(new Font("Serif", Font.PLAIN, 18));
 		lblNewLabel_3_1_1.setBounds(220, 65, 282, 68);
 		contentPane.add(lblNewLabel_3_1_1);
 		
@@ -82,7 +82,7 @@ public class TelaProfissional extends JFrame {
 		Button button_1 = new Button("Médico");
 		button_1.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		button_1.setBackground(Color.WHITE);
-		button_1.setBounds(252, 184, 194, 38);
+		button_1.setBounds(269, 184, 194, 38);
 		contentPane.add(button_1);
 		
 		Button button_2 = new Button("Administrador");
