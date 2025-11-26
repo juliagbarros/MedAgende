@@ -1,5 +1,6 @@
 package telasSistema;
 
+import java.util.*;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Color; // Importação adicionada para cores
@@ -18,8 +19,7 @@ import javax.swing.JProgressBar;
 import javax.swing.event.DocumentEvent; // Importação para DocumentListener
 import javax.swing.event.DocumentListener; // Importação para DocumentListener
 
-import com.toedter.calendar.JDateChooser; //Jcalendar importado
-
+import com.toedter.calendar.JDateChooser; //Jcalendar importado;
 import java.util.Arrays;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTree;
@@ -204,7 +204,7 @@ public class TelaCadastro extends JFrame {
         JButton btnLogin = new JButton("Realizar Login");
         btnLogin.setBounds(405, 50, 135, 20);
         contentPane.add(btnLogin);
-        
+               
         JLabel LabelEstados = new JLabel("Estado(UF):");
         LabelEstados.setBounds(699, 85, 72, 22);
         contentPane.add(LabelEstados);
