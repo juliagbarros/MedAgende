@@ -6,8 +6,11 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPrincipalSecretaria extends JFrame {
 
@@ -33,7 +36,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 		panel.add(lblBoasVindas);
 		
 		JList<String> listOpcoes = new JList<String>();
-		listOpcoes.setBackground(new Color(204, 255, 255));
+		listOpcoes.setBackground(new Color(255, 255, 255));
 		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listOpcoes.setModel(new AbstractListModel<String>() {
 			/**
@@ -48,11 +51,45 @@ public class TelaPrincipalSecretaria extends JFrame {
 				return values[index];
 			}
 		});
-		listOpcoes.setBounds(110, 133, 349, 113);
+		listOpcoes.setBounds(186, 136, 349, 113);
 		panel.add(listOpcoes);
 		
 		JButton BotaoProximo = new JButton("Proximo");
-		BotaoProximo.setBounds(324, 312, 84, 20);
+		BotaoProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String opcaoSelecionada= listOpcoes.getSelectedValue();
+				
+				if (opcaoSelecionada==null) {
+					JOptionPane.showMessageDialog(BotaoProximo, "Selecione alguma opção!");
+				}
+				
+				switch (opcaoSelecionada) {
+				case "Agendar Consulta":
+					new TelaSecretariaAgendar().setVisible(true);
+					dispose();
+					break;
+					
+				case "Cancelar Consulta":
+					new TelaSecretariaCancelar().setVisible(true);
+					dispose();
+					break;
+					
+				case "Reagendar Consulta":
+					new TelaSecretariaReagendar().setVisible(true);
+					dispose();
+					break;
+					
+				case "Cadastrar Novo Paciente":
+					new TelaSecretariaCadastrar().setVisible(true);
+					dispose();
+					break;
+				}
+			
+			}
+			
+		});
+		BotaoProximo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		BotaoProximo.setBounds(282, 312, 126, 32);
 		panel.add(BotaoProximo);
 		
 
