@@ -38,5 +38,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="com.jgoodies.common_1.8.1.v20240327-0800.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Fabrícia/Downloads/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Fabrícia/Downloads/javamail1_4_7/javamail-1.4.7/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
