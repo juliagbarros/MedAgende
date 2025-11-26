@@ -18,15 +18,16 @@ import java.awt.Button;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Label;
+
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import java.awt.Dimension;
+import javax.swing.JRadioButton;
 
 public class TelaLogin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_2;
 	private JPasswordField passwordField;
 
 	/**
@@ -63,63 +64,89 @@ public class TelaLogin extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Digite aqui seu e-mail:");
-		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel.setBounds(95, 94, 156, 32);
-		panel.add(lblNewLabel);
+		JLabel lblEmail = new JLabel("Digite aqui seu e-mail:");
+		lblEmail.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblEmail.setBounds(95, 94, 156, 32);
+		panel.add(lblEmail);
 		
-		textField = new JTextField();
-		textField.setBounds(95, 126, 175, 19);
-		panel.add(textField);
-		textField.setColumns(10);
+		JTextField textFieldEmail = new JTextField();
+		textFieldEmail.setBounds(95, 126, 175, 19);
+		panel.add(textFieldEmail);
+		textFieldEmail.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("Digite aqui sua senha:");
-		lblNewLabel_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(95, 145, 175, 31);
-		panel.add(lblNewLabel_1);
+		JLabel lblSenha = new JLabel("Digite aqui sua senha:");
+		lblSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblSenha.setBounds(95, 145, 175, 31);
+		panel.add(lblSenha);
 		
-		JLabel lblNewLabel_2 = new JLabel("Digite aqui sua matrícula:");
-		lblNewLabel_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(95, 198, 175, 15);
-		panel.add(lblNewLabel_2);
+		JLabel lblMatricula = new JLabel("Digite aqui sua matrícula:");
+		lblMatricula.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblMatricula.setBounds(95, 198, 175, 15);
+		panel.add(lblMatricula);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(95, 224, 178, 18);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
+		JTextField textFieldSenha = new JTextField();
+		textFieldSenha.setBounds(95, 224, 178, 18);
+		panel.add(textFieldSenha);
+		textFieldSenha.setColumns(10);
+		
+	//BOTOES SELECAO PROFISSIONAL
+		
+		JRadioButton rdbtnSecretaria = new JRadioButton("Secretária");
+		rdbtnSecretaria.setBounds(19, 297, 102, 20);
+		panel.add(rdbtnSecretaria);
+		
+		JRadioButton rdbtnMedico = new JRadioButton("Médico");
+		rdbtnMedico.setBounds(131, 297, 102, 20);
+		panel.add(rdbtnMedico);
+		
+		JRadioButton rdbtnAdministrador = new JRadioButton("Administrador");
+		rdbtnAdministrador.setBounds(244, 297, 102, 20);
+		panel.add(rdbtnAdministrador);
+		
+		ButtonGroup grupoBotoes= new ButtonGroup();
+		grupoBotoes.add(rdbtnSecretaria);
+		grupoBotoes.add(rdbtnMedico);
+		grupoBotoes.add(rdbtnAdministrador);
 		
 		
-		//BOTAO LOGIN: AO APERTAR, ELA VAI P TELA PRINCIPAL
-		JButton btnNewButton = new JButton("LOGIN");
-		btnNewButton.addActionListener(new ActionListener() {
+		//BOTAO LOGIN: 
+		JButton btnLogin = new JButton("LOGIN");
+		btnLogin.addActionListener(new ActionListener() {
+
+			@Override
 			public void actionPerformed(ActionEvent e) {
-			setVisible(false);
-			TelaProfissional janelaProfissional = new TelaProfissional();
-			janelaProfissional.setVisible(true);}
+				// TODO Auto-generated method stub
+				if (rdbtnSecretaria.isSelected()) {
+					TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
+					tela.setVisible(true);
+					 dispose();
+				}
+				//aqui, ficaria os outros else ifs pra medico e administrador!!
+			}
 		});
-		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnNewButton.setBackground(new Color(0, 159, 255));
-		btnNewButton.setBounds(156, 275, 84, 20);
-		panel.add(btnNewButton);
+		btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnLogin.setBackground(new Color(0, 159, 255));
+		btnLogin.setBounds(149, 329, 84, 20);
+		panel.add(btnLogin);
 		
-		JLabel lblNewLabel_3 = new JLabel("LOGIN");
-		lblNewLabel_3.setFont(new Font("Segoe UI", Font.BOLD, 26));
-		lblNewLabel_3.setBounds(128, 11, 105, 39);
-		panel.add(lblNewLabel_3);
+		JLabel lblLogin = new JLabel("LOGIN");
+		lblLogin.setFont(new Font("Segoe UI", Font.BOLD, 26));
+		lblLogin.setBounds(128, 11, 105, 39);
+		panel.add(lblLogin);
 		
-		JLabel lblNewLabel_4 = new JLabel("Realize o login para continuar");
-		lblNewLabel_4.setFont(new Font("Serif", Font.PLAIN, 16));
-		lblNewLabel_4.setBounds(81, 61, 189, 19);
-		panel.add(lblNewLabel_4);
+		JLabel lblRealizarLogin = new JLabel("Realize o login para continuar");
+		lblRealizarLogin.setFont(new Font("Serif", Font.PLAIN, 16));
+		lblRealizarLogin.setBounds(81, 61, 189, 19);
+		panel.add(lblRealizarLogin);
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(95, 179, 175, 18);
 		panel.add(passwordField);
 		
-		JLabel lblNewLabel_4_2 = new JLabel("Ainda não possui cadastro no sistema?");
-		lblNewLabel_4_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_4_2.setBounds(20, 339, 220, 19);
-		panel.add(lblNewLabel_4_2);
+		JLabel Cadastro = new JLabel("Ainda não possui cadastro no sistema?");
+		Cadastro.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		Cadastro.setBounds(20, 359, 220, 19);
+		panel.add(Cadastro);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -128,18 +155,24 @@ public class TelaLogin extends JFrame {
 		});
 		btnCadastrar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		btnCadastrar.setBackground(new Color(255, 255, 255));
-		btnCadastrar.setBounds(231, 342, 97, 16);
+		btnCadastrar.setBounds(238, 360, 97, 16);
 		panel.add(btnCadastrar);
 		
-		JLabel lblNewLabel_3_1 = new JLabel("Bem-vindo(a) ao MedAgende!");
-		lblNewLabel_3_1.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
-		lblNewLabel_3_1.setBounds(10, 0, 349, 68);
-		contentPane.add(lblNewLabel_3_1);
+		JLabel LogarComo = new JLabel("Logar como:");
+		LogarComo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		LogarComo.setBounds(149, 252, 97, 19);
+		panel.add(LogarComo);
 		
-		JLabel lblNewLabel_3_1_1 = new JLabel("Seu sistema de gerenciamento de consultas");
-		lblNewLabel_3_1_1.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-		lblNewLabel_3_1_1.setBounds(20, 46, 349, 39);
-		contentPane.add(lblNewLabel_3_1_1);
+
+		JLabel BoasVindas = new JLabel("Bem-vindo(a) ao MedAgende!");
+		BoasVindas.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
+		BoasVindas.setBounds(10, 0, 349, 68);
+		contentPane.add(BoasVindas);
+		
+		JLabel Gerenciamento = new JLabel("Seu sistema de gerenciamento de consultas");
+		Gerenciamento.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		Gerenciamento.setBounds(20, 46, 349, 39);
+		contentPane.add(Gerenciamento);
 
 	}
 }
