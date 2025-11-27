@@ -196,12 +196,8 @@ public class TelaCadastro extends JFrame {
         checkbox_1_1.setBounds(232, 355, 95, 22);
         contentPane.add(checkbox_1_1);
         
-        Checkbox checkbox_2 = new Checkbox("Paciente");
-        checkbox_2.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-        checkbox_2.setBounds(31, 389, 95, 22);
-        contentPane.add(checkbox_2);
-        
         JLabel lblNewLabel_10 = new JLabel("Já possui Cadastro? ");
+        lblNewLabel_10.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         lblNewLabel_10.setBounds(279, 53, 135, 14);
         contentPane.add(lblNewLabel_10);
         
@@ -216,6 +212,14 @@ public class TelaCadastro extends JFrame {
         contentPane.add(btnCadastro);
         
         JButton btnLogin = new JButton("Realizar Login");
+        btnLogin.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TelaLogin tela = new TelaLogin();
+				tela.setVisible(true);
+				 dispose();
+        	}
+        });
+        btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnLogin.setBounds(405, 50, 135, 20);
         contentPane.add(btnLogin);
                
