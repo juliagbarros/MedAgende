@@ -121,6 +121,12 @@ public class TelaLogin extends JFrame {
 					tela.setVisible(true);
 					 dispose();
 				}
+				
+				else if (rdbtnMedico.isSelected()){
+					TelaPrincipalMedico tela = new TelaPrincipalMedico();
+					tela.setVisible(true);
+					dispose();
+				}
 				//aqui, ficaria os outros else ifs pra medico e administrador!!
 			}
 		});

@@ -81,6 +81,23 @@ public class TelaPrincipalMedico extends JFrame {
 		JLabel lblOqueDeseja = new JLabel("O que deseja realizar?");
 		lblOqueDeseja.setBounds(418, 84, 112, 14);
 		contentPane.add(lblOqueDeseja);
+		
+		JButton btnNewButton = new JButton("Voltar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaLogin tela = new TelaLogin();
+				tela.setVisible(true);
+				 dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnNewButton.setBounds(85, 385, 84, 20);
+		contentPane.add(btnNewButton);
+		
+		JButton btnPrximo = new JButton("Próximo");
+		btnPrximo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		btnPrximo.setBounds(658, 386, 84, 20);
+		contentPane.add(btnPrximo);
 
 	}
 }
