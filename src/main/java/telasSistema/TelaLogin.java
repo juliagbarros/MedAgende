@@ -135,7 +135,7 @@ public class TelaLogin extends JFrame {
 		panel.add(lblLogin);
 		
 		JLabel lblRealizarLogin = new JLabel("Realize o login para continuar");
-		lblRealizarLogin.setFont(new Font("Serif", Font.PLAIN, 16));
+		lblRealizarLogin.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblRealizarLogin.setBounds(81, 61, 189, 19);
 		panel.add(lblRealizarLogin);
 		
@@ -176,6 +176,11 @@ public class TelaLogin extends JFrame {
 		Gerenciamento.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		Gerenciamento.setBounds(20, 46, 349, 39);
 		contentPane.add(Gerenciamento);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource("/EstetoscopioTelaLogin.png")));
+		lblNewLabel.setBounds(10, 95, 317, 312);
+		contentPane.add(lblNewLabel);
 
 		
 		
