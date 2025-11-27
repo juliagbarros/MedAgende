@@ -57,6 +57,8 @@ public class TelaPrincipalMedico extends JFrame {
 		btnViewProntuario.setAlignmentY(0.0f);
 		btnViewProntuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				TelaProntuarioPaciente telaProntuarioPaciente = new TelaProntuarioPaciente();
+				telaProntuarioPaciente.setVisible(true);
 			}
 		});
 		contentPane.setLayout(null);
@@ -79,7 +81,7 @@ public class TelaPrincipalMedico extends JFrame {
 		contentPane.add(btnEmitirPrescricao);
 		
 		JLabel lblOqueDeseja = new JLabel("O que deseja realizar?");
-		lblOqueDeseja.setBounds(418, 84, 112, 14);
+		lblOqueDeseja.setBounds(418, 84, 188, 14);
 		contentPane.add(lblOqueDeseja);
 		
 		JButton btnNewButton = new JButton("Voltar");
