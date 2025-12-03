@@ -42,8 +42,9 @@ public class TelaConfirmar extends JFrame {
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new TelaConfirmar().setVisible(true);
-				
+				TelaConfirmar tela=new TelaConfirmar();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
 				dispose();
 				
 			}

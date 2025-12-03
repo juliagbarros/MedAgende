@@ -95,8 +95,12 @@ public class TelaSecretariaReagendar extends JFrame {
 			    
 			}
 				
-				new TelaInfosAgendamento().setVisible(true);
-				dispose();
+			    TelaInfosAgendamento tela = new TelaInfosAgendamento();
+			    tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				 dispose();
+				//new TelaInfosAgendamento().setVisible(true);
+				//dispose();
 				
 			}
 		});

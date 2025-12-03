@@ -94,8 +94,13 @@ public class TelaSecretariaAgendar extends JFrame {
 			        return; 
 			    
 			}
-				new TelaInfosAgendamento().setVisible(true);
+			    TelaInfosAgendamento tela= new TelaInfosAgendamento();
+			    tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
 				dispose();
+			   
+				//new TelaInfosAgendamento().setVisible(true);
+				//dispose();
 			}
 		});
 		btnProximo.setFont(new Font("Segoe UI", Font.BOLD, 12));

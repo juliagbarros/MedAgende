@@ -3,6 +3,9 @@ package telasSistema.Secretaria;
 import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JPanel;
+
+import telasSistema.TelaInicial.TelaLogin;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JList;
@@ -65,23 +68,35 @@ public class TelaPrincipalSecretaria extends JFrame {
 				
 				switch (opcaoSelecionada) {
 				case "Agendar Consulta":
-					new TelaSecretariaAgendar().setVisible(true);
-					dispose();
+					TelaSecretariaAgendar telaSecretariaAgendar= new TelaSecretariaAgendar();
+					telaSecretariaAgendar.setLocationRelativeTo(null);
+					telaSecretariaAgendar.setVisible(true);
+					 dispose();
+			
 					break;
 					
 				case "Cancelar Consulta":
-					new TelaSecretariaCancelar().setVisible(true);
-					dispose();
+					TelaSecretariaCancelar telaSecretariaCancelar = new TelaSecretariaCancelar();
+					telaSecretariaCancelar.setLocationRelativeTo(null);
+					telaSecretariaCancelar.setVisible(true);
+					 dispose();
+				
 					break;
 					
 				case "Reagendar Consulta":
-					new TelaSecretariaReagendar().setVisible(true);
-					dispose();
+					TelaSecretariaReagendar telaSecretariaReagendar= new TelaSecretariaReagendar();
+					telaSecretariaReagendar.setLocationRelativeTo(null);
+					telaSecretariaReagendar.setVisible(true);
+					 dispose();
+					
 					break;
 					
 				case "Cadastrar Novo Paciente":
-					new TelaSecretariaCadastrar().setVisible(true);
-					dispose();
+					TelaSecretariaCadastrar telaSecretariaCadastrar = new TelaSecretariaCadastrar();
+					telaSecretariaCadastrar.setLocationRelativeTo(null);
+					telaSecretariaCadastrar.setVisible(true);
+					 dispose();
+					
 					break;
 				}
 			
@@ -89,8 +104,21 @@ public class TelaPrincipalSecretaria extends JFrame {
 			
 		});
 		BotaoProximo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		BotaoProximo.setBounds(282, 312, 126, 32);
+		BotaoProximo.setBounds(560, 311, 126, 32);
 		panel.add(BotaoProximo);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaLogin tela = new TelaLogin();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				 dispose();
+			}
+		});
+		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		btnVoltar.setBounds(59, 318, 126, 32);
+		panel.add(btnVoltar);
 		
 
 	}

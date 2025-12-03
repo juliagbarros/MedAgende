@@ -142,8 +142,12 @@ public class TelaInfosAgendamento extends JFrame {
 
 				
 				
-				new TelaConfirmar().setVisible(true);
-				dispose();
+				TelaConfirmar tela= new TelaConfirmar();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				 dispose();
+				//new TelaConfirmar().setVisible(true);
+				//dispose();
 				
 			}
 		});

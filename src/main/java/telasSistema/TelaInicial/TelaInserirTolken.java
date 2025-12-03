@@ -31,6 +31,7 @@ public class TelaInserirTolken extends JFrame {
 			public void run() {
 				try {
 					TelaInserirTolken frame = new TelaInserirTolken();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
