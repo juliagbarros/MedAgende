@@ -88,27 +88,31 @@ public class TelaAdministradorCadastroMedicos extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnNewButton.setBounds(181, 101, 147, 52);
+		btnNewButton.setBounds(49, 90, 190, 52);
 		contentPane_1.add(btnNewButton);
 		
 		JButton btnVincularMdicos = new JButton("Vincular médicos à clínicas e especialidades");
 		btnVincularMdicos.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnVincularMdicos.setBounds(181, 300, 334, 52);
+		btnVincularMdicos.setBounds(148, 300, 402, 52);
 		contentPane_1.add(btnVincularMdicos);
 		
 		JButton btnDesativarMdicosInativos = new JButton("Desativar médicos inativos e Desativar especialidades");
 		btnDesativarMdicosInativos.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnDesativarMdicosInativos.setBounds(181, 225, 334, 52);
+		btnDesativarMdicosInativos.setBounds(148, 225, 402, 52);
 		contentPane_1.add(btnDesativarMdicosInativos);
 		
 		JButton btnDefinirHorriosE = new JButton("Definir horários e disponibilidade dos médicos");
 		btnDefinirHorriosE.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnDefinirHorriosE.setBounds(181, 163, 329, 52);
+		btnDefinirHorriosE.setBounds(148, 163, 402, 52);
 		contentPane_1.add(btnDefinirHorriosE);
 		
 		JButton btnEditarDadosMdicos = new JButton("Editar dados médicos");
+		btnEditarDadosMdicos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnEditarDadosMdicos.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnEditarDadosMdicos.setBounds(360, 101, 147, 52);
+		btnEditarDadosMdicos.setBounds(430, 90, 190, 52);
 		contentPane_1.add(btnEditarDadosMdicos);
 
 	}
