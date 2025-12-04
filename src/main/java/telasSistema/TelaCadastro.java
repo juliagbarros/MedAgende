@@ -50,7 +50,6 @@ public class TelaCadastro extends JFrame {
         STRONG // Forte
     }
 
-    // CLASSE INTERNA PARA A RESPOSTA DA API DOS CORREIOS
     private static class ViaCEPResponse {
         private String cep;
         private String logradouro;
@@ -147,11 +146,9 @@ public class TelaCadastro extends JFrame {
     private JTextField textField; // CEP
     private JTextField textField_1; // Rua
     private JTextField textField_2; // Número
-    
-    // VARIÁVEIS ADICIONADAS PARA ENDEREÇO
-    private JTextField textMunicipio; // Campo para Município (antiga Cidade)
-    private JTextField textEstadoUF; // Campo para Estado(UF)
-    private JTextField textBairro; // Campo para Bairro
+    private JTextField textMunicipio;
+    private JTextField textEstadoUF;
+    private JTextField textBairro;
 
 	/**
 	 * Launch the application.
@@ -171,9 +168,11 @@ public class TelaCadastro extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
-	 */
 	public TelaCadastro() {
+		// INICIALIZA AS BIBLIOTECAS DA API
+		httpClient = new OkHttpClient();
+		gson = new Gson();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 888, 500);
 		contentPane = new JPanel();
@@ -296,9 +295,6 @@ public class TelaCadastro extends JFrame {
         btnCadastro.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnCadastro.setForeground(new Color(13, 242, 219));
         btnCadastro.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        	}
-        });
         btnCadastro.setBounds(528, 406, 135, 35);
         contentPane.add(btnCadastro);
         
@@ -313,6 +309,7 @@ public class TelaCadastro extends JFrame {
 				}
 				if (textCPF.getText().trim().isEmpty()) {
 					camposEmBranco++;
+					cposEmBranco++;
 					mensagem+="CPf\n";
 				}
 				if (textEmail.getText().trim().isEmpty()) {
@@ -321,24 +318,19 @@ public class TelaCadastro extends JFrame {
 				}
 				
 				if (textField_3.getText().trim().isEmpty()) {
-					camposEmBranco++;
-					mensagem+="Matricula\n";
-				}
 				if (passwordFieldSENHA.getPassword().length==0) {
 					camposEmBranco++;
-					mensagem+="Cep\n";}
 				 if (	passwordCONFIRMARSENHA.getPassword().length==0) {
 					 camposEmBranco++;
-				 }
+					 mensagem+="Confirmação de Senha\n";
 				
 				if (camposEmBranco > 0) {
 				        
 				     System.out.println(camposEmBranco + " campo(s) em branco. Abortando login.");
-				        
 				        // 
 				        JOptionPane.showMessageDialog(
 				            null,
-				            mensagem,
+				            "Preencha os campos:\n" + mensagem,
 				            "Erro de Validação",
 				            JOptionPane.WARNING_MESSAGE 
 				        );
@@ -357,10 +349,6 @@ public class TelaCadastro extends JFrame {
         
         // REMOVI OS CAMPOS ANTIGOS SEM FUNCIONALIDADE:
         // JLabel LabelEstados = new JLabel("Estado(UF):"); // REMOVIDO
-        // JLabel LabelMunicípios = new JLabel("Município:"); // REMOVIDO
-        // JComboBox comboBoxEstados = new JComboBox(); // REMOVIDO
-        // JComboBox comboBoxMunicípios = new JComboBox(); // REMOVIDO
-        
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -401,13 +389,7 @@ public class TelaCadastro extends JFrame {
         contentPane.add(textField_2);
         textField_2.setColumns(10);
 
-		JLabel lblNewLabel_9 = new JLabel("Senha:");
-		lblNewLabel_9.setBounds(285, 224, 46, 14);
-		// Removi o lblNewLabel_9 para dar espaço ao novo JLabel e JProgressBar
-		// contentPane.add(lblNewLabel_9); 
         
-        // CAMPOS ADICIONADOS PARA COMPLETAR ENDEREÇO
-        // RENOMEADO: Bairro
         JLabel lblBairro = new JLabel("Bairro:");
         lblBairro.setBounds(644, 230, 46, 14);
         contentPane.add(lblBairro);
@@ -469,26 +451,19 @@ public class TelaCadastro extends JFrame {
         
         // 0. Verifica se está vazia
         if (password.length() == 0) {
-            return PasswordStrength.WEAK; // Será tratado no Listener para limpar o feedback
-        }
 
         // 1. Pontua por comprimento
         // Senhas com menos de 8 caracteres vão ser consideradas fracas, mas se for maior que isso, aumenta a segurança.
-        if (password.length() >= 8) {
             score++;
-        }
         if (password.length() >= 12) {
             score++;
-        }
 
-        // 2. Pontua por ter diferentes tipos de caracteres (Regex)
         // Pelo menos uma minúscula
         if (password.matches(".*[a-z].*")) { 
             score++;
         }
         // Pelo menos uma maiúscula
         if (password.matches(".*[A-Z].*")) { 
-            score++;
         }
         // Pelo menos um número
         if (password.matches(".*[0-9].*")) { 
@@ -512,24 +487,24 @@ public class TelaCadastro extends JFrame {
     // 
     // 2. integração do SWING com DocumentListener
     // 
+        if (password.length() >= 12) score++;
+        if (password.matches(".*[a-z].*")) score++;
+        if (password.matches(".*[0-9].*")) score++;
+        
+        else if (score >= 2) return PasswordStrength.MEDIUM;
+        else return PasswordStrength.WEAK;
 
     /**
-     * Adiciona o DocumentListener ao campo de senha para atualizar o feedback em tempo real.
      */
     private void implementPasswordStrengthCheck() {
         
         passwordFieldSENHA.getDocument().addDocumentListener(new DocumentListener() {
             
             @Override
-            public void insertUpdate(DocumentEvent e) {
                 checkAndUpdateUI();
-            }
-
             @Override
-            public void removeUpdate(DocumentEvent e) {
-                checkAndUpdateUI();
             }
-
+            public void removeUpdate(DocumentEvent e) { checkAndUpdateUI(); }
             @Override
             public void changedUpdate(DocumentEvent e) {
                 // Não usado para JPasswordField
@@ -588,19 +563,14 @@ public class TelaCadastro extends JFrame {
     private void implementCEPAutoComplete() {
         textField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
-                buscarQuandoCompleto();
-            }
-            
+            public void insertUpdate(DocumentEvent e) { buscarQuandoCompleto(); }
             @Override
             public void removeUpdate(DocumentEvent e) {
                 // Não faz nada
             }
             
             @Override
-            public void changedUpdate(DocumentEvent e) {
-                buscarQuandoCompleto();
-            }
+            public void changedUpdate(DocumentEvent e) { buscarQuandoCompleto(); }
             
             private void buscarQuandoCompleto() {
                 String cep = textField.getText().replaceAll("[^0-9]", "");
@@ -618,10 +588,10 @@ public class TelaCadastro extends JFrame {
      * MÉTODO ADICIONADO: Busca endereço por CEP
      */
     private void buscarEnderecoPorCEP() {
-        String cep = textField.getText().trim();
+        String cep = textField.getText().trim().replaceAll("[^0-9]", "");
         
-        if (cep.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Digite um CEP válido");
+        if (cep.length() != 8) {
+            JOptionPane.showMessageDialog(this, "CEP deve conter 8 dígitos!", "CEP Inválido", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -629,11 +599,20 @@ public class TelaCadastro extends JFrame {
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         
         // Usa SwingWorker para não travar a interface
-        javax.swing.SwingWorker<ViaCEPResponse, Void> worker = new javax.swing.SwingWorker<>() {
+        SwingWorker<ViaCEPResponse, Void> worker = new SwingWorker<ViaCEPResponse, Void>() {
             @Override
             protected ViaCEPResponse doInBackground() throws Exception {
-                ViaCEPService service = new ViaCEPService();
-                return service.buscarCEP(cep);
+                try {
+                    String url = "https://viacep.com.br/ws/" + cep + "/json/";
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    
+                    Response response = httpClient.newCall(request).execute();
+                    String json = response.body().string();
+                    
+                    
+                } catch (Exception e) {
             }
             
             @Override
@@ -644,26 +623,26 @@ public class TelaCadastro extends JFrame {
                     ViaCEPResponse endereco = get();
                     
                     if (endereco == null) {
+                    if (endereco == null || endereco.temErro()) {
                         JOptionPane.showMessageDialog(TelaCadastro.this, 
+                            "CEP não encontrado!\nVerifique o CEP digitado.", 
                             "CEP não encontrado", 
-                            "Erro", 
                             JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     
-                    // Preenche os campos automaticamente
-                    textField_1.setText(endereco.getLogradouro());
-                    textBairro.setText(endereco.getBairro());
                     textMunicipio.setText(endereco.getLocalidade()); // Preenche Município
                     textEstadoUF.setText(endereco.getUf()); // Preenche Estado(UF)
-                    
                     // Foca no campo Número automaticamente
-                    textField_2.requestFocus();
+                    SwingUtilities.invokeLater(() -> {
+                        textBairro.setText(endereco.getBairro());
+                        
+                        textField_2.requestFocus();
+                    });
                     
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(TelaCadastro.this,
-                        "Erro ao buscar CEP: " + e.getMessage(),
-                        "Erro",
+                        "Erro na Consulta",
                         JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -676,13 +655,10 @@ public class TelaCadastro extends JFrame {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
+				if (e.isPopupTrigger()) showMenu(e);
 			}
 			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
+				if (e.isPopupTrigger()) showMenu(e);
 			}
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
