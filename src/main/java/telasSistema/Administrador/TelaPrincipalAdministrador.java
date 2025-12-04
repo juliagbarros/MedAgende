@@ -42,7 +42,7 @@ public class TelaPrincipalAdministrador extends JFrame {
 		listOpcoes.setBackground(new Color(255, 255, 255));
 		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listOpcoes.setModel(new AbstractListModel<String>() {
-			String[] values = new String[] {"Gestão de usuários e especialidades", "Configuração de horários e funcionamento", "Relatórios", "Auditoria e Registro"};
+			String[] values = new String[] {"Gestão de usuários", "Configuração de horários e funcionamento", "Cadastro de especialidades", "Cadastro de Secretária(o)", "Cadastro de médicos", "Relatórios", "Auditoria e Registro"};
 			public int getSize() {
 				return values.length;
 			}
@@ -50,20 +50,20 @@ public class TelaPrincipalAdministrador extends JFrame {
 				return values[index];
 			}
 		});
-		listOpcoes.setBounds(186, 136, 349, 141);
+		listOpcoes.setBounds(194, 109, 349, 184);
 		panel.add(listOpcoes);
 		
 		JButton BotaoProximo = new JButton("Proximo");
 		BotaoProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String opcaoSelecionada= listOpcoes.getSelectedValue();
+				String opcaoSelecionada= listOpcoes.getSelectedValue().trim();
 				
 				if (opcaoSelecionada==null) {
 					JOptionPane.showMessageDialog(BotaoProximo, "Selecione alguma opção!");
 				}
 				
 				switch (opcaoSelecionada) {
-				case "Gestão de usuários e especialidades":
+				case "Gestão de usuários":
 					new TelaAdministradorGestaoUsuarios().setVisible(true);
 					dispose();
 					break;
@@ -72,7 +72,22 @@ public class TelaPrincipalAdministrador extends JFrame {
 					new TelaAdministradorConfigHorarios().setVisible(true);
 					dispose();
 					break;
+					
+				case "Cadastro de especialidades":
+					new TelaAdminAdicionarEspecialidade().setVisible(true);
+					dispose();
+					break;
 				
+				case "Cadastro de Secretária(o)":
+					new TelaAdministradorCadastroUsuarios().setVisible(true);
+					dispose();
+					break;
+				
+				case "Cadastro de médicos":
+				new TelaAdministradorCadastroMedicos().setVisible(true);
+				dispose();
+				break;
+	
 				case "Relatórios":
 					new TelaAdministradorRelatorios().setVisible(true);
 					dispose();

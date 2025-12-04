@@ -1,4 +1,4 @@
-package telasSistema.Secretaria;
+package telasSistema.Administrador;
 
 import java.util.*;
 import java.awt.EventQueue;
@@ -32,9 +32,9 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import telasSistema.TelaInicial.TelaLogin;
 
-public class TelaSecretariaCadastrar extends JFrame {
+
+public class TelaAdministradorCadastroUsuarios extends JFrame {
 
     // Enum para definir os níveis de força
     private enum PasswordStrength {
@@ -96,7 +96,13 @@ public class TelaSecretariaCadastrar extends JFrame {
 	private JTextField textNome;
 	private JTextField textCPF;
 	private JTextField textEmail;
+	private JPasswordField passwordFieldSENHA;
+	private JPasswordField passwordCONFIRMARSENHA;
 	private JDateChooser dcDataNascimento;
+    
+    // NOVOS COMPONENTES PARA FEEDBACK
+    private JLabel lblStrengthFeedbackNIVELSENHA;
+    private JProgressBar progressBarBARRAdoNIVELSENHA;
     private JTextField textField; // CEP
     private JTextField textField_1; // Rua
     private JTextField textField_2; // Número
@@ -107,7 +113,6 @@ public class TelaSecretariaCadastrar extends JFrame {
     // Componentes para API
     private OkHttpClient httpClient;
     private Gson gson;
-    private JPasswordField TelefoneField;
     private JPasswordField PlanoSaudeField;
 
 	/**
@@ -117,7 +122,7 @@ public class TelaSecretariaCadastrar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaSecretariaCadastrar frame = new TelaSecretariaCadastrar();
+					TelaAdministradorCadastroUsuarios frame = new TelaAdministradorCadastroUsuarios();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -130,7 +135,7 @@ public class TelaSecretariaCadastrar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaSecretariaCadastrar() {
+	public TelaAdministradorCadastroUsuarios() {
 		// INICIALIZA AS BIBLIOTECAS DA API
 		httpClient = new OkHttpClient();
 		gson = new Gson();
@@ -146,7 +151,7 @@ public class TelaSecretariaCadastrar extends JFrame {
 		addPopup(contentPane, popupMenu);
 		contentPane.setLayout(null);
 		
-		JLabel LabelCadastroUsuarios = new JLabel("Cadastro do Paciente:");
+		JLabel LabelCadastroUsuarios = new JLabel("Cadastro de Secretária(o)");
 		LabelCadastroUsuarios.setBounds(315, 0, 277, 67);
 		LabelCadastroUsuarios.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
 		contentPane.add(LabelCadastroUsuarios);
@@ -172,6 +177,11 @@ public class TelaSecretariaCadastrar extends JFrame {
 		LabelEmail.setBounds(31, 172, 189, 14);
 		contentPane.add(LabelEmail);
 		
+		JLabel LabelSENHA = new JLabel("Digite aqui a senha que deseja usar:");
+		LabelSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		LabelSENHA.setBounds(232, 172, 206, 14);
+		contentPane.add(LabelSENHA);
+		
 		JLabel LabelCPF = new JLabel("CPF:");
 		LabelCPF.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 		LabelCPF.setBounds(260, 118, 154, 14);
@@ -193,6 +203,32 @@ public class TelaSecretariaCadastrar extends JFrame {
         dcDataNascimento.setDateFormatString("dd/MM/yyyy");
         dcDataNascimento.setBounds(441, 142, 120, 20); 
         contentPane.add(dcDataNascimento);
+		
+		passwordFieldSENHA = new JPasswordField();
+		passwordFieldSENHA.setToolTipText("Ex: 40028922...");
+		passwordFieldSENHA.setBounds(254, 198, 160, 20);
+		contentPane.add(passwordFieldSENHA);
+		
+		passwordCONFIRMARSENHA = new JPasswordField();
+		passwordCONFIRMARSENHA.setBounds(457, 198, 135, 20);
+		contentPane.add(passwordCONFIRMARSENHA);
+		
+		JLabel LabelCONFIRMARSENHA = new JLabel("Confirme a senha:");
+		LabelCONFIRMARSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		LabelCONFIRMARSENHA.setBounds(468, 172, 124, 14);
+		contentPane.add(LabelCONFIRMARSENHA);
+		
+		// configuração dos novos componentes 
+		lblStrengthFeedbackNIVELSENHA = new JLabel("Nível da Senha:");
+		lblStrengthFeedbackNIVELSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		lblStrengthFeedbackNIVELSENHA.setBounds(203, 229, 100, 14);
+		contentPane.add(lblStrengthFeedbackNIVELSENHA);
+        
+        // Barra de progresso para feedback visual
+        progressBarBARRAdoNIVELSENHA = new JProgressBar(0, 5);
+        progressBarBARRAdoNIVELSENHA.setBounds(293, 228, 72, 20);
+        progressBarBARRAdoNIVELSENHA.setStringPainted(true);
+        contentPane.add(progressBarBARRAdoNIVELSENHA);
         
         JButton btnCadastro = new JButton("Cadastrar");
         btnCadastro.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -208,7 +244,7 @@ public class TelaSecretariaCadastrar extends JFrame {
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TelaSecretariaAgendar tela = new TelaSecretariaAgendar();
+        		TelaPrincipalAdministrador tela = new TelaPrincipalAdministrador();
 				tela.setVisible(true);
 				 dispose();
         	}
@@ -292,25 +328,15 @@ public class TelaSecretariaCadastrar extends JFrame {
         lblPreenchaOsDados.setBounds(338, 56, 223, 14);
         contentPane.add(lblPreenchaOsDados);
         
-        TelefoneField = new JPasswordField();
-        TelefoneField.setToolTipText("Telefone");
-        TelefoneField.setBounds(279, 198, 206, 20);
-        contentPane.add(TelefoneField);
+        PlanoSaudeField = new JPasswordField();
+        PlanoSaudeField.setToolTipText("Plano de saúde");
+        PlanoSaudeField.setBounds(21, 284, 206, 20);
+        contentPane.add(PlanoSaudeField);
         
         JLabel lblDigiteOTelefone = new JLabel("Digite o Telefone:");
         lblDigiteOTelefone.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblDigiteOTelefone.setBounds(289, 172, 189, 14);
+        lblDigiteOTelefone.setBounds(40, 253, 189, 14);
         contentPane.add(lblDigiteOTelefone);
-        
-        PlanoSaudeField = new JPasswordField();
-        PlanoSaudeField.setToolTipText("Plano de saúde");
-        PlanoSaudeField.setBounds(21, 255, 206, 20);
-        contentPane.add(PlanoSaudeField);
-        
-        JLabel lblDigitePlano = new JLabel("Digite o Plano de saúde:");
-        lblDigitePlano.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblDigitePlano.setBounds(31, 231, 189, 14);
-        contentPane.add(lblDigitePlano);
 
 		// chamando o método que implementa O DocumentListener
         implementPasswordStrengthCheck();
@@ -338,7 +364,14 @@ public class TelaSecretariaCadastrar extends JFrame {
             camposEmBranco++;
             mensagem += "Email\n";
         }
-      
+        if (passwordFieldSENHA.getPassword().length == 0) {
+            camposEmBranco++;
+            mensagem += "Senha\n";
+        }
+        if (passwordCONFIRMARSENHA.getPassword().length == 0) {
+            camposEmBranco++;
+            mensagem += "Confirmação de Senha\n";
+        }
         if (dcDataNascimento.getDate() == null) {
             camposEmBranco++;
             mensagem += "Data de Nascimento\n";
@@ -348,6 +381,20 @@ public class TelaSecretariaCadastrar extends JFrame {
             JOptionPane.showMessageDialog(
                 null,
                 "Preencha os campos:\n" + mensagem,
+                "Erro de Validação",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        
+        // Verificar se senhas coincidem
+        String senha = new String(passwordFieldSENHA.getPassword());
+        String confirmacao = new String(passwordCONFIRMARSENHA.getPassword());
+        
+        if (!senha.equals(confirmacao)) {
+            JOptionPane.showMessageDialog(
+                null,
+                "As senhas não coincidem!",
                 "Erro de Validação",
                 JOptionPane.WARNING_MESSAGE
             );
@@ -417,6 +464,61 @@ public class TelaSecretariaCadastrar extends JFrame {
      * Implementa a verificação de força da senha
      */
     private void implementPasswordStrengthCheck() {
+        passwordFieldSENHA.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                checkAndUpdateUI();
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                checkAndUpdateUI();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Não usado para JPasswordField
+            }
+
+            private void checkAndUpdateUI() {
+                String password = new String(passwordFieldSENHA.getPassword());
+                
+                if (password.isEmpty()) {
+                    lblStrengthFeedbackNIVELSENHA.setText("Nível da Senha:");
+                    lblStrengthFeedbackNIVELSENHA.setForeground(Color.BLACK);
+                    progressBarBARRAdoNIVELSENHA.setValue(0);
+                    progressBarBARRAdoNIVELSENHA.setString("");
+                    return;
+                }
+                
+                PasswordStrength strength = checkPasswordStrength(password);
+                
+                // Atualiza a interface
+                switch (strength) {
+                    case WEAK:
+                        lblStrengthFeedbackNIVELSENHA.setText("FRACA");
+                        lblStrengthFeedbackNIVELSENHA.setForeground(Color.RED);
+                        progressBarBARRAdoNIVELSENHA.setValue(1);
+                        progressBarBARRAdoNIVELSENHA.setForeground(Color.RED);
+                        progressBarBARRAdoNIVELSENHA.setString("Fraca");
+                        break;
+                    case MEDIUM:
+                        lblStrengthFeedbackNIVELSENHA.setText("MÉDIA");
+                        lblStrengthFeedbackNIVELSENHA.setForeground(Color.ORANGE.darker());
+                        progressBarBARRAdoNIVELSENHA.setValue(3);
+                        progressBarBARRAdoNIVELSENHA.setForeground(Color.ORANGE.darker());
+                        progressBarBARRAdoNIVELSENHA.setString("Média");
+                        break;
+                    case STRONG:
+                        lblStrengthFeedbackNIVELSENHA.setText("FORTE");
+                        lblStrengthFeedbackNIVELSENHA.setForeground(Color.GREEN.darker());
+                        progressBarBARRAdoNIVELSENHA.setValue(5);
+                        progressBarBARRAdoNIVELSENHA.setForeground(Color.GREEN.darker());
+                        progressBarBARRAdoNIVELSENHA.setString("Forte");
+                        break;
+                }
+            }
+        });
     }
     
     /**
@@ -492,7 +594,7 @@ public class TelaSecretariaCadastrar extends JFrame {
                     ViaCEPResponse endereco = get();
                     
                     if (endereco == null || endereco.temErro()) {
-                        JOptionPane.showMessageDialog(TelaSecretariaCadastrar.this, 
+                        JOptionPane.showMessageDialog(TelaAdministradorCadastroUsuarios.this, 
                             "CEP não encontrado!\nVerifique o CEP digitado.", 
                             "CEP não encontrado", 
                             JOptionPane.ERROR_MESSAGE);
@@ -510,7 +612,7 @@ public class TelaSecretariaCadastrar extends JFrame {
                     });
                     
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(TelaSecretariaCadastrar.this,
+                    JOptionPane.showMessageDialog(TelaAdministradorCadastroUsuarios.this,
                         "Erro na consulta ao CEP: " + e.getMessage(),
                         "Erro na Consulta",
                         JOptionPane.ERROR_MESSAGE);
