@@ -20,11 +20,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `alergias`
+--
+
+CREATE TABLE `alergias` (
+  `Id_Paciente` int(11) NOT NULL,
+  `Alergia` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `comorbidades`
+--
+
+CREATE TABLE `comorbidades` (
+  `Id_Paciente` int(11) NOT NULL,
+  `Comorbidade` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `consultas`
 --
 
 CREATE TABLE `consultas` (
-  `id_Consultas` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `id_Consultas` int(11) NOT NULL,
   `Fk_Id_Paciente` int(11) NOT NULL,
   `Fk_Matricula_Medico` int(11) NOT NULL,
   `Data_Consulta` date NOT NULL,
@@ -42,7 +64,7 @@ CREATE TABLE `consultas` (
 --
 
 CREATE TABLE `especialidades` (
-  `Id_Especialidade` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `Id_Especialidade` int(11) NOT NULL,
   `Nome_Especialidade` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -53,7 +75,7 @@ CREATE TABLE `especialidades` (
 --
 
 CREATE TABLE `medico` (
-  `Matricula` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `Matricula` int(11) NOT NULL,
   `Id_Usuario` int(11) NOT NULL,
   `Especialidade` int(11) NOT NULL,
   `Crm` char(9) NOT NULL,
@@ -68,7 +90,7 @@ CREATE TABLE `medico` (
 --
 
 CREATE TABLE `paciente` (
-  `Id_Paciente` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `Id_Paciente` int(11) NOT NULL,
   `Email` varchar(90) NOT NULL,
   `Nome` varchar(90) NOT NULL,
   `Data_Nasc` date DEFAULT NULL,
@@ -81,7 +103,45 @@ CREATE TABLE `paciente` (
   `Senha` varchar(45) NOT NULL,
   `CPF` char(11) NOT NULL,
   `Telefone` char(11) DEFAULT NULL,
-  `Estado` varchar(45) DEFAULT NULL
+  `Estado` varchar(45) DEFAULT NULL,
+  `Profissao` varchar(45) NOT NULL,
+  `Sexo` char(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `prontuarios`
+--
+
+CREATE TABLE `prontuarios` (
+  `Id_Prontuario` int(11) NOT NULL,
+  `Id_Paciente` int(11) NOT NULL,
+  `Peso` decimal(10,0) NOT NULL,
+  `Altura` decimal(10,0) NOT NULL,
+  `Temperatura` decimal(10,0) NOT NULL,
+  `Pressao_Arterial` decimal(10,0) NOT NULL,
+  `Frequencia_Cardiaca` decimal(10,0) NOT NULL,
+  `Queixas` varchar(100) NOT NULL,
+  `Solicita_Exame` tinyint(1) NOT NULL,
+  `Solicita_Atestado` tinyint(1) NOT NULL,
+  `Solicita_Prescricao` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `solicitacoes_exames`
+--
+
+CREATE TABLE `solicitacoes_exames` (
+  `Id_Solicitacao_Exame` int(11) NOT NULL,
+  `Id_Medico` int(11) NOT NULL,
+  `Id_Paciente` int(11) NOT NULL,
+  `Data` date NOT NULL,
+  `Hora` time NOT NULL,
+  `Exames_Solicitados` varchar(90) NOT NULL,
+  `Observacoes` varchar(90) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -91,7 +151,7 @@ CREATE TABLE `paciente` (
 --
 
 CREATE TABLE `usuarios` (
-  `Id_Usuario` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+  `Id_Usuario` int(11) NOT NULL,
   `Email` varchar(90) NOT NULL,
   `Senha` varchar(15) NOT NULL,
   `Nome` varchar(90) NOT NULL,
@@ -110,6 +170,18 @@ CREATE TABLE `usuarios` (
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices de tabela `alergias`
+--
+ALTER TABLE `alergias`
+  ADD PRIMARY KEY (`Id_Paciente`,`Alergia`);
+
+--
+-- Índices de tabela `comorbidades`
+--
+ALTER TABLE `comorbidades`
+  ADD PRIMARY KEY (`Id_Paciente`,`Comorbidade`);
 
 --
 -- Índices de tabela `consultas`
@@ -144,6 +216,21 @@ ALTER TABLE `paciente`
   ADD UNIQUE KEY `CPF` (`CPF`);
 
 --
+-- Índices de tabela `prontuarios`
+--
+ALTER TABLE `prontuarios`
+  ADD PRIMARY KEY (`Id_Prontuario`),
+  ADD KEY `Id_Paciente` (`Id_Paciente`);
+
+--
+-- Índices de tabela `solicitacoes_exames`
+--
+ALTER TABLE `solicitacoes_exames`
+  ADD PRIMARY KEY (`Id_Solicitacao_Exame`),
+  ADD KEY `Id_Medico` (`Id_Medico`),
+  ADD KEY `Id_Paciente` (`Id_Paciente`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -161,14 +248,56 @@ ALTER TABLE `consultas`
   MODIFY `id_Consultas` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `especialidades`
+--
+ALTER TABLE `especialidades`
+  MODIFY `Id_Especialidade` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `medico`
+--
+ALTER TABLE `medico`
+  MODIFY `Matricula` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `paciente`
 --
 ALTER TABLE `paciente`
   MODIFY `Id_Paciente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de tabela `prontuarios`
+--
+ALTER TABLE `prontuarios`
+  MODIFY `Id_Prontuario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `solicitacoes_exames`
+--
+ALTER TABLE `solicitacoes_exames`
+  MODIFY `Id_Solicitacao_Exame` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `Id_Usuario` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Restrições para tabelas despejadas
 --
+
+--
+-- Restrições para tabelas `alergias`
+--
+ALTER TABLE `alergias`
+  ADD CONSTRAINT `alergias_ibfk_1` FOREIGN KEY (`Id_Paciente`) REFERENCES `paciente` (`Id_Paciente`);
+
+--
+-- Restrições para tabelas `comorbidades`
+--
+ALTER TABLE `comorbidades`
+  ADD CONSTRAINT `comorbidades_ibfk_1` FOREIGN KEY (`Id_Paciente`) REFERENCES `paciente` (`Id_Paciente`);
 
 --
 -- Restrições para tabelas `consultas`
@@ -183,10 +312,22 @@ ALTER TABLE `consultas`
 ALTER TABLE `medico`
   ADD CONSTRAINT `fk_especialidade` FOREIGN KEY (`Especialidade`) REFERENCES `especialidades` (`Id_Especialidade`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`Id_Usuario`) REFERENCES `usuarios` (`Id_Usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Restrições para tabelas `prontuarios`
+--
+ALTER TABLE `prontuarios`
+  ADD CONSTRAINT `prontuarios_ibfk_1` FOREIGN KEY (`Id_Paciente`) REFERENCES `paciente` (`Id_Paciente`);
+
+--
+-- Restrições para tabelas `solicitacoes_exames`
+--
+ALTER TABLE `solicitacoes_exames`
+  ADD CONSTRAINT `solicitacoes_exames_ibfk_1` FOREIGN KEY (`Id_Medico`) REFERENCES `medico` (`Matricula`),
+  ADD CONSTRAINT `solicitacoes_exames_ibfk_2` FOREIGN KEY (`Id_Paciente`) REFERENCES `paciente` (`Id_Paciente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
 
