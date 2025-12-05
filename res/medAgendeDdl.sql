@@ -68,6 +68,17 @@ CREATE TABLE `especialidades` (
   `Nome_Especialidade` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Despejando dados para a tabela `especialidades`
+-- Dados Placeholders para autorizar o primeiro acesso ao banco
+
+INSERT INTO `especialidades` (`Id_Especialidade`, `Nome_Especialidade`) VALUES
+(1, 'Ortopedista'),
+(2, 'Cardiologista'),
+(3, 'Dermatologista'),
+(4, 'Urologista'),
+(5, 'Neurologista'),
+(6, 'Psiquiatra');
+
 -- --------------------------------------------------------
 
 --
@@ -82,6 +93,13 @@ CREATE TABLE `medico` (
   `Situacao` varchar(45) NOT NULL,
   `Rqe` char(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Despejando dados para a tabela 'medico'
+-- Dados Placeholders para autorizar o acesso inicial ao banco
+
+INSERT INTO `medico` (`Matricula`, `Id_Usuario`, `Especialidade`, `Crm`, `Situacao`, `Rqe`) VALUES
+(1, 1, 6, '555666777', 'Superposição Quântica', '3364447');
+
 
 -- --------------------------------------------------------
 
@@ -166,6 +184,13 @@ CREATE TABLE `usuarios` (
   `CEP` char(8) DEFAULT NULL,
   `Telefone` char(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Despejando dados para a tabela `usuarios`
+-- Dados Placeholders para autorizar o acesso inicial ao programa
+
+INSERT INTO `usuarios` (`Id_Usuario`, `Email`, `Senha`, `Nome`, `CPF`, `Data_Nasc`, `Bairro`, `Rua`, `Num_Casa`, `Cidade`, `Servíco`, `Plano_De_Saude`, `CEP`, `Telefone`) VALUES
+(1, 'adminicial@gmail.com', '123456', 'Lorem Ipsum Dolor', '55566677733', '0000-00-00', 'Lorem', 'Ipsum', '6', 'Dolor', 'Administrador', '', '44477777', '88636665556');
+
 
 --
 -- Índices para tabelas despejadas
@@ -330,4 +355,5 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
 
