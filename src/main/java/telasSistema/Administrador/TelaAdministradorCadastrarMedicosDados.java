@@ -1,6 +1,5 @@
 package telasSistema.Administrador;
 
-import java.util.*;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Color;
@@ -114,11 +113,6 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
     private OkHttpClient httpClient;
     private Gson gson;
     private JPasswordField PlanoSaudeField;
-    private JPasswordField CrmField;
-    private JPasswordField EspecialidadeField;
-    private JPasswordField passwordField;
-    private JPasswordField passwordField_1;
-    private JPasswordField passwordField_2;
 
 	/**
 	 * Launch the application.
@@ -235,16 +229,16 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         progressBarBARRAdoNIVELSENHA.setStringPainted(true);
         contentPane.add(progressBarBARRAdoNIVELSENHA);
         
-        JButton btnCadastro = new JButton("Cadastrar");
-        btnCadastro.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnCadastro.setForeground(new Color(0, 0, 0));
-        btnCadastro.addActionListener(new ActionListener() {
+        JButton btnCadastrar = new JButton("Cadastrar");
+        btnCadastrar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnCadastrar.setForeground(new Color(0, 0, 0));
+        btnCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 realizarCadastro();
             }
         });
-        btnCadastro.setBounds(42, 406, 135, 35);
-        contentPane.add(btnCadastro);
+        btnCadastrar.setBounds(42, 406, 135, 35);
+        contentPane.add(btnCadastrar);
         
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
@@ -343,56 +337,18 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         lblDigiteOTelefone.setBounds(40, 253, 189, 14);
         contentPane.add(lblDigiteOTelefone);
         
-        CrmField = new JPasswordField();
-        CrmField.setToolTipText("CRM");
-        CrmField.setBounds(252, 284, 100, 20);
-        contentPane.add(CrmField);
-        
-        EspecialidadeField = new JPasswordField();
-        EspecialidadeField.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
-        EspecialidadeField.setToolTipText("Especialidade");
-        EspecialidadeField.setBounds(385, 284, 147, 20);
-        contentPane.add(EspecialidadeField);
-        
-        JLabel lblDigiteCrm = new JLabel("Digite o CRM:");
-        lblDigiteCrm.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblDigiteCrm.setBounds(251, 253, 86, 14);
-        contentPane.add(lblDigiteCrm);
-        
-        JLabel lblDigiteAEspecialidade = new JLabel("Digite a Especialidade:");
-        lblDigiteAEspecialidade.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblDigiteAEspecialidade.setBounds(395, 255, 189, 14);
-        contentPane.add(lblDigiteAEspecialidade);
-        
-        passwordField = new JPasswordField();
-        passwordField.setToolTipText("CRM");
-        passwordField.setBounds(21, 339, 100, 20);
-        contentPane.add(passwordField);
-        
-        passwordField_1 = new JPasswordField();
-        passwordField_1.setToolTipText("CRM");
-        passwordField_1.setBounds(143, 339, 130, 20);
-        contentPane.add(passwordField_1);
-        
-        passwordField_2 = new JPasswordField();
-        passwordField_2.setToolTipText("CRM");
-        passwordField_2.setBounds(315, 339, 100, 20);
-        contentPane.add(passwordField_2);
-        
-        JLabel lblDigiteRQE = new JLabel("Digite o RQE:");
-        lblDigiteRQE.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblDigiteRQE.setBounds(31, 314, 86, 14);
-        contentPane.add(lblDigiteRQE);
-        
-        JLabel lblAreaDeAtuacao = new JLabel("Área de atuação:");
-        lblAreaDeAtuacao.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblAreaDeAtuacao.setBounds(166, 312, 107, 14);
-        contentPane.add(lblAreaDeAtuacao);
-        
-        JLabel lblSituacao = new JLabel("Situação:");
-        lblSituacao.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblSituacao.setBounds(321, 314, 107, 14);
-        contentPane.add(lblSituacao);
+        JButton btnNewButton = new JButton("Próximo");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		TelaAdministradorCadastrarEspecialidadesMedicos tela = new  TelaAdministradorCadastrarEspecialidadesMedicos();
+        		tela.setVisible(true);
+        		dispose();
+        	}
+        });
+        btnNewButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+        btnNewButton.setBounds(354, 407, 135, 32);
+        contentPane.add(btnNewButton);
 
 		// chamando o método que implementa O DocumentListener
         implementPasswordStrengthCheck();
