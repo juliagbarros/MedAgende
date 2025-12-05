@@ -1,6 +1,5 @@
 package telasSistema.Secretaria;
 
-import java.util.*;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Color;
@@ -14,7 +13,6 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JProgressBar;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import com.toedter.calendar.JDateChooser;
@@ -32,17 +30,12 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import telasSistema.TelaInicial.TelaLogin;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaSecretariaCadastrar extends JFrame {
 
-    // Enum para definir os níveis de força
-    private enum PasswordStrength {
-        WEAK, // Fraca
-        MEDIUM, // Média
-        STRONG // Forte
-    }
-
+ 
     private static class ViaCEPResponse {
         private String cep;
         private String logradouro;
@@ -109,6 +102,7 @@ public class TelaSecretariaCadastrar extends JFrame {
     private Gson gson;
     private JPasswordField TelefoneField;
     private JPasswordField PlanoSaudeField;
+    private JTextField textProfissao;
 
 	/**
 	 * Launch the application.
@@ -130,6 +124,7 @@ public class TelaSecretariaCadastrar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TelaSecretariaCadastrar() {
 		// INICIALIZA AS BIBLIOTECAS DA API
 		httpClient = new OkHttpClient();
@@ -146,10 +141,10 @@ public class TelaSecretariaCadastrar extends JFrame {
 		addPopup(contentPane, popupMenu);
 		contentPane.setLayout(null);
 		
-		JLabel LabelCadastroUsuarios = new JLabel("Cadastro do Paciente:");
-		LabelCadastroUsuarios.setBounds(315, 0, 277, 67);
-		LabelCadastroUsuarios.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
-		contentPane.add(LabelCadastroUsuarios);
+		JLabel LabelCadastroPaciente = new JLabel("Cadastro do Paciente:");
+		LabelCadastroPaciente.setBounds(315, 0, 277, 67);
+		LabelCadastroPaciente.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
+		contentPane.add(LabelCadastroPaciente);
 		
 		textNome = new JTextField();
 		textNome.setBounds(21, 142, 206, 20);
@@ -195,14 +190,14 @@ public class TelaSecretariaCadastrar extends JFrame {
         contentPane.add(dcDataNascimento);
         
         JButton btnCadastro = new JButton("Cadastrar");
-        btnCadastro.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnCadastro.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
         btnCadastro.setForeground(new Color(0, 0, 0));
         btnCadastro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 realizarCadastro();
             }
         });
-        btnCadastro.setBounds(42, 406, 135, 35);
+        btnCadastro.setBounds(683, 401, 135, 35);
         contentPane.add(btnCadastro);
         
         JButton btnVoltar = new JButton("Voltar");
@@ -213,8 +208,8 @@ public class TelaSecretariaCadastrar extends JFrame {
 				 dispose();
         	}
         });
-        btnVoltar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        btnVoltar.setBounds(686, 407, 125, 32);
+        btnVoltar.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+        btnVoltar.setBounds(45, 402, 125, 32);
         contentPane.add(btnVoltar);
         
         JLabel lblNewLabel = new JLabel("CEP:");
@@ -311,9 +306,24 @@ public class TelaSecretariaCadastrar extends JFrame {
         lblDigitePlano.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
         lblDigitePlano.setBounds(31, 231, 189, 14);
         contentPane.add(lblDigitePlano);
+        
+        JLabel lblDigiteProfissao = new JLabel("Digite a profissão:");
+        lblDigiteProfissao.setToolTipText("Digite a profissão:");
+        lblDigiteProfissao.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+        lblDigiteProfissao.setBounds(279, 231, 189, 14);
+        contentPane.add(lblDigiteProfissao);
+        
+        textProfissao = new JTextField();
+        textProfissao.setToolTipText("Digite a profissão:");
+        textProfissao.setBounds(279, 255, 206, 18);
+        contentPane.add(textProfissao);
+        textProfissao.setColumns(10);
+        
+        JComboBox textSexo = new JComboBox();
+        textSexo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
+        textSexo.setBounds(533, 197, 46, 22);
+        contentPane.add(textSexo);
 
-		// chamando o método que implementa O DocumentListener
-        implementPasswordStrengthCheck();
         
         // ADICIONA LISTENER PARA BUSCA AUTOMÁTICA DE CEP
         implementCEPAutoComplete();
@@ -355,69 +365,6 @@ public class TelaSecretariaCadastrar extends JFrame {
         }
  
         }
-
-    
-    /**
-     * Método para abrir a tela de login
-     */
-    //private void abrirTelaLogin() {
-       //  TelaLogin tela = new TelaLogin();
-       // tela.setLocationRelativeTo(null);
-       // tela.setVisible(true);
-       // dispose();
-  //  }
-    
-    /**
-     * Avalia a força da senha com base em vários critérios
-     */
-    private PasswordStrength checkPasswordStrength(String password) {
-        int score = 0;
-        
-        // Verifica se está vazia
-        if (password.length() == 0) {
-            return PasswordStrength.WEAK;
-        }
-        
-        // Pontua por comprimento
-        if (password.length() >= 8) {
-            score++;
-        }
-        if (password.length() >= 12) {
-            score++;
-        }
-        
-        // Pelo menos uma minúscula
-        if (password.matches(".*[a-z].*")) { 
-            score++;
-        }
-        // Pelo menos uma maiúscula
-        if (password.matches(".*[A-Z].*")) { 
-            score++;
-        }
-        // Pelo menos um número
-        if (password.matches(".*[0-9].*")) { 
-            score++;
-        }
-        // Pelo menos um símbolo/caractere especial 
-        if (password.matches(".*[^a-zA-Z0-9].*")) { 
-            score++;
-        }
-        
-        // Define a força com base na pontuação total
-        if (score >= 5) {
-            return PasswordStrength.STRONG;
-        } else if (score >= 3) {
-            return PasswordStrength.MEDIUM;
-        } else {
-            return PasswordStrength.WEAK;
-        }
-    }
-
-    /**
-     * Implementa a verificação de força da senha
-     */
-    private void implementPasswordStrengthCheck() {
-    }
     
     /**
      * Implementa a busca automática de CEP

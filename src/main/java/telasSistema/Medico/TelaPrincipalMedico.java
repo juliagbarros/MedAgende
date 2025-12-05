@@ -56,7 +56,7 @@ public class TelaPrincipalMedico extends JFrame {
 		contentPane.add(lblBemVindoMedico);
 		
 		JButton btnViewProntuario = new JButton("Visualizar Prontuário");
-		btnViewProntuario.setBounds(106, 174, 154, 62);
+		btnViewProntuario.setBounds(151, 174, 154, 62);
 		btnViewProntuario.setAlignmentY(0.0f);
 		btnViewProntuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -78,7 +78,7 @@ public class TelaPrincipalMedico extends JFrame {
 			}
 		});
 		btnSolicitarExame.setAlignmentY(0.0f);
-		btnSolicitarExame.setBounds(277, 174, 154, 62);
+		btnSolicitarExame.setBounds(357, 174, 154, 62);
 		contentPane.add(btnSolicitarExame);
 		
 		JButton btnEmitirAtestado = new JButton("Emitir atestado");
@@ -90,12 +90,12 @@ public class TelaPrincipalMedico extends JFrame {
 			}
 		});
 		btnEmitirAtestado.setAlignmentY(0.0f);
-		btnEmitirAtestado.setBounds(452, 174, 154, 62);
+		btnEmitirAtestado.setBounds(572, 174, 154, 62);
 		contentPane.add(btnEmitirAtestado);
 		
 		JButton btnEmitirPrescricao = new JButton("Emitir prescrição");
 		btnEmitirPrescricao.setAlignmentY(0.0f);
-		btnEmitirPrescricao.setBounds(631, 174, 154, 62);
+		btnEmitirPrescricao.setBounds(242, 277, 154, 62);
 		contentPane.add(btnEmitirPrescricao);
 		
 		JLabel lblOqueDeseja = new JLabel("O que deseja realizar?");
@@ -118,6 +118,10 @@ public class TelaPrincipalMedico extends JFrame {
 		btnPrximo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		btnPrximo.setBounds(658, 386, 84, 20);
 		contentPane.add(btnPrximo);
+		
+		JButton btnAgenda = new JButton("Configurar agenda");
+		btnAgenda.setBounds(449, 277, 155, 62);
+		contentPane.add(btnAgenda);
 
 	}
 }

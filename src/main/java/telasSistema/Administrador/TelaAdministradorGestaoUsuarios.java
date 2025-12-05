@@ -30,18 +30,18 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblGestao = new JLabel("Gestão de Usuários");
-		lblGestao.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblGestao.setBounds(228, 21, 231, 54);
+		lblGestao.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+		lblGestao.setBounds(229, 10, 231, 54);
 		panel.add(lblGestao);
 		
 		JButton btnAtivarDestivar = new JButton("Ativar/Desativar Usuários do Sistema");
-		btnAtivarDestivar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnAtivarDestivar.setBounds(58, 136, 266, 48);
+		btnAtivarDestivar.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnAtivarDestivar.setBounds(212, 74, 266, 48);
 		panel.add(btnAtivarDestivar);
 		
 		JButton btnDefinirPermissesDe = new JButton("Definir Permissões de Acesso");
-		btnDefinirPermissesDe.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnDefinirPermissesDe.setBounds(58, 194, 266, 49);
+		btnDefinirPermissesDe.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnDefinirPermissesDe.setBounds(212, 196, 266, 49);
 		panel.add(btnDefinirPermissesDe);
 		
 		JButton btnEditarDadosDe = new JButton("Editar dados de usuários existentes");
@@ -53,8 +53,8 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 				dispose();
 			}
 		});
-		btnEditarDadosDe.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnEditarDadosDe.setBounds(411, 133, 266, 54);
+		btnEditarDadosDe.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnEditarDadosDe.setBounds(212, 132, 266, 54);
 		panel.add(btnEditarDadosDe);
 		
 		JButton btnRedefinirSenhaDos = new JButton("Redefinir senha dos usuários");
@@ -66,13 +66,13 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 				dispose();
 			}
 		});
-		btnRedefinirSenhaDos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnRedefinirSenhaDos.setBounds(411, 195, 266, 48);
+		btnRedefinirSenhaDos.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnRedefinirSenhaDos.setBounds(212, 321, 266, 48);
 		panel.add(btnRedefinirSenhaDos);
 		
 		JButton btnGestoDeEspecialidades = new JButton("Gestão de Especialidades");
-		btnGestoDeEspecialidades.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnGestoDeEspecialidades.setBounds(229, 253, 266, 49);
+		btnGestoDeEspecialidades.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnGestoDeEspecialidades.setBounds(212, 256, 266, 49);
 		panel.add(btnGestoDeEspecialidades);
 		
 		btnGestoDeEspecialidades.addActionListener(new ActionListener() {
@@ -95,13 +95,13 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 				 dispose();
 			}
 		});
-		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		btnVoltar.setBounds(76, 345, 126, 32);
+		btnVoltar.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		btnVoltar.setBounds(70, 375, 126, 32);
 		panel.add(btnVoltar);
 		
 		JButton btnPrximo = new JButton("Próximo");
-		btnPrximo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		btnPrximo.setBounds(478, 345, 126, 32);
+		btnPrximo.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
+		btnPrximo.setBounds(488, 375, 126, 32);
 		panel.add(btnPrximo);
 		
 

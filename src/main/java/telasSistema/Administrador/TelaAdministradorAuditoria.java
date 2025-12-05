@@ -29,20 +29,15 @@ public class TelaAdministradorAuditoria extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblGestao = new JLabel("Relatorios e Visualizações");
-		lblGestao.setFont(new Font("Segoe UI", Font.BOLD, 24));
+		lblGestao.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
 		lblGestao.setBounds(224, 23, 312, 54);
 		panel.add(lblGestao);
 		
 
 		JButton btnNewButton = new JButton("Visualizar histórico de ações realizadas por usuário");
-		btnNewButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnNewButton.setBounds(190, 129, 332, 49);
+		btnNewButton.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		btnNewButton.setBounds(192, 159, 332, 49);
 		panel.add(btnNewButton);
-		
-		JButton btnAtivarDestivar = new JButton("Registrar acessos ao sistema");
-		btnAtivarDestivar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		btnAtivarDestivar.setBounds(190, 217, 332, 48);
-		panel.add(btnAtivarDestivar);
 		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -52,12 +47,12 @@ public class TelaAdministradorAuditoria extends JFrame {
 				 dispose();
 			}
 		});
-		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		btnVoltar.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnVoltar.setBounds(76, 345, 126, 32);
 		panel.add(btnVoltar);
 		
 		JButton btnPrximo = new JButton("Próximo");
-		btnPrximo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		btnPrximo.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnPrximo.setBounds(512, 345, 126, 32);
 		panel.add(btnPrximo);
 		
