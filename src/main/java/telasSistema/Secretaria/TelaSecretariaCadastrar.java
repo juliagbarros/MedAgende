@@ -13,9 +13,18 @@ import javax.swing.JPopupMenu;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import conexao.ConnectionFactory;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import com.toedter.calendar.JDateChooser;
+
+import conexao.ConnectionFactory;
+
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -86,23 +95,35 @@ public class TelaSecretariaCadastrar extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textNome;
-	private JTextField textCPF;
-	private JTextField textEmail;
+    private JComboBox<String> boxSexo;
+
+	private JTextField FieldNome;
+	private JTextField FieldCpf;
+	private JTextField FieldEmail;
 	private JDateChooser dcDataNascimento;
-    private JTextField textField; // CEP
-    private JTextField textField_1; // Rua
-    private JTextField textField_2; // Número
-    private JTextField textMunicipio;
-    private JTextField textEstadoUF;
-    private JTextField textBairro;
+    private JTextField FieldCep; // CEP
+    private JTextField FieldRua; // Rua
+    private JTextField FieldNumero; // Número
+    private JTextField FieldMunicipio;
+    private JTextField FieldEstado;
+    private JTextField FieldBairro;
+    PreparedStatement pstPaciente = null;
+    PreparedStatement pstAlergia = null;
+    PreparedStatement pstComorbidade = null;
+    
+    Connection conexao = null;
+    
+    ResultSet rs=null;
     
     // Componentes para API
     private OkHttpClient httpClient;
     private Gson gson;
-    private JPasswordField TelefoneField;
-    private JPasswordField PlanoSaudeField;
-    private JTextField textProfissao;
+    private JTextField FieldProfissao;
+    private JTextField FieldPlanoSaude;
+    private JTextField FieldAlergia;
+    private JTextField FieldComorbidade;
+    private JTextField FieldTelefone;
+    private JTextField FieldSenha;
 
 	/**
 	 * Launch the application.
@@ -137,6 +158,9 @@ public class TelaSecretariaCadastrar extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		conexao = ConnectionFactory.getConnection();
+		System.out.println(conexao);
+		
 		JPopupMenu popupMenu = new JPopupMenu();
 		addPopup(contentPane, popupMenu);
 		contentPane.setLayout(null);
@@ -146,21 +170,21 @@ public class TelaSecretariaCadastrar extends JFrame {
 		LabelCadastroPaciente.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
 		contentPane.add(LabelCadastroPaciente);
 		
-		textNome = new JTextField();
-		textNome.setBounds(21, 142, 206, 20);
-		contentPane.add(textNome);
-		textNome.setColumns(10);
+		FieldNome = new JTextField();
+		FieldNome.setBounds(21, 142, 206, 20);
+		contentPane.add(FieldNome);
+		FieldNome.setColumns(10);
 		
-		textCPF = new JTextField();
-		textCPF.setBounds(279, 142, 86, 20);
-		contentPane.add(textCPF);
-		textCPF.setColumns(10);
+		FieldCpf = new JTextField();
+		FieldCpf.setBounds(279, 142, 86, 20);
+		contentPane.add(FieldCpf);
+		FieldCpf.setColumns(10);
 		
-		textEmail = new JTextField();
-		textEmail.setToolTipText("Ex: costelinha123@gmail.com...");
-		textEmail.setBounds(21, 198, 206, 20);
-		contentPane.add(textEmail);
-		textEmail.setColumns(10);
+		FieldEmail = new JTextField();
+		FieldEmail.setToolTipText("Ex: costelinha123@gmail.com...");
+		FieldEmail.setBounds(21, 198, 206, 20);
+		contentPane.add(FieldEmail);
+		FieldEmail.setColumns(10);
 		
 		JLabel LabelEmail = new JLabel("Digite o Email:");
 		LabelEmail.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
@@ -194,7 +218,13 @@ public class TelaSecretariaCadastrar extends JFrame {
         btnCadastro.setForeground(new Color(0, 0, 0));
         btnCadastro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                realizarCadastro();
+                realizarValidação();
+                try {
+					cadastrarDadosPaciente();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         btnCadastro.setBounds(683, 401, 135, 35);
@@ -217,60 +247,60 @@ public class TelaSecretariaCadastrar extends JFrame {
         lblNewLabel.setBounds(652, 117, 46, 14);
         contentPane.add(lblNewLabel);
         
-        textField = new JTextField(); // CEP
-        textField.setBounds(644, 140, 86, 20);
-        contentPane.add(textField);
-        textField.setColumns(10);
+        FieldCep = new JTextField(); // CEP
+        FieldCep.setBounds(644, 140, 86, 20);
+        contentPane.add(FieldCep);
+        FieldCep.setColumns(10);
         
         JLabel lblNewLabel_1 = new JLabel("Rua:");
         lblNewLabel_1.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
         lblNewLabel_1.setBounds(740, 230, 46, 14);
         contentPane.add(lblNewLabel_1);
         
-        textField_1 = new JTextField(); // Rua
-        textField_1.setBounds(740, 255, 86, 20);
-        contentPane.add(textField_1);
-        textField_1.setColumns(10);
+        FieldRua = new JTextField(); // Rua
+        FieldRua.setBounds(740, 255, 86, 20);
+        contentPane.add(FieldRua);
+        FieldRua.setColumns(10);
         
         JLabel lblNewLabel_2 = new JLabel("Número:");
         lblNewLabel_2.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
         lblNewLabel_2.setBounds(740, 286, 72, 14);
         contentPane.add(lblNewLabel_2);
         
-        textField_2 = new JTextField(); // Número
-        textField_2.setBounds(740, 311, 59, 20);
-        contentPane.add(textField_2);
-        textField_2.setColumns(10);
+        FieldNumero = new JTextField(); // Número
+        FieldNumero.setBounds(740, 311, 59, 20);
+        contentPane.add(FieldNumero);
+        FieldNumero.setColumns(10);
         
         JLabel lblBairro = new JLabel("Bairro:");
         lblBairro.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
         lblBairro.setBounds(644, 230, 46, 14);
         contentPane.add(lblBairro);
         
-        textBairro = new JTextField(); // Bairro
-        textBairro.setBounds(644, 255, 86, 20);
-        contentPane.add(textBairro);
-        textBairro.setColumns(10);
+        FieldBairro = new JTextField(); // Bairro
+        FieldBairro.setBounds(644, 255, 86, 20);
+        contentPane.add(FieldBairro);
+        FieldBairro.setColumns(10);
         
         JLabel lblMunicipio = new JLabel("Município:");
         lblMunicipio.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
         lblMunicipio.setBounds(740, 173, 72, 14);
         contentPane.add(lblMunicipio);
         
-        textMunicipio = new JTextField(); // Município
-        textMunicipio.setBounds(740, 198, 86, 20);
-        contentPane.add(textMunicipio);
-        textMunicipio.setColumns(10);
+        FieldMunicipio = new JTextField(); // Município
+        FieldMunicipio.setBounds(740, 198, 86, 20);
+        contentPane.add(FieldMunicipio);
+        FieldMunicipio.setColumns(10);
         
         JLabel lblEstadoUF = new JLabel("Estado(UF):");
         lblEstadoUF.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));
         lblEstadoUF.setBounds(644, 173, 72, 14);
         contentPane.add(lblEstadoUF);
         
-        textEstadoUF = new JTextField(); // Estado(UF)
-        textEstadoUF.setBounds(644, 198, 46, 20);
-        contentPane.add(textEstadoUF);
-        textEstadoUF.setColumns(10);
+        FieldEstado = new JTextField(); // Estado(UF)
+        FieldEstado.setBounds(644, 198, 46, 20);
+        contentPane.add(FieldEstado);
+        FieldEstado.setColumns(10);
         
         // BOTÃO PARA BUSCAR CEP
         JButton btnBuscarCEP = new JButton("Buscar");
@@ -287,20 +317,10 @@ public class TelaSecretariaCadastrar extends JFrame {
         lblPreenchaOsDados.setBounds(338, 56, 223, 14);
         contentPane.add(lblPreenchaOsDados);
         
-        TelefoneField = new JPasswordField();
-        TelefoneField.setToolTipText("Telefone");
-        TelefoneField.setBounds(279, 198, 206, 20);
-        contentPane.add(TelefoneField);
-        
         JLabel lblDigiteOTelefone = new JLabel("Digite o Telefone:");
         lblDigiteOTelefone.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
         lblDigiteOTelefone.setBounds(289, 172, 189, 14);
         contentPane.add(lblDigiteOTelefone);
-        
-        PlanoSaudeField = new JPasswordField();
-        PlanoSaudeField.setToolTipText("Plano de saúde");
-        PlanoSaudeField.setBounds(21, 255, 206, 20);
-        contentPane.add(PlanoSaudeField);
         
         JLabel lblDigitePlano = new JLabel("Digite o Plano de saúde:");
         lblDigitePlano.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
@@ -313,38 +333,148 @@ public class TelaSecretariaCadastrar extends JFrame {
         lblDigiteProfissao.setBounds(279, 231, 189, 14);
         contentPane.add(lblDigiteProfissao);
         
-        textProfissao = new JTextField();
-        textProfissao.setToolTipText("Digite a profissão:");
-        textProfissao.setBounds(279, 255, 206, 18);
-        contentPane.add(textProfissao);
-        textProfissao.setColumns(10);
+        FieldProfissao = new JTextField();
+        FieldProfissao.setToolTipText("Digite a profissão:");
+        FieldProfissao.setBounds(279, 255, 206, 18);
+        contentPane.add(FieldProfissao);
+        FieldProfissao.setColumns(10);
         
-        JComboBox textSexo = new JComboBox();
-        textSexo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
-        textSexo.setBounds(533, 197, 46, 22);
-        contentPane.add(textSexo);
+         boxSexo = new JComboBox();
+        boxSexo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
+        boxSexo.setBounds(533, 197, 46, 22);
+        contentPane.add(boxSexo);
+        
+        JLabel lblDigiteSuasAlergias = new JLabel("Digite a(s) alergia(a):");
+        lblDigiteSuasAlergias.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+        lblDigiteSuasAlergias.setBounds(31, 304, 189, 14);
+        contentPane.add(lblDigiteSuasAlergias);
+        
+        JLabel lblDigiteAsComorbidades = new JLabel("Digite a(s) comorbidade(s):");
+        lblDigiteAsComorbidades.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+        lblDigiteAsComorbidades.setBounds(279, 304, 189, 14);
+        contentPane.add(lblDigiteAsComorbidades);
+        
+        FieldPlanoSaude = new JTextField();
+        FieldPlanoSaude.setBounds(21, 255, 206, 20);
+        contentPane.add(FieldPlanoSaude);
+        FieldPlanoSaude.setColumns(10);
+        
+        FieldAlergia = new JTextField();
+        FieldAlergia.setBounds(21, 329, 206, 20);
+        contentPane.add(FieldAlergia);
+        FieldAlergia.setColumns(10);
+        
+        FieldComorbidade = new JTextField();
+        FieldComorbidade.setColumns(10);
+        FieldComorbidade.setBounds(279, 329, 206, 20);
+        contentPane.add(FieldComorbidade);
+        
+        FieldTelefone = new JTextField();
+        FieldTelefone.setColumns(10);
+        FieldTelefone.setBounds(279, 198, 206, 20);
+        contentPane.add(FieldTelefone);
+        
+        FieldSenha = new JTextField();
+        FieldSenha.setBounds(533, 329, 120, 20);
+        contentPane.add(FieldSenha);
+        FieldSenha.setColumns(10);
+        
+        JLabel lblNewLabel_3 = new JLabel("Digite a Senha:");
+        lblNewLabel_3.setBounds(552, 314, 86, 14);
+        contentPane.add(lblNewLabel_3);
 
         
         // ADICIONA LISTENER PARA BUSCA AUTOMÁTICA DE CEP
         implementCEPAutoComplete();
+	}//o metodo abaixo ele utiliza a tabela de paciente como referencia
+	public void cadastrarDadosPaciente() throws SQLException {
+		String sqlusuario="insert into paciente ( Email, Nome, Data_Nasc, Bairro, Rua, Num_Casa, Municipio, Plano_De_Saude, CEP, Senha, CPF, Telefone, Estado, Profissao, Sexo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			pstPaciente = conexao.prepareStatement(sqlusuario, Statement.RETURN_GENERATED_KEYS);
+			pstPaciente.setString(1,FieldEmail.getText() );
+			pstPaciente.setString(2, FieldNome.getText());
+			// Converter data para java.sql.Date
+	        java.util.Date dataUtil = dcDataNascimento.getDate();
+	        if (dataUtil != null) {
+	            java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
+	            pstPaciente.setDate(3, dataSql);
+	        } else {
+	            pstPaciente.setNull(3, java.sql.Types.DATE);  // Se não houver data
+	        }
+	        pstPaciente.setString(4, FieldBairro.getText());
+	        pstPaciente.setString(5, FieldRua.getText());
+	        pstPaciente.setString(6, FieldNumero.getText());
+	        pstPaciente.setString(7, FieldMunicipio.getText());
+	        pstPaciente.setString(8, FieldPlanoSaude.getText());
+	        pstPaciente.setString(9,FieldCep.getText());
+	        pstPaciente.setString(10,FieldSenha.getText());
+	        pstPaciente.setString(11, FieldCpf.getText());
+	        pstPaciente.setString(12, FieldTelefone.getText());
+	        pstPaciente.setString(13, FieldEstado.getText());
+	        pstPaciente.setString(14, FieldProfissao.getText());
+	        String sexo = (String) boxSexo.getSelectedItem();
+	        if (sexo != null && !sexo.isEmpty()) {
+	            pstPaciente.setString(15, sexo);
+	        } else {
+	            pstPaciente.setNull(15, java.sql.Types.VARCHAR);
+	        }
+	        int linhasAfetadas=pstPaciente.executeUpdate();
+	        if (linhasAfetadas == 0) {
+	            throw new SQLException("Falha ao cadastrar paciente, nenhuma linha afetada.");
+	        }
+	       
+	        rs = pstPaciente.getGeneratedKeys();
+	        int idPaciente = 0;
+	        if (rs.next()) {
+	            idPaciente = rs.getInt(1);
+	        } else {
+	            throw new SQLException("Falha ao obter ID do paciente.");
+	        }
+	        
+	        
+	        String sqlalergia="insert into alergias(Id_Paciente,Alergia)values(?,?)";
+            pstAlergia = conexao.prepareStatement(sqlalergia);
+
+	        pstAlergia.setInt(1, idPaciente);
+	        pstAlergia.setString(2, FieldAlergia.getText());
+	        int linhasAfetadas1=pstAlergia.executeUpdate();
+	        if (linhasAfetadas == 0) {
+	            throw new SQLException("Falha ao cadastrar paciente, nenhuma linha afetada.");
+	        }	        
+	        String sqlcomorbidades="insert into comorbidades(Id_Paciente,Comorbidade)values(?,?)";
+            pstComorbidade = conexao.prepareStatement(sqlcomorbidades);
+
+	        pstComorbidade.setInt(1,idPaciente);
+	        pstComorbidade.setString(2, FieldComorbidade.getText());
+	        int linhasAfetadas2=pstComorbidade.executeUpdate();
+	        if (linhasAfetadas == 0) {
+	            throw new SQLException("Falha ao cadastrar paciente, nenhuma linha afetada.");
+	        }
+		
+		} catch (Exception e) {
+		JOptionPane.showMessageDialog(null,e);
+		}
+		
 	}
+
+	
     
     /**
      * Método para realizar o cadastro
      */
-    private void realizarCadastro() {
+    private void realizarValidação() {
         String mensagem = "";
         int camposEmBranco = 0;
         
-        if (textNome.getText().trim().isEmpty()) {
+        if (FieldNome.getText().trim().isEmpty()) {
             camposEmBranco++;
             mensagem += "Nome\n";
         }
-        if (textCPF.getText().trim().isEmpty()) {
+        if (FieldCpf.getText().trim().isEmpty()) {
             camposEmBranco++;
             mensagem += "CPF\n";
         }
-        if (textEmail.getText().trim().isEmpty()) {
+        if (FieldEmail.getText().trim().isEmpty()) {
             camposEmBranco++;
             mensagem += "Email\n";
         }
@@ -370,7 +500,7 @@ public class TelaSecretariaCadastrar extends JFrame {
      * Implementa a busca automática de CEP
      */
     private void implementCEPAutoComplete() {
-        textField.getDocument().addDocumentListener(new DocumentListener() {
+        FieldCep.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 buscarQuandoCompleto();
@@ -387,7 +517,7 @@ public class TelaSecretariaCadastrar extends JFrame {
             }
             
             private void buscarQuandoCompleto() {
-                String cep = textField.getText().replaceAll("[^0-9]", "");
+                String cep = FieldCep.getText().replaceAll("[^0-9]", "");
                 if (cep.length() == 8) {
                     Timer timer = new Timer(500, e2 -> buscarEnderecoPorCEP());
                     timer.setRepeats(false);
@@ -401,7 +531,7 @@ public class TelaSecretariaCadastrar extends JFrame {
      * Busca endereço por CEP
      */
     private void buscarEnderecoPorCEP() {
-        String cep = textField.getText().trim().replaceAll("[^0-9]", "");
+        String cep = FieldCep.getText().trim().replaceAll("[^0-9]", "");
         
         if (cep.length() != 8) {
             JOptionPane.showMessageDialog(this, "CEP deve conter 8 dígitos!", "CEP Inválido", JOptionPane.WARNING_MESSAGE);
@@ -446,14 +576,14 @@ public class TelaSecretariaCadastrar extends JFrame {
                         return;
                     }
                     
-                    textMunicipio.setText(endereco.getLocalidade());
-                    textEstadoUF.setText(endereco.getUf());
-                    textField_1.setText(endereco.getLogradouro());
-                    textBairro.setText(endereco.getBairro());
+                    FieldMunicipio.setText(endereco.getLocalidade());
+                    FieldEstado.setText(endereco.getUf());
+                    FieldRua.setText(endereco.getLogradouro());
+                    FieldBairro.setText(endereco.getBairro());
                     
                     // Foca no campo Número automaticamente
                     SwingUtilities.invokeLater(() -> {
-                        textField_2.requestFocus();
+                        FieldNumero.requestFocus();
                     });
                     
                 } catch (Exception e) {
