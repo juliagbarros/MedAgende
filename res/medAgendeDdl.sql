@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `medagende(testes)`
+-- Banco de dados: `bancodedadosmedagende`
 --
 
 -- --------------------------------------------------------
@@ -68,8 +68,9 @@ CREATE TABLE `especialidades` (
   `Nome_Especialidade` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
 -- Despejando dados para a tabela `especialidades`
--- Dados Placeholders para autorizar o primeiro acesso ao banco
+--
 
 INSERT INTO `especialidades` (`Id_Especialidade`, `Nome_Especialidade`) VALUES
 (1, 'Ortopedista'),
@@ -94,12 +95,12 @@ CREATE TABLE `medico` (
   `Rqe` char(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Despejando dados para a tabela 'medico'
--- Dados Placeholders para autorizar o acesso inicial ao banco
+--
+-- Despejando dados para a tabela `medico`
+--
 
 INSERT INTO `medico` (`Matricula`, `Id_Usuario`, `Especialidade`, `Crm`, `Situacao`, `Rqe`) VALUES
 (1, 1, 6, '555666777', 'Superposição Quântica', '3364447');
-
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,6 @@ CREATE TABLE `paciente` (
   `Municipio` varchar(45) DEFAULT NULL,
   `Plano_De_Saude` varchar(45) DEFAULT NULL,
   `CEP` char(8) DEFAULT NULL,
-  `Senha` varchar(45) NOT NULL,
   `CPF` char(11) NOT NULL,
   `Telefone` char(11) DEFAULT NULL,
   `Estado` varchar(45) DEFAULT NULL,
@@ -185,12 +185,12 @@ CREATE TABLE `usuarios` (
   `Telefone` char(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
 -- Despejando dados para a tabela `usuarios`
--- Dados Placeholders para autorizar o acesso inicial ao programa
+--
 
 INSERT INTO `usuarios` (`Id_Usuario`, `Email`, `Senha`, `Nome`, `CPF`, `Data_Nasc`, `Bairro`, `Rua`, `Num_Casa`, `Cidade`, `Servíco`, `Plano_De_Saude`, `CEP`, `Telefone`) VALUES
 (1, 'adminicial@gmail.com', '123456', 'Lorem Ipsum Dolor', '55566677733', '0000-00-00', 'Lorem', 'Ipsum', '6', 'Dolor', 'Administrador', '', '44477777', '88636665556');
-
 
 --
 -- Índices para tabelas despejadas
@@ -276,13 +276,13 @@ ALTER TABLE `consultas`
 -- AUTO_INCREMENT de tabela `especialidades`
 --
 ALTER TABLE `especialidades`
-  MODIFY `Id_Especialidade` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Especialidade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `medico`
 --
 ALTER TABLE `medico`
-  MODIFY `Matricula` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Matricula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `paciente`
@@ -306,7 +306,7 @@ ALTER TABLE `solicitacoes_exames`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id_Usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restrições para tabelas despejadas
@@ -355,5 +355,7 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
 
 
