@@ -27,6 +27,8 @@ import javax.swing.Timer;
 import java.awt.Cursor;
 import javax.swing.SwingWorker;
 import javax.swing.SwingUtilities;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.MaskFormatter;
 
 // IMPORTAÇÕES PARA API DOS CORREIOS
 import com.google.gson.Gson;
@@ -95,7 +97,7 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textNome;
-	private JTextField textCPF;
+	private JFormattedTextField textCPF;
 	private JTextField textEmail;
 	private JTextField textTelefone;
 	private JPasswordField passwordFieldSENHA;
@@ -164,8 +166,16 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
 		contentPane.add(textNome);
 		textNome.setColumns(10);
 		
-		textCPF = new JTextField();
-		textCPF.setBounds(279, 142, 86, 20);
+		MaskFormatter maskCpf = null;
+		try {
+		    maskCpf = new MaskFormatter("###.###.###-##");
+		    maskCpf.setPlaceholderCharacter('_');
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
+		textCPF = new JFormattedTextField(maskCpf);
+		textCPF.setBounds(279, 142, 100, 25);
 		contentPane.add(textCPF);
 		textCPF.setColumns(10);
 		
@@ -371,7 +381,8 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
             camposEmBranco++;
             mensagem += "Nome\n";
         }
-        if (textCPF.getText().trim().isEmpty()) {
+        String cpf = textCPF.getText().replaceAll("\\D", "");
+        if (cpf.isEmpty()) {
             camposEmBranco++;
             mensagem += "CPF\n";
         }
