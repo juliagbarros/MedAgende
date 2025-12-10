@@ -123,7 +123,7 @@ public class TelaSecretariaAgendar extends JFrame {
 		JButton btnCadastrarPaciente = new JButton("Cadastrar Paciente");
 		btnCadastrarPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaSecretariaCadastrar tela =new TelaSecretariaCadastrar();
+				TelaSecretariaCadastrarPaciente tela =new TelaSecretariaCadastrarPaciente();
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				dispose();

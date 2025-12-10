@@ -36,7 +36,7 @@ public class EnvioEmail {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO, 
-                InternetAddress.parse("destinatario@exemplo.com")); // Adicione o email do destinatário
+                InternetAddress.parse("emailprojetos01@gmail.com")); // Adicione o email do destinatário
             message.setSubject("Assunto: Recuperação de Senha");
             message.setText("Olá,\\n\\nSua consulta foi agendada com sucesso!\\n\\nDetalhes do agendamento:\\n + detalhes_agendamento + '\\n\\nAgradecemos por escolher nosso serviço.\\n\\nAtenciosamente,\\nEquipe de Agendamento");
             

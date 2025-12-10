@@ -79,7 +79,7 @@ public class TelaPrincipalAdministrador extends JFrame {
 					break;
 				
 				case "Cadastro de Secretária(o)":
-					new TelaAdministradorCadastroUsuarios().setVisible(true);
+					new TelaAdministradorCadastroSecretaria().setVisible(true);
 					dispose();
 					break;
 				
