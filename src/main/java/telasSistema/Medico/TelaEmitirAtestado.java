@@ -60,7 +60,7 @@ public class TelaEmitirAtestado extends JFrame {
 		contentPane.add(txtpnAtestoParaOs);
 		
 		JLabel lblEmitirAtestado = new JLabel("Emitir atestado");
-		lblEmitirAtestado.setBounds(334, 10, 215, 35);
+		lblEmitirAtestado.setBounds(334, 10, 241, 35);
 		lblEmitirAtestado.setFont(new Font("Arial Black", Font.BOLD, 24));
 		contentPane.add(lblEmitirAtestado);
 		

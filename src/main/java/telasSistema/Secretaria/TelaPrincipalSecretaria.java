@@ -92,7 +92,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 					break;
 					
 				case "Cadastrar Novo Paciente":
-					TelaSecretariaCadastrar telaSecretariaCadastrar = new TelaSecretariaCadastrar();
+					TelaSecretariaCadastrarPaciente telaSecretariaCadastrar = new TelaSecretariaCadastrarPaciente();
 					telaSecretariaCadastrar.setLocationRelativeTo(null);
 					telaSecretariaCadastrar.setVisible(true);
 					 dispose();

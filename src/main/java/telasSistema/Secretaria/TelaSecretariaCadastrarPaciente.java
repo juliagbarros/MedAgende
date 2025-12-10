@@ -108,7 +108,7 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
     private JTextField FieldEstado;
     private JTextField FieldBairro;
     
-    PreparedStatement pstDelete = null;
+  
 
     PreparedStatement pstPaciente = null;
     PreparedStatement pstAlergia = null;
@@ -124,7 +124,6 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
     private JTextField FieldAlergia;
     private JTextField FieldComorbidade;
     private JTextField FieldTelefone;
-    private JTextField FieldSenha;
 
 	/**
 	 * Launch the application.
@@ -393,15 +392,6 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
         FieldTelefone.setColumns(10);
         FieldTelefone.setBounds(279, 198, 206, 20);
         contentPane.add(FieldTelefone);
-        
-        FieldSenha = new JTextField();
-        FieldSenha.setBounds(533, 329, 120, 20);
-        contentPane.add(FieldSenha);
-        FieldSenha.setColumns(10);
-        
-        JLabel lblNewLabel_3 = new JLabel("Digite a Senha:");
-        lblNewLabel_3.setBounds(552, 314, 86, 14);
-        contentPane.add(lblNewLabel_3);
 
         
         // ADICIONA LISTENER PARA BUSCA AUTOMÁTICA DE CEP
@@ -419,7 +409,7 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
 	        conexao.setAutoCommit(false);
 	        
 	        
-	        String sqlPaciente = "INSERT INTO paciente (Email, Nome, Data_Nasc, Bairro, Rua, Num_Casa, Municipio, Plano_De_Saude, CEP, Senha, CPF, Telefone, Estado, Profissao, Sexo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	        String sqlPaciente = "INSERT INTO paciente (Email, Nome, Data_Nasc, Bairro, Rua, Num_Casa, Municipio, Plano_De_Saude, CEP,  CPF, Telefone, Estado, Profissao, Sexo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	        pstPaciente = conexao.prepareStatement(sqlPaciente, Statement.RETURN_GENERATED_KEYS);
 	      //o metodo abaixo ele utiliza a tabela de paciente como referencia
 	        // Preenche os parâmetros (igual ao seu código)
@@ -441,14 +431,13 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
 	        pstPaciente.setString(7, FieldMunicipio.getText());
 	        pstPaciente.setString(8, FieldPlanoSaude.getText());
 	        pstPaciente.setString(9, FieldCep.getText());
-	        pstPaciente.setString(10, FieldSenha.getText());
-	        pstPaciente.setString(11, FieldCpf.getText());
-	        pstPaciente.setString(12, FieldTelefone.getText());
-	        pstPaciente.setString(13, FieldEstado.getText());
-	        pstPaciente.setString(14, FieldProfissao.getText());
+	        pstPaciente.setString(10, FieldCpf.getText());
+	        pstPaciente.setString(11, FieldTelefone.getText());
+	        pstPaciente.setString(12, FieldEstado.getText());
+	        pstPaciente.setString(13, FieldProfissao.getText());
 	        
 	        String sexo = (String) boxSexo.getSelectedItem();
-	        pstPaciente.setString(15, sexo != null ? sexo : "");
+	        pstPaciente.setString(14, sexo != null ? sexo : "");
 	        
 	        int linhasAfetadas = pstPaciente.executeUpdate();
 	        
@@ -532,7 +521,6 @@ public class TelaSecretariaCadastrarPaciente extends JFrame {
 	    FieldMunicipio.setText("");
 	    FieldEstado.setText("");
 	    FieldBairro.setText("");
-	    FieldSenha.setText("");
 	    boxSexo.setSelectedIndex(0);
 	}
     
