@@ -68,8 +68,15 @@ public class TelaLogin extends JFrame {
 		contentPane.setLayout(null);
 
 		// Conecta ao banco
-		connection = ConnectionFactory.getConnection();
-		System.out.println(connection);
+		try {
+		    connection = ConnectionFactory.getConnection();
+		    System.out.println(connection);
+		} 
+		catch (Exception e) {
+		    e.printStackTrace();
+		    JOptionPane.showMessageDialog(null, "Falha ao conectar ao banco de dados:\n" + e.getMessage(),
+		    "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
@@ -91,7 +98,10 @@ public class TelaLogin extends JFrame {
 		lblSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblSenha.setBounds(114, 194, 175, 31);
 		panel.add(lblSenha);
-
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(95, 225, 175, 39);
+		panel.add(passwordField);
 		ButtonGroup grupoBotoes = new ButtonGroup();
 
 		// BOTAO LOGIN:
@@ -110,7 +120,6 @@ public class TelaLogin extends JFrame {
 					mensagemDeErro += "- E-mail\n";
 				}
 
-
 				if (passwordField.getPassword().length == 0) {
 					camposEmBranco++;
 					mensagemDeErro += "- Senha\n";
@@ -118,10 +127,9 @@ public class TelaLogin extends JFrame {
 
 				if (camposEmBranco > 0) {
 					JOptionPane.showMessageDialog(null, mensagemDeErro, "Erro de Validação",
-							JOptionPane.WARNING_MESSAGE);
+					JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-
 				// Aqui você chamaria o método logar() e faria a verificação
 				// logar();
 				logar();
@@ -144,19 +152,15 @@ public class TelaLogin extends JFrame {
 		lblRealizarLogin.setBounds(95, 84, 189, 19);
 		panel.add(lblRealizarLogin);
 
-		passwordField = new JPasswordField();
-		passwordField.setBounds(95, 225, 175, 39);
-		panel.add(passwordField);
+		JLabel logarComo = new JLabel("Logar como:");
+		logarComo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		logarComo.setBounds(136, 273, 97, 19);
+		panel.add(logarComo);
 
-		JLabel LogarComo = new JLabel("Logar como:");
-		LogarComo.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		LogarComo.setBounds(136, 273, 97, 19);
-		panel.add(LogarComo);
-
-		JLabel EsqueceuSenha = new JLabel("Esqueceu a senha?");
-		EsqueceuSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		EsqueceuSenha.setBounds(96, 375, 114, 32);
-		panel.add(EsqueceuSenha);
+		JLabel esqueceuSenha = new JLabel("Esqueceu a senha?");
+		esqueceuSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		esqueceuSenha.setBounds(96, 375, 114, 32);
+		panel.add(esqueceuSenha);
 
 		JButton btnRecuperarSenha = new JButton("Recuperar Senha");
 		btnRecuperarSenha.addActionListener(new ActionListener() {
@@ -173,15 +177,15 @@ public class TelaLogin extends JFrame {
 		btnRecuperarSenha.setBounds(208, 375, 132, 32);
 		panel.add(btnRecuperarSenha);
 
-		JLabel BoasVindas = new JLabel("Bem-vindo(a) ao MedAgende!");
-		BoasVindas.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
-		BoasVindas.setBounds(10, 0, 349, 68);
-		contentPane.add(BoasVindas);
+		JLabel boasVindas = new JLabel("Bem-vindo(a) ao MedAgende!");
+		boasVindas.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
+		boasVindas.setBounds(10, 0, 349, 68);
+		contentPane.add(boasVindas);
 
-		JLabel Gerenciamento = new JLabel("Seu sistema de gerenciamento de consultas");
-		Gerenciamento.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-		Gerenciamento.setBounds(20, 46, 349, 39);
-		contentPane.add(Gerenciamento);
+		JLabel gerenciamento = new JLabel("Seu sistema de gerenciamento de consultas");
+		gerenciamento.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		gerenciamento.setBounds(20, 46, 349, 39);
+		contentPane.add(gerenciamento);
 
 	} // FECHA O CONSTRUTOR TelaLogin()
 
@@ -230,9 +234,4 @@ public class TelaLogin extends JFrame {
 		}
 	}
 
-} //  FECHA A CLASSE TelaLogin
-
-
-
-
-
+}
