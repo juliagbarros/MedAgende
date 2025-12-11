@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Back.Exame;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -206,6 +208,34 @@ public class TelaSolicitacaoExame extends JFrame {
 		contentPane.add(btnVoltar);
 		
 		JButton btnImprimir = new JButton("Imprimir");
+		btnImprimir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String Idade = txtIdade.getText();
+				
+				String Nome_Pac = txtNomeCompleto.getText();
+				
+				String Endereco_Pac = txtEndereco.getText();
+				
+				String Sexo = (String) comboBoxSexo.getSelectedItem();
+				
+				String Telefone = txtTelefone.getText();
+				
+				String Nome_Med = txtNomeDoProfissional.getText();
+				
+				String CRM = txtCRM.getText();
+				
+				String Endereco_Clinica = txtEnderecoClinica.getText();
+				
+				String Exames = txtExamesSolicitados.getText();
+				
+				String Obs = textAreaObservacoes.getText();
+				
+				String Data_Sol = txtDataSolicitacao.getText();
+				
+				Exame.EmitirExame(Nome_Pac, Idade, Endereco_Pac, Sexo, Telefone, Nome_Med, CRM, Endereco_Clinica, Exames, Obs, Data_Sol);
+			}
+		});
 		btnImprimir.setActionCommand("Imprimir");
 		btnImprimir.setForeground(Color.WHITE);
 		btnImprimir.setBorder(null);

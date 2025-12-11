@@ -9,12 +9,11 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class Prontuario {
-	public static void EmitirProntuario(String Idade, String Nome, String Endereco, String Telefone, String Peso, String Altura, String Alergias, String Doencas, String Profissao, String Temperatura, String Pressao, String FreqCardiaca, String Sintomas, String Sexo){
-		
-		String titulo_prontuario = "Prontuario "+ Nome+".pdf";
-		String pasta = "relatorios\\prontuarios\\";
-		String caminho = pasta+titulo_prontuario;
+public class Exame {
+	public static void EmitirExame(String Nome_Pac, String Idade, String Endereco_Pac, String Sexo, String Telefone, String Nome_Med, String CRM, String Endereco_Clinica, String Exames, String Obs, String Data_Sol) {
+		String titulo_solicitacao = "Sol_Exame "+ Nome_Pac+".pdf";
+		String pasta = "relatorios\\sol_exames\\";
+		String caminho = pasta+titulo_solicitacao;
 		
 		 try { 
 			 //Cria a pasta caso ela não exista
@@ -39,17 +38,22 @@ public class Prontuario {
 				documento.add(new Paragraph("Prontuário médico \n"));
 				
 				//adicionando as variáveis ao prontuário
-				documento.add(new Paragraph("Paciente: " + Nome + " ;Data de emissão: __/__/____"));
+				documento.add(new Paragraph("Paciente: " + Nome_Pac));
 				documento.add(new Paragraph("Idade: " + Idade));
 				documento.add(new Paragraph("Telefone: " + Telefone));
-				documento.add(new Paragraph("Peso: " + Peso + "Kg; Altura: " + Altura + "Cm; Sexo: " + Sexo));
-				documento.add(new Paragraph("Alergias: " + Alergias));
-				documento.add(new Paragraph("Comorbidades: " + Doencas));
-				documento.add(new Paragraph("Profissao: " + Profissao));
-				documento.add(new Paragraph("Temperatura: " + Temperatura + "Cº; Pressao Arterial: " + Pressao + "; Frequência Cardíaca: " + FreqCardiaca));
-				documento.add(new Paragraph("Sintomas e queixas: " + Sintomas));
+				documento.add(new Paragraph("Sexo: " + Sexo));
+				documento.add(new Paragraph("Endereço do Paciente: " + Endereco_Pac));
 				
-				documento.add(new Paragraph("Solicitações médicas:____________________________________________________________________________________________________________________ "));
+				
+				documento.add(new Paragraph("Nome do médico solicitante: " + Nome_Med));
+				documento.add(new Paragraph("CRM: " + CRM));
+				documento.add(new Paragraph("Endereço da Clínica: " + Endereco_Clinica));
+				documento.add(new Paragraph("Data da solicitação: " + Data_Sol));
+				documento.add(new Paragraph("Exames Solicitados: " + Exames));
+				documento.add(new Paragraph("Observações adicionais: " + Obs));
+				
+				
+				documento.add(new Paragraph("Ass:____________________________________________________________________________________________________________________ "));
 				
 				
 			} catch (Exception e) {
