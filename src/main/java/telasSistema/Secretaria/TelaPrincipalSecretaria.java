@@ -41,20 +41,16 @@ public class TelaPrincipalSecretaria extends JFrame {
 		JList<String> listOpcoes = new JList<String>();
 		listOpcoes.setBackground(new Color(255, 255, 255));
 		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		listOpcoes.setModel(new AbstractListModel<String>() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			String[] values = new String[] {"Agendar Consulta", "Cancelar Consulta", "Reagendar Consulta", "Cadastrar Novo Paciente"};
+		listOpcoes.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Agendar Consulta", "Cancelar Consulta", "Reagendar Consulta", "Cadastrar Novo Paciente", "Editar dados do Paciente"};
 			public int getSize() {
 				return values.length;
 			}
-			public String getElementAt(int index) {
+			public Object getElementAt(int index) {
 				return values[index];
 			}
 		});
-		listOpcoes.setBounds(186, 136, 349, 113);
+		listOpcoes.setBounds(186, 136, 349, 126);
 		panel.add(listOpcoes);
 		
 		JButton BotaoProximo = new JButton("Proximo");
@@ -95,6 +91,12 @@ public class TelaPrincipalSecretaria extends JFrame {
 					TelaSecretariaCadastrarPaciente telaSecretariaCadastrar = new TelaSecretariaCadastrarPaciente();
 					telaSecretariaCadastrar.setLocationRelativeTo(null);
 					telaSecretariaCadastrar.setVisible(true);
+					 dispose();
+					 
+				case "Editar dados do Paciente":
+					TelaSecretariaEditarPaciente telaSecretariaEditar = new TelaSecretariaEditarPaciente();
+					telaSecretariaEditar.setLocationRelativeTo(null);
+					telaSecretariaEditar.setVisible(true);
 					 dispose();
 					
 					break;
