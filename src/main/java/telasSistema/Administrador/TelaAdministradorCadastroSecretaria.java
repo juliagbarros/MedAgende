@@ -157,10 +157,10 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		addPopup(contentPane, popupMenu);
 		contentPane.setLayout(null);
 		
-		JLabel LabelCadastroUsuarios = new JLabel("Cadastro de Secretária(o)");
-		LabelCadastroUsuarios.setBounds(315, 0, 277, 67);
-		LabelCadastroUsuarios.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
-		contentPane.add(LabelCadastroUsuarios);
+		JLabel labelCadastroUsuarios = new JLabel("Cadastro de Secretária(o)");
+		labelCadastroUsuarios.setBounds(315, 0, 277, 67);
+		labelCadastroUsuarios.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
+		contentPane.add(labelCadastroUsuarios);
 		
 		textNome = new JTextField();
 		textNome.setBounds(21, 142, 206, 20);
@@ -178,30 +178,30 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		contentPane.add(textEmail);
 		textEmail.setColumns(10);
 		
-		JLabel LabelEmail = new JLabel("Digite o Email:");
-		LabelEmail.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelEmail.setBounds(31, 172, 189, 14);
-		contentPane.add(LabelEmail);
+		JLabel labelEmail = new JLabel("Digite o Email:");
+		labelEmail.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelEmail.setBounds(31, 172, 189, 14);
+		contentPane.add(labelEmail);
 		
-		JLabel LabelSENHA = new JLabel("Digite aqui a senha que deseja usar:");
-		LabelSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelSENHA.setBounds(232, 172, 206, 14);
-		contentPane.add(LabelSENHA);
+		JLabel labelSENHA = new JLabel("Digite aqui a senha que deseja usar:");
+		labelSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelSENHA.setBounds(232, 172, 206, 14);
+		contentPane.add(labelSENHA);
 		
-		JLabel LabelCPF = new JLabel("CPF:");
-		LabelCPF.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelCPF.setBounds(260, 118, 154, 14);
-		contentPane.add(LabelCPF);
+		JLabel labelCPF = new JLabel("CPF:");
+		labelCPF.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelCPF.setBounds(260, 118, 154, 14);
+		contentPane.add(labelCPF);
 		
-		JLabel LabelNome = new JLabel("Nome Completo:");
-		LabelNome.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelNome.setBounds(21, 118, 206, 14);
-		contentPane.add(LabelNome);
+		JLabel labelNome = new JLabel("Nome Completo:");
+		labelNome.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelNome.setBounds(21, 118, 206, 14);
+		contentPane.add(labelNome);
 		
-		JLabel LabelDataNascimento = new JLabel("Insira a Data de Nascimento:");
-		LabelDataNascimento.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelDataNascimento.setBounds(438, 118, 167, 14);
-		contentPane.add(LabelDataNascimento);
+		JLabel labelDataNascimento = new JLabel("Insira a Data de Nascimento:");
+		labelDataNascimento.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelDataNascimento.setBounds(438, 118, 167, 14);
+		contentPane.add(labelDataNascimento);
         
         // --- JCALENDAR ---
         textDataNascimento = new JDateChooser();
@@ -214,10 +214,10 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		textConfirmarSenha.setBounds(457, 198, 135, 20);
 		contentPane.add(textConfirmarSenha);
 		
-		JLabel LabelCONFIRMARSENHA = new JLabel("Confirme a senha:");
-		LabelCONFIRMARSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		LabelCONFIRMARSENHA.setBounds(468, 172, 124, 14);
-		contentPane.add(LabelCONFIRMARSENHA);
+		JLabel labelCONFIRMARSENHA = new JLabel("Confirme a senha:");
+		labelCONFIRMARSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
+		labelCONFIRMARSENHA.setBounds(468, 172, 124, 14);
+		contentPane.add(labelCONFIRMARSENHA);
 		
 		// configuração dos novos componentes 
 		lblStrengthFeedbackNIVELSENHA = new JLabel("Nível da Senha:");
@@ -372,8 +372,13 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
     	u.setNome(textNome.getText());
     	u.setEmail(textEmail.getText());
     	u.setCPF(textCPF.getText());
-    	 u.setSenha(new String(textSenha.getPassword()));
-    	u.setDataNasc(textDataNascimento.getDate());
+    	u.setSenha(new String(textSenha.getPassword()));
+    	Date data = textDataNascimento.getDate();
+    	if (data == null) {
+    	    JOptionPane.showMessageDialog(null, "Data de nascimento inválida");
+    	    return;
+    	}
+    	u.setDataNasc(data);
     	u.setBairro(textBairro.getText());
     	u.setCep(textCEP.getText());
     	u.setCidade(textMunicipio.getText());
@@ -383,9 +388,14 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
     	u.setTelefone(textTelefone.getText());
     	u.setServico("Secretária");
     	
-    	dao.create(u);
-    	
-    	
+    	try {
+    	    dao.create(u);
+    	    JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
+    	} 
+    	catch (Exception e) {
+    	    JOptionPane.showMessageDialog(null, 
+    	        "Erro ao cadastrar usuário: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+    	}
     	
         String mensagem = "";
         int camposEmBranco = 0;
@@ -440,8 +450,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         }
  
         }
-
-    
     /**
      * Método para abrir a tela de login
      */
@@ -620,6 +628,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
                     return viaCEPResponse;
                     
                 } catch (Exception e) {
+                	e.printStackTrace();
                     return null;
                 }
             }
@@ -679,5 +688,3 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		});
 	}
 }
-
-

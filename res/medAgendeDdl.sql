@@ -81,8 +81,12 @@ INSERT INTO `especialidades` (`Id_Especialidade`, `Nome_Especialidade`) VALUES
 (6, 'Psiquiatra');
 
 -- --------------------------------------------------------
-
+-- Despejando dados para tabela 'especialidades'
 --
+INSERT INTO `especialidades`(`Nome_Especialidade`) VALUES ('Alergista e Imunologista'), ('Angiologista'), ('Clínica Médica'), ('Endocrinologista e Metabologista'),
+ ('Endoscopista'), ('Geriatrista'), ('Ginecologista e Obstreticista'), ('Neurologista'), ('Nutrologista'), ('Oftalmologista'), ('Pediatra')
+
+-- ----------------------------------------------------------
 -- Estrutura para tabela `medico`
 --
 

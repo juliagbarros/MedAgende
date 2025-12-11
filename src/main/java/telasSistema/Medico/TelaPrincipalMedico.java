@@ -120,6 +120,13 @@ public class TelaPrincipalMedico extends JFrame {
 		contentPane.add(btnPrximo);
 		
 		JButton btnAgenda = new JButton("Configurar agenda");
+		btnAgenda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInserirAgenda telainseriragenda = new TelaInserirAgenda();
+				telainseriragenda.setVisible(true);
+				dispose();
+			}
+		});
 		btnAgenda.setBounds(449, 277, 155, 62);
 		contentPane.add(btnAgenda);
 
