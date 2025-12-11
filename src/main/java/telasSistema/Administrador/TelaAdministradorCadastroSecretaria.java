@@ -30,6 +30,8 @@ import javax.swing.Timer;
 import java.awt.Cursor;
 import javax.swing.SwingWorker;
 import javax.swing.SwingUtilities;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.MaskFormatter;
 
 // IMPORTAÇÕES PARA API DOS CORREIOS
 import com.google.gson.Gson;
@@ -98,7 +100,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textNome;
-	private JTextField textCPF;
+	private JFormattedTextField textCPF;
 	private JTextField textEmail;
 	private JPasswordField textConfirmarSenha;
 	private JDateChooser textDataNascimento;
@@ -167,11 +169,20 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		contentPane.add(textNome);
 		textNome.setColumns(10);
 		
-		textCPF = new JTextField();
-		textCPF.setBounds(279, 142, 86, 20);
-		contentPane.add(textCPF);
-		textCPF.setColumns(10);
-		
+        MaskFormatter maskCpf = null;
+        
+        try {
+            maskCpf = new MaskFormatter("###.###.###-##");
+            maskCpf.setPlaceholderCharacter('_');
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        textCPF = new JFormattedTextField(maskCpf);
+        textCPF.setBounds(279, 142, 100, 25);
+        contentPane.add(textCPF);
+        textCPF.setColumns(10);
+        
 		textEmail = new JTextField();
 		textEmail.setToolTipText("Ex: costelinha123@gmail.com...");
 		textEmail.setBounds(21, 198, 206, 20);
@@ -404,7 +415,8 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             camposEmBranco++;
             mensagem += "Nome\n";
         }
-        if (textCPF.getText().trim().isEmpty()) {
+        String cpf = textCPF.getText().replaceAll("\\D", "");
+        if (cpf.isEmpty()) {
             camposEmBranco++;
             mensagem += "CPF\n";
         }

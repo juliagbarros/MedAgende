@@ -180,6 +180,7 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         FieldNome.setColumns(10);
         
         MaskFormatter maskCpf = null;
+
         try {
             maskCpf = new MaskFormatter("###.###.###-##");
             maskCpf.setPlaceholderCharacter('_');
@@ -187,8 +188,7 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
             e.printStackTrace();
         }
 
-        FieldCpf = new JFormattedTextField();
-        FieldCpf.setText("");
+        FieldCpf = new JFormattedTextField(maskCpf);
         FieldCpf.setBounds(281, 140, 100, 25);
         contentPane.add(FieldCpf);
         FieldCpf.setColumns(10);
