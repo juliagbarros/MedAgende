@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import telasSistema.Secretaria.TelaSecretariaEditarPaciente;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -65,12 +68,19 @@ public class TelaAdminEditarUsuarios extends JFrame {
 		lblNewLabel.setBounds(50, 139, 160, 158);
 		panel.add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Editar Paciente");
-		btnNewButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton.setToolTipText("");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton.setBounds(39, 132, 178, 186);
-		panel.add(btnNewButton);
+		JButton btnEditarPaciente = new JButton("Editar Paciente");
+		btnEditarPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaSecretariaEditarPaciente telaSecretariaEditarPaciente = new TelaSecretariaEditarPaciente();
+				telaSecretariaEditarPaciente.setVisible(true);
+				dispose();
+			}
+		});
+		btnEditarPaciente.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnEditarPaciente.setToolTipText("");
+		btnEditarPaciente.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnEditarPaciente.setBounds(39, 132, 178, 186);
+		panel.add(btnEditarPaciente);
 		
 		JButton btnNewButton_1 = new JButton("Editar Médico");
 		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
