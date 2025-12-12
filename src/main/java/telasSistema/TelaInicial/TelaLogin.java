@@ -25,7 +25,6 @@ import conexao.ConnectionFactory;
 import telasSistema.Administrador.TelaPrincipalAdministrador;
 import telasSistema.Medico.TelaPrincipalMedico;
 import telasSistema.Secretaria.TelaPrincipalSecretaria;
-import Back.Crypto;
 
 public class TelaLogin extends JFrame {
 

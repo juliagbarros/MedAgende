@@ -35,22 +35,22 @@ public class TelaPrincipalAdministrador extends JFrame {
 		
 		JLabel lblBoasVindas = new JLabel("Bem-Vindo(a)! O que deseja fazer?");
 		lblBoasVindas.setFont(new Font("Segoe UI", Font.BOLD, 24));
-		lblBoasVindas.setBounds(110, 21, 511, 54);
+		lblBoasVindas.setBounds(161, 21, 511, 54);
 		panel.add(lblBoasVindas);
 		
 		JList<String> listOpcoes = new JList<String>();
-		listOpcoes.setBackground(new Color(255, 255, 255));
-		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		listOpcoes.setModel(new AbstractListModel<String>() {
-			String[] values = new String[] {"Gestão de usuários", "Configuração de horários e funcionamento", "Cadastro de especialidades", "Cadastro de Secretária(o)", "Cadastro de médicos", "Relatórios", "Auditoria e Registro"};
+		listOpcoes.setBackground(new Color(240, 240, 240));
+		listOpcoes.setFont(new Font("Trebuchet MS", Font.PLAIN, 27));
+		listOpcoes.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Gestão de usuários", "Configuração de horários e funcionamento", "Cadastro de Secretária(o)", "Cadastro de médicos"};
 			public int getSize() {
 				return values.length;
 			}
-			public String getElementAt(int index) {
+			public Object getElementAt(int index) {
 				return values[index];
 			}
 		});
-		listOpcoes.setBounds(194, 109, 349, 184);
+		listOpcoes.setBounds(138, 110, 516, 184);
 		panel.add(listOpcoes);
 		
 		JButton BotaoProximo = new JButton("Proximo");
@@ -64,39 +64,34 @@ public class TelaPrincipalAdministrador extends JFrame {
 				
 				switch (opcaoSelecionada) {
 				case "Gestão de usuários":
-					new TelaAdministradorGestaoUsuarios().setVisible(true);
+					
+					TelaAdministradorGestaoUsuarios tela=new TelaAdministradorGestaoUsuarios();
+					tela.setVisible(true);
+					tela.setLocationRelativeTo(null);
 					dispose();
 					break;
 					
 				case "Configuração de horários e funcionamento":
-					new TelaAdministradorConfigHorarios().setVisible(true);
-					dispose();
-					break;
-					
-				case "Cadastro de especialidades":
-					new TelaAdminAdicionarEspecialidade().setVisible(true);
+					TelaAdministradorConfigHorarios tela2 = new TelaAdministradorConfigHorarios();
+					tela2.setVisible(true);
+					tela2.setLocationRelativeTo(null);
 					dispose();
 					break;
 				
 				case "Cadastro de Secretária(o)":
-					new TelaAdministradorCadastroSecretaria().setVisible(true);
+					TelaAdministradorCadastroSecretaria tela3=new TelaAdministradorCadastroSecretaria();
+					tela3.setVisible(true);
+					tela3.setLocationRelativeTo(null);
 					dispose();
 					break;
 				
 				case "Cadastro de médicos":
-				new TelaAdministradorCadastroMedicos().setVisible(true);
-				dispose();
+					TelaAdministradorCadastrarMedicosDados tela4 = new TelaAdministradorCadastrarMedicosDados();
+					tela4.setVisible(true);
+					tela4.setLocationRelativeTo(null);
+					dispose();
 				break;
 	
-				case "Relatórios":
-					new TelaAdministradorRelatorios().setVisible(true);
-					dispose();
-					break;
-					
-				case "Auditoria e Registro":
-					new TelaAdministradorAuditoria().setVisible(true);
-					dispose();
-					break;
 				}
 			
 			}

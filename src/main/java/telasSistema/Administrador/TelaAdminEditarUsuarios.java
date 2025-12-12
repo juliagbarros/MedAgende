@@ -11,6 +11,8 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaAdminEditarUsuarios extends JFrame {
 
@@ -91,6 +93,23 @@ public class TelaAdminEditarUsuarios extends JFrame {
 		lblNewLabel_3.setFont(new Font("Trebuchet MS", Font.PLAIN, 25));
 		lblNewLabel_3.setBounds(279, 81, 243, 31);
 		panel.add(lblNewLabel_3);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAdministradorGestaoUsuarios tela=new TelaAdministradorGestaoUsuarios();
+				tela.setVisible(true);
+				tela.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
+		btnVoltar.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
+		btnVoltar.setBounds(54, 350, 96, 31);
+		panel.add(btnVoltar);
+		
+		JButton btnProximo = new JButton("Próximo");
+		btnProximo.setBounds(567, 350, 96, 31);
+		panel.add(btnProximo);
 
 
 	}

@@ -178,7 +178,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             e.printStackTrace();
         }
 
-        textCPF = new JFormattedTextField(maskCpf);
+        textCPF = new JFormattedTextField();
         textCPF.setBounds(279, 142, 100, 25);
         contentPane.add(textCPF);
         textCPF.setColumns(10);

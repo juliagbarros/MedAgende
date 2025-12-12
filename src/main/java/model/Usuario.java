@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Date;
-import Back.Crypto;
 
 public class Usuario {
 	
@@ -40,7 +39,15 @@ public class Usuario {
 	        this.cep = cep;
 	        this.telefone=telefone;
 	    }
-	    public int getIdUsuario() {
+	    public void setSenha(String senha) {
+			this.senha = senha;
+		}
+
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
+
+		public int getIdUsuario() {
 	        return idUsuario;
 	    }
 	    
@@ -60,13 +67,7 @@ public class Usuario {
 			return senha;
 		}
 		
-		public void setSenha (String senha) {
-			this.senha=senha;
-			Crypto crypto = new Crypto();
-			crypto.gerarHashBCrypt(senha);
-			senha = crypto.getHash();
-		}
-	    
+		
 	   
 	    public String getNome() {
 	        return nome;

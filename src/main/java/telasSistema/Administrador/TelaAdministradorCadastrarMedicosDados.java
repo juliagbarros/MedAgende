@@ -141,7 +141,7 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
             e.printStackTrace();
         }
 
-        FieldCpf = new JFormattedTextField(maskCpf);
+        FieldCpf = new JFormattedTextField();
         FieldCpf.setBounds(281, 140, 100, 25);
         contentPane.add(FieldCpf);
         FieldCpf.setColumns(10);
@@ -226,7 +226,8 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TelaAdministradorCadastroMedicos tela = new TelaAdministradorCadastroMedicos();
+                TelaPrincipalAdministrador tela = new TelaPrincipalAdministrador();
+               tela.setLocationRelativeTo(null);
                 tela.setVisible(true);
                 dispose();
             }
