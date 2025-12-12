@@ -36,53 +36,8 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 		
 		JButton btnAtivarDestivar = new JButton("Ativar/Desativar Usuários do Sistema");
 		btnAtivarDestivar.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnAtivarDestivar.setBounds(212, 74, 266, 48);
+		btnAtivarDestivar.setBounds(212, 91, 266, 70);
 		panel.add(btnAtivarDestivar);
-		
-		JButton btnDefinirPermissesDe = new JButton("Definir Permissões de Acesso");
-		btnDefinirPermissesDe.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnDefinirPermissesDe.setBounds(212, 196, 266, 49);
-		panel.add(btnDefinirPermissesDe);
-		
-		JButton btnEditarDadosDe = new JButton("Editar dados de usuários existentes");
-		btnEditarDadosDe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaAdminEdicaoUsuario frame = new TelaAdminEdicaoUsuario();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		btnEditarDadosDe.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnEditarDadosDe.setBounds(212, 132, 266, 54);
-		panel.add(btnEditarDadosDe);
-		
-		JButton btnRedefinirSenhaDos = new JButton("Redefinir senha dos usuários");
-		btnRedefinirSenhaDos.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaAdminRedefinirSenha frame = new TelaAdminRedefinirSenha();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
-		btnRedefinirSenhaDos.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnRedefinirSenhaDos.setBounds(212, 321, 266, 48);
-		panel.add(btnRedefinirSenhaDos);
-		
-		JButton btnGestoDeEspecialidades = new JButton("Gestão de Especialidades");
-		btnGestoDeEspecialidades.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnGestoDeEspecialidades.setBounds(212, 256, 266, 49);
-		panel.add(btnGestoDeEspecialidades);
-		
-		btnGestoDeEspecialidades.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaAdminCadastroEspecialidades frame = new TelaAdminCadastroEspecialidades();
-				frame.setLocationRelativeTo(null);
-				frame.setVisible(true);
-				dispose();
-			}
-		});
 		
 		
 		
@@ -103,6 +58,22 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 		btnPrximo.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
 		btnPrximo.setBounds(488, 375, 126, 32);
 		panel.add(btnPrximo);
+		
+		JButton btnEditarUsuarios = new JButton("Editar Usuarios");
+		btnEditarUsuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAdminEditarUsuarios tela=new TelaAdminEditarUsuarios();
+				tela.setVisible(true);
+				tela.setLocationRelativeTo(null);
+				dispose();
+			}
+		});
+		btnEditarUsuarios.setBounds(212, 187, 266, 70);
+		panel.add(btnEditarUsuarios);
+		
+		JButton btnExcluirUsuarios = new JButton("Excluir Usuarios");
+		btnExcluirUsuarios.setBounds(212, 295, 266, 63);
+		panel.add(btnExcluirUsuarios);
 		
 
 	}
