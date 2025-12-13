@@ -97,5 +97,12 @@
     	<artifactId>itextpdf</artifactId>
     	<version>5.5.13.4</version>
 	</dependency>
+
+<!-- bcrypt para hashing de senhas -->
+<dependency>
+    <groupId>org.mindrot</groupId>
+    <artifactId>jbcrypt</artifactId>
+    <version>0.4</version>
+</dependency>
  </dependencies>
 </project>
