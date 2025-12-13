@@ -24,11 +24,37 @@ public class Médico {
 
             con.commit();
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
+           con.rollback();
+           throw e;
+        } 
+        finally {
+            con.setAutoCommit(true);
+        }
+    }
+    public void deletarMedico(int id) throws Exception {
+
+        Connection con = ConnectionFactory.getConnection();
+
+        try {
+            con.setAutoCommit(false);
+
+            MedicoDAO medicoDAO = new MedicoDAO();
+            medicoDAO.deletarMedico(con, id);
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            usuarioDAO.deletarUsuario(con, id);
+
+            con.commit();
+
+        } 
+        catch (Exception e) {
             con.rollback();
             throw e;
-        } finally {
-            con.setAutoCommit(true);
+        } 
+        finally {
+           con.setAutoCommit(true);
         }
     }
 }
