@@ -3,6 +3,8 @@ package conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class ConnectionFactory {
 
@@ -28,5 +30,38 @@ public class ConnectionFactory {
             System.out.println("Driver JDBC não encontrado!");
             throw new RuntimeException(e);
         }
+    }
+
+    // Utilitários para fechar recursos
+    public static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.err.println("Erro fechando Connection: " + e.getMessage());
+            }
+        }
+    }
+
+    public static void closeConnection(Connection conn, PreparedStatement stmt) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                System.err.println("Erro fechando PreparedStatement: " + e.getMessage());
+            }
+        }
+        closeConnection(conn);
+    }
+
+    public static void closeConnection(Connection conn, PreparedStatement stmt, ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                System.err.println("Erro fechando ResultSet: " + e.getMessage());
+            }
+        }
+        closeConnection(conn, stmt);
     }
 }
