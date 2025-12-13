@@ -41,6 +41,9 @@ public class TelaAdminEditarUsuarios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	/**
+	 * 
+	 */
 	public TelaAdminEditarUsuarios() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 742, 454);
@@ -82,11 +85,19 @@ public class TelaAdminEditarUsuarios extends JFrame {
 		btnEditarPaciente.setBounds(39, 132, 178, 186);
 		panel.add(btnEditarPaciente);
 		
-		JButton btnNewButton_1 = new JButton("Editar Médico");
-		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton_1.setBounds(267, 132, 178, 186);
-		panel.add(btnNewButton_1);
+		JButton btnEditarMedico = new JButton("Editar Médico");
+		btnEditarMedico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAdministradorEditarMedico telaAdministradorEditarMedico = new TelaAdministradorEditarMedico();
+				telaAdministradorEditarMedico.setVisible(true);
+				dispose();
+			}
+		}
+				);
+		btnEditarMedico.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnEditarMedico.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnEditarMedico.setBounds(267, 132, 178, 186);
+		panel.add(btnEditarMedico);
 		
 		JButton btnNewButton_2 = new JButton("Editar Secretaria");
 		btnNewButton_2.setVerticalAlignment(SwingConstants.BOTTOM);
