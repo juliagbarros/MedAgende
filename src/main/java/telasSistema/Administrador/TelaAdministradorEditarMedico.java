@@ -17,7 +17,11 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.JOptionPane;
 import com.toedter.calendar.JDateChooser;
+import Back.Usuarios;
+import Back.Médico;
+import model.Usuario;
 
 import telasSistema.Secretaria.TelaSecretariaAgendar;
 
@@ -44,6 +48,8 @@ public class TelaAdministradorEditarMedico extends JFrame {
     private JTextField FieldPlanoSaude;
     private JComboBox<String> BoxEspecialidades;
     private JDateChooser dcDataNascimento;
+    private Usuario usuarioAtual;
+
 
     /**
      * Launch the application.
@@ -106,10 +112,35 @@ public class TelaAdministradorEditarMedico extends JFrame {
         btnBuscarCPF.setBounds(502, 98, 90, 25);
         btnBuscarCPF.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
+                try {
+                    String cpf = FieldCpf.getText().replace(".", "").replace("-", "");
+                    Usuarios usuarios = new Usuarios();
+                    usuarioAtual = usuarios.buscarUsuarioPorCpf(cpf);
+
+                    if (usuarioAtual == null) {
+                        JOptionPane.showMessageDialog(null, "Usuário não encontrado");
+                        return;
+                    }
+
+                    FieldNome.setText(usuarioAtual.getNome());
+                    FieldEmail.setText(usuarioAtual.getEmail());
+                    FieldTelefone.setText(usuarioAtual.getTelefone());
+                    FieldRua.setText(usuarioAtual.getRua());
+                    FieldBairro.setText(usuarioAtual.getBairro());
+                    FieldMunicipio.setText(usuarioAtual.getCidade());
+                    FieldCep.setText(usuarioAtual.getCep());
+                    dcDataNascimento.setDate(usuarioAtual.getDataNasc());
+
+                    JOptionPane.showMessageDialog(null, "Usuário carregado com sucesso");
+
+                } catch (Exception er) {
+                    JOptionPane.showMessageDialog(null, "Erro ao buscar usuário");
+                    er.printStackTrace();
+                }
             }
         });
         contentPane.add(btnBuscarCPF);
+
 
         // --- DADOS PESSOAIS ---
         
@@ -312,10 +343,38 @@ public class TelaAdministradorEditarMedico extends JFrame {
         JButton btnAtualizar = new JButton("Atualizar");
         btnAtualizar.setFont(new Font("Trebuchet MS", Font.BOLD, 12));
         btnAtualizar.setForeground(Color.BLACK);
-        btnAtualizar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        btnAtualizar.addActionListener(e -> {
+            if (usuarioAtual == null) {
+                JOptionPane.showMessageDialog(this, "Busque um médico pelo CPF primeiro!");
+                return;
+            }
+
+            try {
+               
+                usuarioAtual.setNome(FieldNome.getText());
+                usuarioAtual.setEmail(FieldEmail.getText());
+                usuarioAtual.setTelefone(FieldTelefone.getText());
+                usuarioAtual.setRua(FieldRua.getText());
+                usuarioAtual.setBairro(FieldBairro.getText());
+                usuarioAtual.setCidade(FieldMunicipio.getText());
+                usuarioAtual.setCep(FieldCep.getText());
+                usuarioAtual.setDataNasc(dcDataNascimento.getDate());
+
+                String crm = FieldCrm.getText();
+                String rqe = FieldRqe.getText();
+                int especialidade = BoxEspecialidades.getSelectedIndex();
+
+                Médico med = new Médico();
+                med.editarMedico(usuarioAtual, crm, rqe, especialidade);
+
+                JOptionPane.showMessageDialog(this, "Médico atualizado");
+
+            } catch (Exception er) {
+                JOptionPane.showMessageDialog(this, "Erro ao atualizar o médicoo");
+                er.printStackTrace();
             }
         });
+
         btnAtualizar.setBounds(678, 459, 145, 35);
         contentPane.add(btnAtualizar);
 
