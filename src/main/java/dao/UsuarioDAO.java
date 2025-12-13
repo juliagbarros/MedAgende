@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import conexao.ConnectionFactory;
 import model.Usuario;
+import Back.Crypto;
 
 
 public class UsuarioDAO {
@@ -17,7 +18,19 @@ public class UsuarioDAO {
 		PreparedStatement stmt = null;
 		
 		try {
-			stmt = con.prepareStatement("INSERT INTO usuarios (Email, Senha, Nome, CPF, Data_Nasc, Bairro, Rua, Num_Casa, Cidade, Servíco, Plano_De_Saude, CEP, Telefone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)");
+			// Garantir que a senha esteja em hash bcrypt antes de gravar
+			if (u.getSenha() != null) {
+				String s = u.getSenha();
+				boolean looksLikeBcrypt = s.startsWith("$2a$") || s.startsWith("$2b$") || s.startsWith("$2y$");
+				if (!looksLikeBcrypt) {
+					Crypto crypto = new Crypto();
+					String hashed = crypto.gerarHashBCrypt(s);
+					// armazena o hash diretamente no objeto para evitar re-hash posterior
+					u.setSenhaHash(hashed);
+				}
+			}
+			
+			stmt = con.prepareStatement("INSERT INTO usuarios (Email, Senha, Nome, CPF, Data_Nasc, Bairro, Rua, Num_Casa, Cidade, Servíço, Plano_De_Saude, CEP, Telefone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)");
 		        stmt.setString(1, u.getEmail());
 		        stmt.setString(2, u.getSenha());
 		        stmt.setString(3, u.getNome());
@@ -41,12 +54,10 @@ public class UsuarioDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
 			
 			e.printStackTrace();
-		}
+		} 
 		finally {
 			ConnectionFactory.closeConnection(con,stmt);
 		}
 	}
 
 }
-
-
