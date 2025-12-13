@@ -37,6 +37,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import telasSistema.TelaInicial.TelaLogin;
 
+// import Crypto
+import Back.Crypto;
+
 public class TelaAdministradorCadastrarMedicosDados extends JFrame {
 
     // Enum para definir os níveis de força
@@ -93,7 +96,7 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         public boolean temErro() { return erro; }
         public void setErro(boolean erro) { this.erro = erro; }
     }
-
+    private static final Crypto crypto = new Crypto();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textNome;
