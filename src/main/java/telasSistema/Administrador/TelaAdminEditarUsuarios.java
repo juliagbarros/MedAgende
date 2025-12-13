@@ -92,18 +92,24 @@ public class TelaAdminEditarUsuarios extends JFrame {
 				telaAdministradorEditarMedico.setVisible(true);
 				dispose();
 			}
-		}
-				);
+		});
 		btnEditarMedico.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnEditarMedico.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnEditarMedico.setBounds(267, 132, 178, 186);
 		panel.add(btnEditarMedico);
 		
-		JButton btnNewButton_2 = new JButton("Editar Secretaria");
-		btnNewButton_2.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton_2.setBounds(493, 132, 186, 186);
-		panel.add(btnNewButton_2);
+		JButton btnEditarSecretaria = new JButton("Editar Secretaria");
+		btnEditarSecretaria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAdministradorEditarSecretaria telaAdministradorEditarSecretaria = new TelaAdministradorEditarSecretaria();
+				telaAdministradorEditarSecretaria.setVisible(true);
+				dispose();
+			}
+		});
+		btnEditarSecretaria.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnEditarSecretaria.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnEditarSecretaria.setBounds(493, 132, 186, 186);
+		panel.add(btnEditarSecretaria);
 		
 		JLabel lblTitulo = new JLabel("Edição de Usuarios");
 		lblTitulo.setFont(new Font("Trebuchet MS", Font.PLAIN, 37));
