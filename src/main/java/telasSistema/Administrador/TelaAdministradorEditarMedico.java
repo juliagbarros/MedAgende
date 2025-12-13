@@ -5,25 +5,27 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
-import javax.swing.JOptionPane;
-import com.toedter.calendar.JDateChooser;
-import Back.Usuarios;
-import Back.Médico;
-import model.Usuario;
 
-import telasSistema.Secretaria.TelaSecretariaAgendar;
+import com.toedter.calendar.JDateChooser;
+
+import Back.Médico;
+import Back.Usuarios;
+import dao.EspecialidadeDAO;
+import model.Usuario;
 
 public class TelaAdministradorEditarMedico extends JFrame {
 
@@ -71,7 +73,13 @@ public class TelaAdministradorEditarMedico extends JFrame {
     /**
      * Create the frame.
      */
+    
+
+    
     public TelaAdministradorEditarMedico() {
+    	
+        
+    	
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 888, 550);
         contentPane = new JPanel();
@@ -224,16 +232,14 @@ public class TelaAdministradorEditarMedico extends JFrame {
         FieldPlanoSaude.setColumns(10);
 
         // Especialidade
+        DefaultComboBoxModel<String> modeloespecialidades = EspecialidadeDAO.getespecialidades();
         JLabel lblEsp = new JLabel("Especialidade:");
         lblEsp.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
         lblEsp.setBounds(21, 308, 100, 14);
         contentPane.add(lblEsp);
 
         BoxEspecialidades = new JComboBox<>();
-        BoxEspecialidades.setModel(new DefaultComboBoxModel<>(new String[] {
-            "Ortopedista", "Cardiologista", "Dermatologista", 
-            "Urologista", "Neurologista", "Psiquiatra"
-        }));
+        BoxEspecialidades.setModel(modeloespecialidades);
         BoxEspecialidades.setBounds(21, 329, 206, 22);
         contentPane.add(BoxEspecialidades);
 
@@ -363,6 +369,8 @@ public class TelaAdministradorEditarMedico extends JFrame {
                 String crm = FieldCrm.getText();
                 String rqe = FieldRqe.getText();
                 int especialidade = BoxEspecialidades.getSelectedIndex();
+                //gambiarra +1
+                especialidade += 1;
 
                 Médico med = new Médico();
                 med.editarMedico(usuarioAtual, crm, rqe, especialidade);

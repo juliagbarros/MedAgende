@@ -27,6 +27,7 @@ import javax.swing.event.DocumentListener;
 import com.toedter.calendar.JDateChooser;
 
 import conexao.ConnectionFactory;
+import dao.EspecialidadeDAO;
 
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -339,11 +340,9 @@ public class TelaAdministradorCadastrarMedicosDados extends JFrame {
         lblRQE.setBounds(257, 314, 46, 14);
         contentPane.add(lblRQE);
         
+        DefaultComboBoxModel<String> modeloespecialidades = EspecialidadeDAO.getespecialidades();
         BoxEspecialidades = new JComboBox<>();
-        BoxEspecialidades.setModel(new DefaultComboBoxModel<>(new String[] {
-            "Ortopedista", "Cardiologista", "Dermatologista", 
-            "Urologista", "Neurologista", "Psiquiatra"
-        }));
+        BoxEspecialidades.setModel(modeloespecialidades);
         BoxEspecialidades.setForeground(new Color(0, 0, 0));
         BoxEspecialidades.setToolTipText("");
         BoxEspecialidades.setBounds(21, 340, 206, 22);
