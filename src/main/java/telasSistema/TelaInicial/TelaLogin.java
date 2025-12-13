@@ -202,20 +202,22 @@ public class TelaLogin extends JFrame {
 			
 			if (rs.next()) {
 				//obtem o conteudo do campo pefil
-				
+				String nome = rs.getString(4);
 				String serviço = rs.getString(11);
 				if (serviço.equals("Secretária")){
-					JOptionPane.showMessageDialog(null, "Secretaria  cadastrada	");
+					JOptionPane.showMessageDialog(null, "Bem vindo(a) "+nome);
 					TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
 					dispose();
 				}else if (serviço.equals("Administrador")) {
+					JOptionPane.showMessageDialog(null, "Bem vindo(a) "+nome);
 					TelaPrincipalAdministrador tela = new TelaPrincipalAdministrador();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
 					dispose();
 				}else if (serviço.equals("Médico")) {
+					JOptionPane.showMessageDialog(null, "Bem vindo(a) Doutor(a) "+nome);
 					TelaPrincipalMedico tela = new TelaPrincipalMedico();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
