@@ -38,7 +38,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class TelaAdministradorCadastroUsuarios extends JFrame {
+public class TelaAdministradorCadastroSecretaria extends JFrame {
 
     // Enum para definir os níveis de força
     private enum PasswordStrength {
@@ -127,7 +127,7 @@ public class TelaAdministradorCadastroUsuarios extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaAdministradorCadastroUsuarios frame = new TelaAdministradorCadastroUsuarios();
+					TelaAdministradorCadastroSecretaria frame = new TelaAdministradorCadastroSecretaria();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -140,7 +140,7 @@ public class TelaAdministradorCadastroUsuarios extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaAdministradorCadastroUsuarios() {
+	public TelaAdministradorCadastroSecretaria() {
 		// INICIALIZA AS BIBLIOTECAS DA API
 		httpClient = new OkHttpClient();
 		gson = new Gson();
@@ -632,7 +632,7 @@ public class TelaAdministradorCadastroUsuarios extends JFrame {
                     ViaCEPResponse endereco = get();
                     
                     if (endereco == null || endereco.temErro()) {
-                        JOptionPane.showMessageDialog(TelaAdministradorCadastroUsuarios.this, 
+                        JOptionPane.showMessageDialog(TelaAdministradorCadastroSecretaria.this, 
                             "CEP não encontrado!\nVerifique o CEP digitado.", 
                             "CEP não encontrado", 
                             JOptionPane.ERROR_MESSAGE);
@@ -650,7 +650,7 @@ public class TelaAdministradorCadastroUsuarios extends JFrame {
                     });
                     
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(TelaAdministradorCadastroUsuarios.this,
+                    JOptionPane.showMessageDialog(TelaAdministradorCadastroSecretaria.this,
                         "Erro na consulta ao CEP: " + e.getMessage(),
                         "Erro na Consulta",
                         JOptionPane.ERROR_MESSAGE);
@@ -679,5 +679,3 @@ public class TelaAdministradorCadastroUsuarios extends JFrame {
 		});
 	}
 }
-
-
