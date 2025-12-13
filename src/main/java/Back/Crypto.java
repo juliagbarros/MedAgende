@@ -7,9 +7,24 @@ public class Crypto {
 	private String hash;
 	public Crypto() {
 	}
-	public final void gerarHashBCrypt(String senha) {
-		senha = getSenha();
-		setHash(BCrypt.hashpw(senha, BCrypt.gensalt()));
+	// Gera o hash para a senha fornecida, armazena internamente e retorna o hash
+	public final String gerarHashBCrypt(String senha) {
+		// usar o parâmetro recebido (não sobrescrever com getSenha())
+		setSenha(senha);
+		String generated = BCrypt.hashpw(senha, BCrypt.gensalt());
+		setHash(generated);
+		return generated;
+	}
+	
+	// Verifica se a senha em texto claro corresponde ao hash armazenado ou fornecido
+	public final boolean verificarHashBCrypt(String senha, String hash) {
+		if (senha == null || hash == null) return false;
+		try {
+			return BCrypt.checkpw(senha, hash);
+		} catch (IllegalArgumentException e) {
+			// hash malformado -> falha na verificação
+			return false;
+		}
 	}
 	
 	public final void pprint(String ttext) {
