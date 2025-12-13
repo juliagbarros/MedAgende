@@ -27,7 +27,8 @@ public class Usuario {
 	                   String rua, String numCasa, String cidade, String servico, 
 	                   String planoDeSaude, String cep, String telefone) {
 	        this.email = email;
-	        this.senha=senha;
+	        // usar setSenha para armazenar o hash da senha
+	        this.setSenha(senha);
 	        this.nome = nome;
 	        this.cpf=cpf;
 	        this.dataNasc = dataNasc;
@@ -56,16 +57,25 @@ public class Usuario {
 	        this.email = email;
 	    }
 	    
-		public String getSenha() {
-			return senha;
+	public String getSenha() {
+		return senha;
+	}
+	
+	// Ao definir a senha, armazenamos o hash retornado por Crypto
+	public void setSenha (String senha) {
+		if (senha == null) {
+			this.senha = null;
+			return;
 		}
-		
-		public void setSenha (String senha) {
-			this.senha=senha;
-			Crypto crypto = new Crypto();
-			crypto.gerarHashBCrypt(senha);
-			senha = crypto.getHash();
-		}
+		Crypto crypto = new Crypto();
+		String hashed = crypto.gerarHashBCrypt(senha);
+		this.senha = hashed;
+	}
+
+	// Permite atribuir diretamente o hash vindo do banco (evita re-hash)
+	public void setSenhaHash(String hash) {
+		this.senha = hash;
+	}
 	    
 	   
 	    public String getNome() {
@@ -76,96 +86,100 @@ public class Usuario {
 	        this.nome = nome;
 	    }
 	    
-		public String getCpf() {
-			return cpf;
-		}
-		
-		public void setCPF (String cpf) {
-			this.cpf=cpf;
-		}
-
-
-	    public Date getDataNasc() {
-	        return dataNasc;
-	    }
-	    
-	    public void setDataNasc(java.util.Date dataNasc) {
-	        if (dataNasc != null) {
-	            this.dataNasc = new java.sql.Date(dataNasc.getTime());
-	        } else {
-	            this.dataNasc = null;
-	        }
-	    }
-	    
-	    public String getBairro() {
-	        return bairro;
-	    }
-	    
-	    public void setBairro(String bairro) {
-	        this.bairro = bairro;
-	    }
-	    
-	    public String getRua() {
-	        return rua;
-	    }
-	    
-	    public void setRua(String rua) {
-	        this.rua = rua;
-	    }
-	    
-	    public String getNumCasa() {
-	        return numCasa;
-	    }
-	    
-	    public void setNumCasa(String numCasa) {
-	        this.numCasa = numCasa;
-	    }
-	    
-	    public String getCidade() {
-	        return cidade;
-	    }
-	    
-	    public void setCidade(String cidade) {
-	        this.cidade = cidade;
-	    }
-	    
-	    public String getServico() {
-	        return servico;
-	    }
-	    
-	    public void setServico(String servico) {
-	        this.servico = servico;
-	    }
-	    
-	    public String getPlanoDeSaude() {
-	        return planoDeSaude;
-	    }
-	    
-	    public void setPlanoDeSaude(String planoDeSaude) {
-	        this.planoDeSaude = planoDeSaude;
-	    }
-	    
-	    public String getCep() {
-	        return cep;
-	    }
-	    
-	    public void setCep(String cep) {
-	        this.cep = cep;
-	    }
-
-
-		public String getTelefone() {
-			// TODO Auto-generated method stub
-			return telefone;
-		}
-		
-		public void setTelefone(String telefone) {
-			this.telefone=telefone;
-		}
-
+	public String getCpf() {
+		return cpf;
+	}
 	
+	public void setCPF (String cpf) {
+		this.cpf=cpf;
+	}
+
+
+    public Date getDataNasc() {
+        return dataNasc;
+    }
+    
+    public void setDataNasc(java.util.Date dataNasc) {
+        if (dataNasc != null) {
+            this.dataNasc = new java.sql.Date(dataNasc.getTime());
+        } else {
+            this.dataNasc = null;
+        }
+    }
+    
+    public String getBairro() {
+        return bairro;
+    }
+    
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+    
+    public String getRua() {
+        return rua;
+    }
+    
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+    
+    public String getNumCasa() {
+        return numCasa;
+    }
+    
+    public void setNumCasa(String numCasa) {
+        this.numCasa = numCasa;
+    }
+    
+    public String getCidade() {
+        return cidade;
+    }
+    
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+    
+    public String getServico() {
+        return servico;
+    }
+    
+    public void setServico(String servico) {
+        this.servico = servico;
+    }
+    
+    public String getPlanoDeSaude() {
+        return planoDeSaude;
+    }
+    
+    public void setPlanoDeSaude(String planoDeSaude) {
+        this.planoDeSaude = planoDeSaude;
+    }
+    
+    public String getCep() {
+        return cep;
+    }
+    
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+
+	public String getTelefone() {
+		// TODO Auto-generated method stub
+		return telefone;
+	}
+	
+	public void setTelefone(String telefone) {
+		this.telefone=telefone;
+	}
+
+	// Verifica se a senha em texto claro corresponde ao hash armazenado neste usuário
+	public boolean verificarSenha(String senhaEmTexto) {
+		if (this.senha == null) return false;
+		Crypto crypto = new Crypto();
+		return crypto.verificarHashBCrypt(senhaEmTexto, this.senha);
+	}
+
 
 
 }
-
-
