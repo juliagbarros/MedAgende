@@ -17,7 +17,11 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.JOptionPane;
 import com.toedter.calendar.JDateChooser;
+import Back.Usuarios;
+import Back.Médico;
+import model.Usuario;
 
 public class TelaAdministradorExcluirMedico extends JFrame {
 
@@ -42,6 +46,7 @@ public class TelaAdministradorExcluirMedico extends JFrame {
     private JTextField FieldPlanoSaude;
     private JComboBox<String> BoxEspecialidades;
     private JDateChooser dcDataNascimento;
+    private Usuario usuarioAtual;
 
     /**
      * Launch the application.
@@ -104,9 +109,36 @@ public class TelaAdministradorExcluirMedico extends JFrame {
         btnBuscarCPF.setBounds(502, 98, 90, 25);
         btnBuscarCPF.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
+
+                try {
+                    String cpf = FieldCpf.getText().replace(".", "").replace("-", "");
+
+                    Usuarios usuarios = new Usuarios();
+                    usuarioAtual = usuarios.buscarUsuarioPorCpf(cpf);
+
+                    if (usuarioAtual == null) {
+                        JOptionPane.showMessageDialog(null, "Médico não encontrado");
+                        return;
+                    }
+
+                    FieldNome.setText(usuarioAtual.getNome());
+                    FieldEmail.setText(usuarioAtual.getEmail());
+                    FieldTelefone.setText(usuarioAtual.getTelefone());
+                    FieldRua.setText(usuarioAtual.getRua());
+                    FieldBairro.setText(usuarioAtual.getBairro());
+                    FieldMunicipio.setText(usuarioAtual.getCidade());
+                    FieldCep.setText(usuarioAtual.getCep());
+                    dcDataNascimento.setDate(usuarioAtual.getDataNasc());
+
+                    JOptionPane.showMessageDialog(null, "Médico carregado");
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao buscar médico");
+                    ex.printStackTrace();
+                }
             }
         });
+
         contentPane.add(btnBuscarCPF);
 
         // --- DADOS PESSOAIS ---
@@ -312,6 +344,27 @@ public class TelaAdministradorExcluirMedico extends JFrame {
         btnExcluir.setForeground(Color.BLACK);
         btnExcluir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                if (usuarioAtual == null) {
+                    JOptionPane.showMessageDialog(null, "Busque um médico primeiro");
+                    return;
+                }
+
+                int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este médico?", "Confirmação", JOptionPane.YES_NO_OPTION);
+
+                if (opcao == JOptionPane.YES_OPTION) {
+                    try {
+                        Médico med = new Médico();
+                        med.deletarMedico(usuarioAtual.getIdUsuario());
+
+                        JOptionPane.showMessageDialog(null, "Médico excluído com sucesso");
+                        dispose();
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Erro ao excluir médico");
+                        ex.printStackTrace();
+                    }
+                }
             }
         });
         btnExcluir.setBounds(678, 459, 145, 35);
