@@ -63,7 +63,7 @@ public class TelaInserirAgenda extends JFrame {
 				    if (escolha == JFileChooser.APPROVE_OPTION) {
 				    	//arquivo recebe o ARQUIVO escolhido
 				        File arquivo = fileChooser.getSelectedFile();
-				        System.out.println("[DEBUG] Arquivo recebido");
+				        System.out.println("[DEBUG TelaInserirAgenda] Arquivo recebido");
 				        
 				        //Chama a função da classe que tá na pasta de backend
 				        Agenda.recebeplanilha(arquivo);

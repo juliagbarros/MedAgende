@@ -2,6 +2,10 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import conexao.ConnectionFactory;
+import model.Medico;
 
 public class MedicoDAO {
 
@@ -26,4 +30,48 @@ public class MedicoDAO {
         stmt.executeUpdate();
     
     }
+    public static Medico criamedicoconectado(String id) throws Exception {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT * FROM usuarios INNER JOIN medico ON usuarios.Id_usuario = medico.Id_Usuario WHERE usuarios.Id_usuario = ?";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, id);
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+            	
+                Medico medico_conectado = new Medico();
+                medico_conectado.setIdUsuario(rs.getInt("Id_Usuario"));
+                medico_conectado.setNome(rs.getString("Nome"));
+                medico_conectado.setEmail(rs.getString("Email"));
+                medico_conectado.setTelefone(rs.getString("Telefone"));
+                medico_conectado.setCpf(rs.getString("CPF"));
+                medico_conectado.setRua(rs.getString("Rua"));
+                medico_conectado.setBairro(rs.getString("Bairro"));
+                medico_conectado.setCidade(rs.getString("Cidade"));
+                medico_conectado.setCep(rs.getString("CEP"));
+                medico_conectado.setServico(rs.getString("Servíco"));
+                medico_conectado.setDataNasc(rs.getDate("Data_Nasc"));
+                medico_conectado.setMatricula(rs.getString("Matricula"));
+                medico_conectado.setEspecialidade(rs.getString("Especialidade"));
+                medico_conectado.setCrm(rs.getString("CRM"));
+                medico_conectado.setRqe(rs.getString("Rqe"));
+                
+                
+                System.out.println("[DEBUG MedicoDAO] médico cadastrado com sucesso");
+                
+                return medico_conectado;
+            }
+
+            return null;
+
+        } finally {
+            //ConnectionFactory.closeConnection(con, pst, rs);
+        }
+}
+
 }

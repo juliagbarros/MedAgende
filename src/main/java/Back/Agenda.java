@@ -2,8 +2,12 @@ package Back;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Iterator;
+
+import javax.swing.JOptionPane;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -11,6 +15,11 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import dao.AgendaDAO;
+import model.Medico;
+import model.Usuario;
+
 
 public class Agenda {
     public static void recebeplanilha(File arquivo) {
@@ -28,7 +37,14 @@ public class Agenda {
             resultado = "Conteúdo lido:";
             
             //Criando a variável ponte para o LocalDateTime
-            LocalDateTime dt;
+            LocalDateTime dt = null;
+            
+            //Variaveis importantes para o cadastro no código
+            LocalDate data = null;
+            LocalTime horario_entrada = null;
+            LocalTime horario_saida = null;
+            Medico medicoatual = Medico.GetMedico();
+            System.out.println("[DEBUG Agenda] recebeplanilha chamado, médico conectado: " + medicoatual.getNome());
             
             try {
             	//System.out.println("[DEBUG] acessando as linhas da planilha");
@@ -40,25 +56,32 @@ public class Agenda {
 					Iterator<Cell> ItColuna = linha.cellIterator();
 					while (ItColuna.hasNext()){
 						Cell celula = ItColuna.next();
-						if (celula.getCellType() == CellType.STRING) break; //Um pequeno tratamento de dados para ignorar as células que apresentarem texto
+						if (celula.getCellType() == CellType.STRING) {
+							break; //Um pequeno tratamento de dados para ignorar as células que apresentarem texto
+						}
 						
-						//O ponto desse swtich é que ele funciona com o index da coluna, então a planilha DEVE ter a primeira coluna sendo a data, e as outras duas sendo horário de entrada/saida
+						//O ponto desse switch é que ele funciona com o index da coluna, então a planilha DEVE ter a primeira coluna sendo a data, e as outras duas sendo horário de entrada/saida
 						switch (celula.getColumnIndex()) {
 						case 0:
 							//como dito, DT é a variável ponte e por isso é constantemente sobrescrita
+							System.out.println("[DEBUG Agenda] case: Data");
 							dt = celula.getLocalDateTimeCellValue();
+							data = dt.toLocalDate();
 							//Concatenando o texto para no final ter um diálogo completo no terminal, para adicionar no BD seria bom mante-los separados e no final juntar em um código SQL
-							resultado += ("Data: " + dt.toLocalDate().toString() + "; ");
+							resultado += ("Data: " + data.toString() + "; ");
+							
 							break;
 						case 1:
+							System.out.println("[DEBUG Agenda] case: Horario_entrada");
 							dt = celula.getLocalDateTimeCellValue();
-							
-							resultado += ("Horário de Entrada: " + dt.toLocalTime().toString() + "; ");
+							horario_entrada = dt.toLocalTime();
+							resultado += ("Horário de Entrada: " + horario_entrada.toString() + "; ");
 							break;
 						case 2:
+							System.out.println("[DEBUG Agenda] case: Horario_saida");
 							 dt = celula.getLocalDateTimeCellValue();
-							
-							resultado += ("Horário de Saída: " + dt.toLocalTime().toString() + "; ");
+							horario_saida = dt.toLocalTime();
+							resultado += ("Horário de Saída: " + horario_saida.toString() + "; ");
 							break;
 						default:
 							break;
@@ -67,7 +90,11 @@ public class Agenda {
 				//por fim printando o resultado
 				System.out.println(resultado);
 				resultado = "\n";
+				//e jogando no banco de dados
+				if (dt != null) AgendaDAO.cadastradata(medicoatual.getMatricula(), data, horario_entrada, horario_saida);
 				}
+				JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+				
 			} catch (Exception eprintacelula) {
 				
 				System.out.println("Erro ao printar célula, código do erro: " + eprintacelula);

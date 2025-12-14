@@ -21,7 +21,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Back.Usuarios;
 import conexao.ConnectionFactory;
+import dao.MedicoDAO;
+import model.Medico;
 import telasSistema.Administrador.TelaPrincipalAdministrador;
 import telasSistema.Medico.TelaPrincipalMedico;
 import telasSistema.Secretaria.TelaPrincipalSecretaria;
@@ -204,19 +207,26 @@ public class TelaLogin extends JFrame {
 				//obtem o conteudo do campo pefil
 				String nome = rs.getString(4);
 				String serviço = rs.getString(11);
+				String id_conectado = rs.getString(1);
 				if (serviço.equals("Secretária")){
+					Usuarios.criausuarioconectado(id_conectado);
 					JOptionPane.showMessageDialog(null, "Bem vindo(a) "+nome);
 					TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
 					dispose();
 				}else if (serviço.equals("Administrador")) {
+					Usuarios.criausuarioconectado(id_conectado);
 					JOptionPane.showMessageDialog(null, "Bem vindo(a) "+nome);
 					TelaPrincipalAdministrador tela = new TelaPrincipalAdministrador();
 					tela.setLocationRelativeTo(null);
 					tela.setVisible(true);
 					dispose();
+					
+					
 				}else if (serviço.equals("Médico")) {
+					Medico.criamedico(id_conectado);
+					System.out.println("[DEBUG] Logado como médico, doutor: " + Medico.GetMedico().getMatricula());
 					JOptionPane.showMessageDialog(null, "Bem vindo(a) Doutor(a) "+nome);
 					TelaPrincipalMedico tela = new TelaPrincipalMedico();
 					tela.setLocationRelativeTo(null);

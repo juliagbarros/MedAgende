@@ -4,20 +4,20 @@ import java.sql.Date;
 
 public class Usuario {
 	
-	 	private int idUsuario;
-	    private String email;
-	    private String senha;
-	    private String nome;
-		private String cpf;
-	    private Date dataNasc;
-	    private String bairro;
-	    private String rua;
-	    private String numCasa;
-	    private String cidade;
-	    private String servico;
-	    private String planoDeSaude;
-	    private String cep;
-	    private String telefone;
+	 	protected int idUsuario;
+	    protected String email;
+	    protected String senha;
+	    protected String nome;
+		protected String cpf;
+	    protected Date dataNasc;
+	    protected String bairro;
+	    protected String rua;
+	    protected String numCasa;
+	    protected String cidade;
+	    protected String servico;
+	    protected String planoDeSaude;
+	    protected String cep;
+	    protected String telefone;
 	    
 	    public Usuario() {
 	    }
