@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -137,6 +138,8 @@ public class TelaAdministradorEditarMedico extends JFrame {
                     FieldBairro.setText(usuarioAtual.getBairro());
                     FieldMunicipio.setText(usuarioAtual.getCidade());
                     FieldCep.setText(usuarioAtual.getCep());
+                    FieldPlanoSaude.setText(usuarioAtual.getPlanoDeSaude());
+                    FieldNum.setText(usuarioAtual.getNumCasa());
                     dcDataNascimento.setDate(usuarioAtual.getDataNasc());
 
                     JOptionPane.showMessageDialog(null, "Usuário carregado com sucesso");
@@ -355,8 +358,9 @@ public class TelaAdministradorEditarMedico extends JFrame {
                 return;
             }
 
+            
             try {
-               
+        
                 usuarioAtual.setNome(FieldNome.getText());
                 usuarioAtual.setEmail(FieldEmail.getText());
                 usuarioAtual.setTelefone(FieldTelefone.getText());
@@ -364,8 +368,11 @@ public class TelaAdministradorEditarMedico extends JFrame {
                 usuarioAtual.setBairro(FieldBairro.getText());
                 usuarioAtual.setCidade(FieldMunicipio.getText());
                 usuarioAtual.setCep(FieldCep.getText());
+                usuarioAtual.setPlanoDeSaude(FieldPlanoSaude.getText());
+                usuarioAtual.setNumCasa(FieldNum.getText());
                 usuarioAtual.setDataNasc(dcDataNascimento.getDate());
-
+                
+                
                 String crm = FieldCrm.getText();
                 String rqe = FieldRqe.getText();
                 int especialidade = BoxEspecialidades.getSelectedIndex();
@@ -374,12 +381,14 @@ public class TelaAdministradorEditarMedico extends JFrame {
 
                 Médico med = new Médico();
                 med.editarMedico(usuarioAtual, crm, rqe, especialidade);
-
                 JOptionPane.showMessageDialog(this, "Médico atualizado");
 
-            } catch (Exception er) {
-                JOptionPane.showMessageDialog(this, "Erro ao atualizar o médicoo");
-                er.printStackTrace();
+            } 
+            catch (SQLException er) {
+                JOptionPane.showMessageDialog(this, "Erro ao conectar com o banco de dados");
+            } 
+            catch (Exception er) {
+                JOptionPane.showMessageDialog(this, "Erro inesperado");
             }
         });
 
