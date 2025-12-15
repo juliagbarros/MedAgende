@@ -55,8 +55,7 @@ public class UsuarioDAO {
 			JOptionPane.showMessageDialog(null, "Erro ao salvar!");
 			
 			e.printStackTrace();
-		} 
-		finally {
+		} finally {
 			ConnectionFactory.closeConnection(con,stmt);
 		}
 	}
@@ -80,14 +79,15 @@ public class UsuarioDAO {
                 u.setTelefone(rs.getString("Telefone"));
                 u.setCpf(rs.getString("CPF"));
                 u.setRua(rs.getString("Rua"));
+                u.setNumCasa(rs.getString("Num_Casa"));
                 u.setBairro(rs.getString("Bairro"));
                 u.setCidade(rs.getString("Cidade"));
                 u.setCep(rs.getString("CEP"));
                 u.setServico(rs.getString("Servíco"));
+                u.setPlanoDeSaude(rs.getString("Plano_De_Saude"));
                 u.setDataNasc(rs.getDate("Data_Nasc"));
                 return u;
             }
-
             return null;
 
         } finally {
