@@ -92,6 +92,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 					telaSecretariaCadastrar.setLocationRelativeTo(null);
 					telaSecretariaCadastrar.setVisible(true);
 					 dispose();
+					 break;
 					 
 				case "Editar dados do Paciente":
 					TelaSecretariaEditarPaciente telaSecretariaEditar = new TelaSecretariaEditarPaciente();
