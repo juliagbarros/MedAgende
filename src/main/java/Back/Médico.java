@@ -6,6 +6,7 @@ import dao.MedicoDAO;
 import dao.UsuarioDAO;
 import conexao.ConnectionFactory;
 import model.Usuario;
+import model.Medico;
 
 public class Médico {
 
@@ -56,5 +57,9 @@ public class Médico {
         finally {
            con.setAutoCommit(true);
         }
+    }
+    
+    public Medico buscarMedico(int idUsuario) throws Exception {
+        return MedicoDAO.criamedicoconectado(String.valueOf(idUsuario));
     }
 }
