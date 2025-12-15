@@ -27,6 +27,7 @@ import Back.Médico;
 import Back.Usuarios;
 import dao.EspecialidadeDAO;
 import model.Usuario;
+import model.Medico;
 
 public class TelaAdministradorEditarMedico extends JFrame {
 
@@ -52,6 +53,7 @@ public class TelaAdministradorEditarMedico extends JFrame {
     private JComboBox<String> BoxEspecialidades;
     private JDateChooser dcDataNascimento;
     private Usuario usuarioAtual;
+    private Medico medicoAtual;
 
 
     /**
@@ -130,7 +132,7 @@ public class TelaAdministradorEditarMedico extends JFrame {
                         JOptionPane.showMessageDialog(null, "Usuário não encontrado");
                         return;
                     }
-
+                    
                     FieldNome.setText(usuarioAtual.getNome());
                     FieldEmail.setText(usuarioAtual.getEmail());
                     FieldTelefone.setText(usuarioAtual.getTelefone());
@@ -141,7 +143,13 @@ public class TelaAdministradorEditarMedico extends JFrame {
                     FieldPlanoSaude.setText(usuarioAtual.getPlanoDeSaude());
                     FieldNum.setText(usuarioAtual.getNumCasa());
                     dcDataNascimento.setDate(usuarioAtual.getDataNasc());
-
+                    Médico medicos = new Médico();
+                    medicoAtual = medicos.buscarMedico(usuarioAtual.getIdUsuario());
+                    if (medicoAtual != null) {
+                        FieldCrm.setText(medicoAtual.getCrm());
+                        FieldRqe.setText(medicoAtual.getRqe());
+                        BoxEspecialidades.setSelectedItem(medicoAtual.getEspecialidade());
+                    }
                     JOptionPane.showMessageDialog(null, "Usuário carregado com sucesso");
 
                 } catch (Exception er) {
