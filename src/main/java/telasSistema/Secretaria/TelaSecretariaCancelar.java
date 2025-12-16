@@ -16,7 +16,6 @@ import java.awt.event.ActionEvent;
 public class TelaSecretariaCancelar extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
 	private JTextField textField_1;
 
 	/**
@@ -43,20 +42,10 @@ public class TelaSecretariaCancelar extends JFrame {
 		lblPreenchaDados.setBounds(288, 84, 203, 16);
 		panel.add(lblPreenchaDados);
 		
-		JLabel lblNomePaciente = new JLabel("Nome do paciente");
-		lblNomePaciente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNomePaciente.setBounds(98, 161, 203, 16);
-		panel.add(lblNomePaciente);
-		
 		JLabel lblCpfPaciente = new JLabel("CPF do paciente");
-		lblCpfPaciente.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblCpfPaciente.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 		lblCpfPaciente.setBounds(108, 189, 203, 16);
 		panel.add(lblCpfPaciente);
-		
-		textField = new JTextField();
-		textField.setBounds(208, 161, 265, 18);
-		panel.add(textField);
-		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(208, 189, 265, 18);
@@ -69,10 +58,9 @@ public class TelaSecretariaCancelar extends JFrame {
 				//não deixar passar com os campos em branco
 				String mensagemDeErro = "Por favor, preencha os seguintes campos obrigatórios:\n";
 				int camposEmBranco=0;
-				if (textField.getText().trim().isEmpty()) {
 			        camposEmBranco++;
 			        mensagemDeErro += "- Nome\n"; 
-			    }
+			    
 
 			  
 			    if (textField_1.getText().trim().isEmpty()) { 

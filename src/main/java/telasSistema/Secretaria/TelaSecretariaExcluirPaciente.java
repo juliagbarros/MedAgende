@@ -42,7 +42,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import telasSistema.Administrador.TelaAdminExcluirUsuarios;
-import telasSistema.Secretaria.TelaSecretariaAgendar;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -255,7 +254,7 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TelaAdminExcluirUsuarios tela = new TelaAdminExcluirUsuarios();
+        		TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
 				tela.setLocationRelativeTo(null);
         		tela.setVisible(true);
 				 dispose();

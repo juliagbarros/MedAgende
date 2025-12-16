@@ -148,7 +148,7 @@ public class TelaInfosAgendamento extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaSecretariaAgendar tela = new TelaSecretariaAgendar();
+				TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
 				tela.setLocationRelativeTo(null);
 				tela.setVisible(true);
 				 dispose();
