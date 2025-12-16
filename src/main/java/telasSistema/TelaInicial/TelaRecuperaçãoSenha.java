@@ -143,6 +143,8 @@ public class TelaRecuperaçãoSenha extends JFrame {
         btnvoltar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnvoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                TelaLogin tela = new TelaLogin();
+				tela.setVisible(true);
                 dispose();
             }
         });
@@ -584,4 +586,5 @@ public class TelaRecuperaçãoSenha extends JFrame {
             }
         }
     }
+
 }
