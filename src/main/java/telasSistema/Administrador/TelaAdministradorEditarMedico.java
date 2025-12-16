@@ -127,6 +127,15 @@ public class TelaAdministradorEditarMedico extends JFrame {
                     String cpf = FieldCpf.getText().replace(".", "").replace("-", "");
                     Usuarios usuarios = new Usuarios();
                     usuarioAtual = usuarios.buscarUsuarioPorCpf(cpf);
+                    
+                    Médico medicos = new Médico();
+                    medicoAtual = medicos.buscarDadosMedico(usuarioAtual.getIdUsuario());
+
+                    if (medicoAtual != null) {
+                        FieldCrm.setText(medicoAtual.getCrm());
+                        FieldRqe.setText(medicoAtual.getRqe());
+                        BoxEspecialidades.setSelectedItem(medicoAtual.getEspecialidade());
+                    }
 
                     if (usuarioAtual == null) {
                         JOptionPane.showMessageDialog(null, "Usuário não encontrado");
@@ -143,13 +152,6 @@ public class TelaAdministradorEditarMedico extends JFrame {
                     FieldPlanoSaude.setText(usuarioAtual.getPlanoDeSaude());
                     FieldNum.setText(usuarioAtual.getNumCasa());
                     dcDataNascimento.setDate(usuarioAtual.getDataNasc());
-                    Médico medicos = new Médico();
-                    medicoAtual = medicos.buscarMedico(usuarioAtual.getIdUsuario());
-                    if (medicoAtual != null) {
-                        FieldCrm.setText(medicoAtual.getCrm());
-                        FieldRqe.setText(medicoAtual.getRqe());
-                        BoxEspecialidades.setSelectedItem(medicoAtual.getEspecialidade());
-                    }
                     JOptionPane.showMessageDialog(null, "Usuário carregado com sucesso");
 
                 } catch (Exception er) {
@@ -379,7 +381,7 @@ public class TelaAdministradorEditarMedico extends JFrame {
                 usuarioAtual.setPlanoDeSaude(FieldPlanoSaude.getText());
                 usuarioAtual.setNumCasa(FieldNum.getText());
                 usuarioAtual.setDataNasc(dcDataNascimento.getDate());
-                
+            
                 
                 String crm = FieldCrm.getText();
                 String rqe = FieldRqe.getText();
