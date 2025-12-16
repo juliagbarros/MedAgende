@@ -50,6 +50,10 @@ public class MedicoDAO {
                 return m;
             }
             return null;
+
+        } finally {
+            //ConnectionFactory.closeConnection(con, stmt, rs);
+        }
     }
 
     public static Medico criamedicoconectado(String id) throws Exception {
