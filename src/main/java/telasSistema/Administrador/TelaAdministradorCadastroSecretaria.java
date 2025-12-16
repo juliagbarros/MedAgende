@@ -393,6 +393,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
     	u.setBairro(textBairro.getText());
     	u.setCep(textCEP.getText());
     	u.setCidade(textMunicipio.getText());
+    	u.setUf(textEstado.getText());
     	u.setRua(textRua.getText());
     	u.setNumCasa(textNumero.getText());
     	u.setPlanoDeSaude(textPlano.getText());

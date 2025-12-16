@@ -36,6 +36,7 @@ public class Usuarios {
                 usuario_conectado.setCpf(rs.getString("CPF"));
                 usuario_conectado.setRua(rs.getString("Rua"));
                 usuario_conectado.setBairro(rs.getString("Bairro"));
+                usuario_conectado.setUf(rs.getString("Uf"));
                 usuario_conectado.setCidade(rs.getString("Cidade"));
                 usuario_conectado.setCep(rs.getString("CEP"));
                 usuario_conectado.setServico(rs.getString("Servíco"));

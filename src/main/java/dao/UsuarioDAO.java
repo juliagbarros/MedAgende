@@ -22,7 +22,7 @@ public class UsuarioDAO {
 				
 			
 			
-			stmt = con.prepareStatement("INSERT INTO usuarios (Email, Senha, Nome, CPF, Data_Nasc, Bairro, Rua, Num_Casa, Cidade, Servíço, Plano_De_Saude, CEP, Telefone) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)");
+			stmt = con.prepareStatement("INSERT INTO usuarios (Email, Senha, Nome, CPF, Data_Nasc, Bairro, Rua, Num_Casa, Cidade, Uf, Servíco, Plano_De_Saude, CEP, Telefone) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)");
 		        stmt.setString(1, u.getEmail());
 		        stmt.setString(2, u.getSenha());
 		        stmt.setString(3, u.getNome());
@@ -32,10 +32,11 @@ public class UsuarioDAO {
 		        stmt.setString(7, u.getRua());
 		        stmt.setString(8, u.getNumCasa());
 		        stmt.setString(9, u.getCidade());
-		        stmt.setString(10, u.getServico());
-		        stmt.setString(11, u.getPlanoDeSaude());
-		        stmt.setString(12, u.getCep());
-		        stmt.setString(13, u.getTelefone());
+		        stmt.setString(10, u.getUf());
+		        stmt.setString(11, u.getServico());
+		        stmt.setString(12, u.getPlanoDeSaude());
+		        stmt.setString(13, u.getCep());
+		        stmt.setString(14, u.getTelefone());
 		        stmt.executeUpdate();
 			
 			JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
@@ -71,9 +72,9 @@ public class UsuarioDAO {
                 u.setCpf(rs.getString("CPF"));
                 u.setRua(rs.getString("Rua"));
                 u.setNumCasa(rs.getString("Num_Casa"));
-                u.setUf(rs.getString("Uf"));
                 u.setBairro(rs.getString("Bairro"));
                 u.setCidade(rs.getString("Cidade"));
+                u.setUf(rs.getString("Uf"));
                 u.setCep(rs.getString("CEP"));
                 u.setServico(rs.getString("Servíco"));
                 u.setPlanoDeSaude(rs.getString("Plano_De_Saude"));
@@ -89,7 +90,7 @@ public class UsuarioDAO {
     
     public void atualizarUsuario(Connection con, Usuario u) throws Exception {
 
-        String sql = "UPDATE usuarios SET Nome = ?, Email = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, CEP = ? WHERE CPF = ?";
+        String sql = "UPDATE usuarios SET Nome = ?, Email = ?, Telefone = ?, Rua = ?, Bairro = ?, Cidade = ?, Uf = ?, CEP = ? WHERE CPF = ?";
 
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, u.getNome());
@@ -98,8 +99,9 @@ public class UsuarioDAO {
         stmt.setString(4, u.getRua());
         stmt.setString(5, u.getBairro());
         stmt.setString(6, u.getCidade());
-        stmt.setString(7, u.getCep());
-        stmt.setString(8, u.getCpf());
+        stmt.setString(7, u.getUf());
+        stmt.setString(8, u.getCep());
+        stmt.setString(9, u.getCpf());
 
         stmt.executeUpdate();
     }
