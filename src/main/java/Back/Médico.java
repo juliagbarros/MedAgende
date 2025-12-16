@@ -59,7 +59,9 @@ public class Médico {
         }
     }
     
-    public Medico buscarMedico(int idUsuario) throws Exception {
-        return MedicoDAO.criamedicoconectado(String.valueOf(idUsuario));
+    public Medico buscarDadosMedico(int id) throws Exception {
+        MedicoDAO dao = new MedicoDAO();
+        return dao.buscarMedico(id);
     }
+    
 }
