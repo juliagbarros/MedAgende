@@ -17,6 +17,7 @@ import java.util.Random;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.awt.event.ActionEvent;
+import telasSistema.Administrador.TelaAdminRedefinirSenha; // Importação adicionada
 
 public class TelaRecuperaçãoSenha extends JFrame {
 
@@ -143,9 +144,14 @@ public class TelaRecuperaçãoSenha extends JFrame {
         btnvoltar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnvoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TelaLogin tela = new TelaLogin();
-				tela.setVisible(true);
+                // Para voltar à tela de login, você precisará importar a TelaLogin
+                // TelaLogin tela = new TelaLogin();
+                // tela.setVisible(true);
                 dispose();
+                JOptionPane.showMessageDialog(null, 
+                    "Funcionalidade 'Voltar' - Em uma implementação real, esta ação retornaria à tela de login.", 
+                    "Informação", 
+                    JOptionPane.INFORMATION_MESSAGE);
             }
         });
         btnvoltar.setBounds(36, 245, 120, 30);
@@ -563,15 +569,9 @@ public class TelaRecuperaçãoSenha extends JFrame {
                     JOptionPane.YES_NO_OPTION);
                 
                 if (opcao == JOptionPane.YES_OPTION) {
-                    // Aqui você pode abrir a tela de redefinição de senha
-                    JOptionPane.showMessageDialog(TelaInserirToken.this,
-                        "Redefinição de senha em desenvolvimento...\n\n" +
-                        "Em uma implementação real, esta tela abriria\n" +
-                        "um formulário para criar uma nova senha.",
-                        "Redefinição de Senha",
-                        JOptionPane.INFORMATION_MESSAGE);
-                    
-                    // Para testar, apenas fecha a janela
+                    // MODIFICAÇÃO PRINCIPAL: Abrir a TelaAdminRedefinirSenha
+                    TelaAdminRedefinirSenha telaRedefinir = new TelaAdminRedefinirSenha(emailUsuario);
+                    telaRedefinir.setVisible(true);
                     dispose();
                 }
             } else {
@@ -586,5 +586,4 @@ public class TelaRecuperaçãoSenha extends JFrame {
             }
         }
     }
-
 }
