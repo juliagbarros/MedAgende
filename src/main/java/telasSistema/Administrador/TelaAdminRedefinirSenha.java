@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+// Adicione esta importação para a TelaLogin
+import telasSistema.TelaInicial.TelaLogin;
+
 public class TelaAdminRedefinirSenha extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +45,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
         // Cabeçalho com ícone
         JPanel panelCabecalho = new JPanel();
         panelCabecalho.setBackground(new Color(0, 204, 204));
-        panelCabecalho.setBounds(0, 0, 584, 80);
+        panelCabecalho.setBounds(0, 0, 675, 80);
         panelCabecalho.setLayout(null);
         contentPane.add(panelCabecalho);
         
@@ -68,7 +71,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
             javax.swing.border.TitledBorder.TOP,
             new Font("Segoe UI", Font.BOLD, 11),
             new Color(70, 130, 180)));
-        panelInfoUsuario.setBounds(30, 95, 524, 70);
+        panelInfoUsuario.setBounds(30, 95, 615, 70);
         panelInfoUsuario.setLayout(null);
         
         JLabel lblUsuarioLabel = new JLabel("Email do Usuário:");
@@ -79,7 +82,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
         
         txtEmailUsuario = new JTextField(email);
         txtEmailUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        txtEmailUsuario.setBounds(120, 20, 300, 20);
+        txtEmailUsuario.setBounds(120, 20, 350, 20);
         panelInfoUsuario.add(txtEmailUsuario);
         
         JLabel lblStatusLabel = new JLabel("Status:");
@@ -106,7 +109,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
             javax.swing.border.TitledBorder.TOP,
             new Font("Segoe UI", Font.BOLD, 11),
             new Color(70, 130, 180)));
-        panelRedefinicao.setBounds(30, 180, 524, 180);
+        panelRedefinicao.setBounds(30, 180, 615, 180);
         panelRedefinicao.setLayout(null);
         
         // Nova Senha
@@ -117,7 +120,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
         
         passwordFieldNovaSenha = new JPasswordField();
         passwordFieldNovaSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        passwordFieldNovaSenha.setBounds(20, 55, 400, 35);
+        passwordFieldNovaSenha.setBounds(20, 55, 450, 35);
         panelRedefinicao.add(passwordFieldNovaSenha);
         
         // Confirmar Senha
@@ -128,14 +131,14 @@ public class TelaAdminRedefinirSenha extends JFrame {
         
         passwordFieldConfirmarSenha = new JPasswordField();
         passwordFieldConfirmarSenha.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        passwordFieldConfirmarSenha.setBounds(20, 125, 400, 35);
+        passwordFieldConfirmarSenha.setBounds(20, 125, 450, 35);
         panelRedefinicao.add(passwordFieldConfirmarSenha);
         
         // Botão mostrar/ocultar senha
         JButton btnToggleSenha = new JButton("👁");
         btnToggleSenha.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         btnToggleSenha.setBackground(new Color(240, 240, 240));
-        btnToggleSenha.setBounds(430, 55, 40, 35);
+        btnToggleSenha.setBounds(480, 55, 40, 35);
         btnToggleSenha.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (passwordFieldNovaSenha.getEchoChar() == '•') {
@@ -160,7 +163,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
         JPanel panelForcaSenha = new JPanel();
         panelForcaSenha.setBackground(new Color(250, 250, 250));
         panelForcaSenha.setBorder(BorderFactory.createTitledBorder("Força da Senha"));
-        panelForcaSenha.setBounds(30, 370, 524, 60);
+        panelForcaSenha.setBounds(30, 370, 615, 60);
         panelForcaSenha.setLayout(null);
         
         JLabel lblForcaTexto = new JLabel("Nível de segurança:");
@@ -169,14 +172,14 @@ public class TelaAdminRedefinirSenha extends JFrame {
         panelForcaSenha.add(lblForcaTexto);
         
         JProgressBar progressBarForca = new JProgressBar(0, 100);
-        progressBarForca.setBounds(120, 25, 250, 20);
+        progressBarForca.setBounds(120, 25, 300, 20);
         progressBarForca.setForeground(Color.RED);
         panelForcaSenha.add(progressBarForca);
         
         JLabel lblForcaStatus = new JLabel("Aguardando senha...");
         lblForcaStatus.setFont(new Font("Segoe UI", Font.PLAIN, 10));
         lblForcaStatus.setForeground(Color.GRAY);
-        lblForcaStatus.setBounds(380, 25, 130, 20);
+        lblForcaStatus.setBounds(430, 25, 150, 20);
         panelForcaSenha.add(lblForcaStatus);
         
         // Listener para atualizar força da senha
@@ -188,12 +191,24 @@ public class TelaAdminRedefinirSenha extends JFrame {
         
         contentPane.add(panelForcaSenha);
         
-        // Painel de botões
+        // Painel de botões COM BOTÃO VOLTAR ADICIONADO
         JPanel panelBotoes = new JPanel();
         panelBotoes.setBackground(new Color(240, 248, 255));
-        panelBotoes.setBounds(0, 435, 584, 50);
-        panelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panelBotoes.setBounds(0, 440, 675, 80);
+        panelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 10));
         
+        // BOTÃO VOLTAR - MODIFICADO PARA VOLTAR AO LOGIN
+        JButton btnVoltar = new JButton("← Voltar ao Login");
+        btnVoltar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btnVoltar.setBackground(new Color(220, 220, 220));
+        btnVoltar.setPreferredSize(new Dimension(150, 35));
+        btnVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                voltarParaTelaLogin();
+            }
+        });
+        
+        // Botão Cancelar
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnCancelar.setBackground(new Color(220, 220, 220));
@@ -204,6 +219,7 @@ public class TelaAdminRedefinirSenha extends JFrame {
             }
         });
         
+        // Botão Redefinir
         JButton btnRedefinir = new JButton("Redefinir Senha");
         btnRedefinir.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnRedefinir.setBackground(new Color(70, 130, 180));
@@ -215,6 +231,8 @@ public class TelaAdminRedefinirSenha extends JFrame {
             }
         });
         
+        // Adiciona os botões na ordem
+        panelBotoes.add(btnVoltar);
         panelBotoes.add(btnCancelar);
         panelBotoes.add(btnRedefinir);
         contentPane.add(panelBotoes);
@@ -228,6 +246,33 @@ public class TelaAdminRedefinirSenha extends JFrame {
         txtEmailUsuario.requestFocus();
     }
     
+    /**
+     * Método para voltar à tela de login
+     */
+    private void voltarParaTelaLogin() {
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Deseja voltar à tela de login?\n\n" +
+            "A redefinição de senha será cancelada.",
+            "Confirmar Voltar ao Login",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+        
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            try {
+                // Abre a TelaLogin
+                TelaLogin telaLogin = new TelaLogin();
+                telaLogin.setLocationRelativeTo(null);
+                telaLogin.setVisible(true);
+                dispose(); // Fecha a janela atual
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                    "Erro ao abrir tela de login. Fechando aplicação...",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+                dispose();
+            }
+        }
+    }
     
     private void atualizarForcaSenha(JProgressBar progressBar, JLabel label) {
         char[] senha = passwordFieldNovaSenha.getPassword();
@@ -431,11 +476,21 @@ public class TelaAdminRedefinirSenha extends JFrame {
             "Redefinição Concluída",
             JOptionPane.INFORMATION_MESSAGE);
         
-        txtEmailUsuario.setText("");
-        passwordFieldNovaSenha.setText("");
-        passwordFieldConfirmarSenha.setText("");
+        // Pergunta se deseja voltar ao login
+        int opcao = JOptionPane.showConfirmDialog(this,
+            "Deseja voltar à tela de login?",
+            "Voltar ao Login",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
         
-        dispose();
+        if (opcao == JOptionPane.YES_OPTION) {
+            voltarParaTelaLogin();
+        } else {
+            txtEmailUsuario.setText("");
+            passwordFieldNovaSenha.setText("");
+            passwordFieldConfirmarSenha.setText("");
+            dispose();
+        }
     }
     
     /**
