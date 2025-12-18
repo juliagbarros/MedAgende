@@ -106,17 +106,15 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 	private JPasswordField textConfirmarSenha;
 	private JDateChooser textDataNascimento;
     
-    // NOVOS COMPONENTES PARA FEEDBACK
     private JLabel lblStrengthFeedbackNIVELSENHA;
     private JProgressBar progressBarBARRAdoNIVELSENHA;
-    private JTextField textCEP; // CEP
-    private JTextField textRua; // Rua
-    private JTextField textNumero; // Número
+    private JTextField textCEP; 
+    private JTextField textRua; 
+    private JTextField textNumero; 
     private JTextField textMunicipio;
     private JTextField textEstado;
     private JTextField textBairro;
     
-    // Componentes para API
     private OkHttpClient httpClient;
     private Gson gson;
     private JTextField textPlano;
@@ -213,7 +211,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		labelDataNascimento.setBounds(424, 118, 167, 14);
 		contentPane.add(labelDataNascimento);
         
-        // --- JCALENDAR ---
         textDataNascimento = new JDateChooser();
         textDataNascimento.setToolTipText("Ex: 15/76/2002...");
         textDataNascimento.setDateFormatString("dd/MM/yyyy");
@@ -229,13 +226,11 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		labelCONFIRMARSENHA.setBounds(468, 172, 124, 14);
 		contentPane.add(labelCONFIRMARSENHA);
 		
-		// configuração dos novos componentes 
 		lblStrengthFeedbackNIVELSENHA = new JLabel("Nível da Senha:");
 		lblStrengthFeedbackNIVELSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
 		lblStrengthFeedbackNIVELSENHA.setBounds(203, 229, 100, 14);
 		contentPane.add(lblStrengthFeedbackNIVELSENHA);
         
-        // Barra de progresso para feedback visual
         progressBarBARRAdoNIVELSENHA = new JProgressBar(0, 5);
         progressBarBARRAdoNIVELSENHA.setBounds(293, 228, 72, 20);
         progressBarBARRAdoNIVELSENHA.setStringPainted(true);
@@ -269,7 +264,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         lblNewLabel.setBounds(619, 119, 46, 14);
         contentPane.add(lblNewLabel);
         
-        textCEP = new JTextField(); // CEP
+        textCEP = new JTextField(); 
         textCEP.setBounds(618, 142, 86, 20);
         contentPane.add(textCEP);
         textCEP.setColumns(10);
@@ -279,7 +274,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         lblNewLabel_1.setBounds(619, 288, 46, 14);
         contentPane.add(lblNewLabel_1);
         
-        textRua = new JTextField(); // Rua
+        textRua = new JTextField(); 
         textRua.setBounds(619, 311, 125, 20);
         contentPane.add(textRua);
         textRua.setColumns(10);
@@ -364,10 +359,8 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         textSenha.setBounds(242, 198, 172, 18);
         contentPane.add(textSenha);
 
-		// chamando o método que implementa O DocumentListener
         implementPasswordStrengthCheck();
         
-        // ADICIONA LISTENER PARA BUSCA AUTOMÁTICA DE CEP
         implementCEPAutoComplete();
 	}
     
@@ -472,7 +465,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             return PasswordStrength.WEAK;
         }
         
-        // Pontua por comprimento
         if (password.length() >= 8) {
             score++;
         }
@@ -480,24 +472,19 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             score++;
         }
         
-        // Pelo menos uma minúscula
         if (password.matches(".*[a-z].*")) { 
             score++;
         }
-        // Pelo menos uma maiúscula
         if (password.matches(".*[A-Z].*")) { 
             score++;
         }
-        // Pelo menos um número
         if (password.matches(".*[0-9].*")) { 
             score++;
         }
-        // Pelo menos um símbolo/caractere especial 
         if (password.matches(".*[^a-zA-Z0-9].*")) { 
             score++;
         }
         
-        // Define a força com base na pontuação total
         if (score >= 5) {
             return PasswordStrength.STRONG;
         } else if (score >= 3) {
@@ -522,7 +509,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             
             @Override
             public void changedUpdate(DocumentEvent e) {
-                // Não usado para JPasswordField
             }
 
             private void checkAndUpdateUI() {
@@ -538,7 +524,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
                 
                 PasswordStrength strength = checkPasswordStrength(password);
                 
-                // Atualiza a interface
                 switch (strength) {
                     case WEAK:
                         lblStrengthFeedbackNIVELSENHA.setText("Nível da Senha:");
@@ -608,7 +593,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
             return;
         }
         
-        // Mostra cursor de carregamento
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         
         SwingWorker<ViaCEPResponse, Void> worker = new SwingWorker<ViaCEPResponse, Void>() {
@@ -652,7 +636,6 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
                     textRua.setText(endereco.getLogradouro());
                     textBairro.setText(endereco.getBairro());
                     
-                    // Foca no campo Número automaticamente
                     SwingUtilities.invokeLater(() -> {
                         textNumero.requestFocus();
                     });
