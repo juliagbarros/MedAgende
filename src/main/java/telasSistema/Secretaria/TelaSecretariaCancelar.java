@@ -328,7 +328,7 @@ public class TelaSecretariaCancelar extends JFrame {
             conexao = ConnectionFactory.getConnection();
             if (conexao == null) return;
             
-            String sql = "SELECT a.Id_Agenda, DATE_FORMAT(a.Data_Consulta, '%d/%m/%Y') as Data, " +
+            String sql = "SELECT a.Id_Agendamento, DATE_FORMAT(a.Data_Consulta, '%d/%m/%Y') as Data, " +
                         "TIME_FORMAT(a.Hora_Consulta, '%H:%i') as Hora, " +
                         "m.Nome as Medico, m.Especialidade, a.Status " +
                         "FROM agenda a " +
