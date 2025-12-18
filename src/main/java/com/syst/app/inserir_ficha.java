@@ -38,18 +38,18 @@ public class inserir_ficha extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\MedAgende-icone.png"));
 		setTitle("MedAgende");
 		
-		JLabel Título = DefaultComponentFactory.getInstance().createTitle("MedAgende");
-		Título.setHorizontalAlignment(SwingConstants.CENTER);
-		Título.setBackground(new Color(135, 206, 250));
-		Título.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		Título.setBorder(new CompoundBorder(new TitledBorder(new MatteBorder(0, 10, 10, 0, (Color) new Color(25, 25, 112)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 139)), new LineBorder(new Color(153, 180, 209), 3)));
-		Título.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 35));
+		JLabel titulo = DefaultComponentFactory.getInstance().createTitle("MedAgende");
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setBackground(new Color(135, 206, 250));
+		titulo.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		titulo.setBorder(new CompoundBorder(new TitledBorder(new MatteBorder(0, 10, 10, 0, (Color) new Color(25, 25, 112)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 139)), new LineBorder(new Color(153, 180, 209), 3)));
+		titulo.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 35));
 		
-		JLabel Senha = new JLabel("Senha:");
-		Senha.setFont(new Font("Lucida Console", Font.PLAIN, 14));
+		JLabel senha = new JLabel("Senha:");
+		senha.setFont(new Font("Lucida Console", Font.PLAIN, 14));
 		
-		JLabel Usuário = DefaultComponentFactory.getInstance().createLabel("Usuário:");
-		Usuário.setFont(new Font("Lucida Console", Font.PLAIN, 14));
+		JLabel usuario = DefaultComponentFactory.getInstance().createLabel("Usuário:");
+		usuario.setFont(new Font("Lucida Console", Font.PLAIN, 14));
 		
 		NomeLog = new JTextField();
 		NomeLog.setBounds(new Rectangle(2, 2, 2, 2));
@@ -62,27 +62,28 @@ public class inserir_ficha extends JFrame{
 		SenhaLog = new JPasswordField();
 		SenhaLog.setForeground(SystemColor.textHighlight);
 		SenhaLog.setBackground(SystemColor.activeCaption);
+		
 		// Aplica borda arredondada também na senha
 		SenhaLog.setBorder(new LineBorder(new Color(0, 0, 128), 2, true));
 		
-		JButton Login = new JButton("Login");
-		Login.setAction(Login_action);
-		Login.addMouseListener(new MouseAdapter() {
+		JButton login = new JButton("Login");
+		login.setAction(Login_action);
+		login.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 			}
 		});
-		Login.addActionListener(new ActionListener() {
+		login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		Login.setBackground(new Color(135, 206, 235));
-		Login.setBorder(new LineBorder(new Color(0, 0, 128), 2, true));
+		login.setBackground(new Color(135, 206, 235));
+		login.setBorder(new LineBorder(new Color(0, 0, 128), 2, true));
 		
-		JButton Singin = new JButton("Singin");
-		Singin.setAction(Singin_action);
-		Singin.setBorder(new LineBorder(new Color(0, 0, 128), 2, true));
-		Singin.setBackground(new Color(135, 206, 235));
+		JButton singin = new JButton("Singin");
+		singin.setAction(Singin_action);
+		singin.setBorder(new LineBorder(new Color(0, 0, 128), 2, true));
+		singin.setBackground(new Color(135, 206, 235));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -92,44 +93,44 @@ public class inserir_ficha extends JFrame{
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Usuário)
+									.addComponent(usuario)
 									.addGap(4)
 									.addComponent(NomeLog, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Senha)
+									.addComponent(senha)
 									.addGap(4)
 									.addComponent(SenhaLog, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(Singin, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+									.addComponent(singin, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 									.addGap(41)
-									.addComponent(Login, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+									.addComponent(login, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
 									.addGap(16)))
 							.addContainerGap(96, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(Título, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+							.addComponent(titulo, GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
 							.addGap(78))))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(30)
-					.addComponent(Título)
+					.addComponent(titulo)
 					.addGap(43)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(2)
-							.addComponent(Usuário))
+							.addComponent(usuario))
 						.addComponent(NomeLog, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(11)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(3)
-							.addComponent(Senha))
+							.addComponent(senha))
 						.addComponent(SenhaLog, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(Singin, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Login))
+						.addComponent(singin, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+						.addComponent(login))
 					.addContainerGap(48, Short.MAX_VALUE))
 		);
 		getContentPane().setLayout(groupLayout);

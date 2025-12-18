@@ -50,6 +50,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JList;
 import java.awt.Button;
+
 public class MedAgende_main extends JFrame {
 	private JTextField Login_de_design;
 	private JTextField barra_de_design;
@@ -81,38 +82,37 @@ public class MedAgende_main extends JFrame {
 		panel.setBackground(SystemColor.inactiveCaption);
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-		JButton Configurations_button = new JButton("");
-		Configurations_button.setBounds(60, 24, 25, 25);
-		Configurations_button.setAction(config_action);
-		Configurations_button.setFocusable(false);
-		Configurations_button.setFocusTraversalKeysEnabled(false);
-		Configurations_button.setFocusPainted(false);
-		Configurations_button.setIcon(new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\Button_config_icon.png"));
-		Configurations_button.setBorder(null);
-		Configurations_button.addActionListener(new ActionListener() {
+		JButton configurations_button = new JButton("");
+		configurations_button.setBounds(60, 24, 25, 25);
+		configurations_button.setAction(config_action);
+		configurations_button.setFocusable(false);
+		configurations_button.setFocusTraversalKeysEnabled(false);
+		configurations_button.setFocusPainted(false);
+		configurations_button.setIcon(new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\Button_config_icon.png"));
+		configurations_button.setBorder(null);
+		configurations_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		panel.setLayout(null);
 		
-		JButton Menu_button = new JButton("");
-		Menu_button.setBounds(95, 24, 25, 25);
-		Menu_button.setAction(Menu_action);
-		Menu_button.setIconTextGap(0);
-		Menu_button.setFocusable(false);
-		Menu_button.setIcon(new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\Button_menu_icon.png"));
-		Menu_button.setFocusTraversalKeysEnabled(false);
-		Menu_button.setFocusPainted(false);
-		Menu_button.setBorder(null);
-		panel.add(Menu_button);
-		panel.add(Configurations_button);
-		
-				
-		JLabel Perfil_iconLabel = new JLabel("", new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\perfil_resized.jpg"), JLabel.CENTER);
-		Perfil_iconLabel.setBounds(10, 9, 40, 40);
-		Perfil_iconLabel.setBorder(null);
-		Perfil_iconLabel.setEnabled(false);
-		panel.add(Perfil_iconLabel);
+		JButton menu_button = new JButton("");
+		menu_button.setBounds(95, 24, 25, 25);
+		menu_button.setAction(Menu_action);
+		menu_button.setIconTextGap(0);
+		menu_button.setFocusable(false);
+		menu_button.setIcon(new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\Button_menu_icon.png"));
+		menu_button.setFocusTraversalKeysEnabled(false);
+		menu_button.setFocusPainted(false);
+		menu_button.setBorder(null);
+		panel.add(menu_button);
+		panel.add(configurations_button);
+			
+		JLabel perfil_iconLabel = new JLabel("", new ImageIcon("C:\\Users\\overh\\eclipse-workspace\\Med-Agende\\src\\main\\java\\com\\syst\\app\\perfil_resized.jpg"), JLabel.CENTER);
+		perfil_iconLabel.setBounds(10, 9, 40, 40);
+		perfil_iconLabel.setBorder(null);
+		perfil_iconLabel.setEnabled(false);
+		panel.add(perfil_iconLabel);
 		//TODO ajustes de textField.
 		barra_de_design = new JTextField();
 		barra_de_design.setBounds(148, 0, 636, 30);
@@ -137,25 +137,25 @@ public class MedAgende_main extends JFrame {
 		panel.add(panel_consultas);
 		panel_consultas.setLayout(null);
 		
-		JLabel Data_nascimento_table = DefaultComponentFactory.getInstance().createLabel("Data_nascimento");
-		Data_nascimento_table.setBounds(522, 11, 126, 14);
-		panel_consultas.add(Data_nascimento_table);
+		JLabel data_nascimento_table = DefaultComponentFactory.getInstance().createLabel("Data_nascimento");
+		data_nascimento_table.setBounds(522, 11, 126, 14);
+		panel_consultas.add(data_nascimento_table);
 		
-		JLabel CPF_table = DefaultComponentFactory.getInstance().createLabel("CPF");
-		CPF_table.setBounds(395, 11, 132, 14);
-		panel_consultas.add(CPF_table);
+		JLabel cpf_table = DefaultComponentFactory.getInstance().createLabel("CPF");
+		cpf_table.setBounds(395, 11, 132, 14);
+		panel_consultas.add(cpf_table);
 		
-		JLabel Registro_table = DefaultComponentFactory.getInstance().createLabel("Registro");
-		Registro_table.setBounds(270, 11, 126, 14);
-		panel_consultas.add(Registro_table);
+		JLabel registro_table = DefaultComponentFactory.getInstance().createLabel("Registro");
+		registro_table.setBounds(270, 11, 126, 14);
+		panel_consultas.add(registro_table);
 		
-		JLabel Idade_table = DefaultComponentFactory.getInstance().createLabel("Idade");
-		Idade_table.setBounds(145, 11, 126, 14);
-		panel_consultas.add(Idade_table);
+		JLabel idade_table = DefaultComponentFactory.getInstance().createLabel("Idade");
+		idade_table.setBounds(145, 11, 126, 14);
+		panel_consultas.add(idade_table);
 		
-		JLabel Nomes_table = DefaultComponentFactory.getInstance().createLabel("Nome");
-		Nomes_table.setBounds(20, 11, 126, 14);
-		panel_consultas.add(Nomes_table);
+		JLabel nomes_table = DefaultComponentFactory.getInstance().createLabel("Nome");
+		nomes_table.setBounds(20, 11, 126, 14);
+		panel_consultas.add(nomes_table);
 		
 		Consultas = new JTable();
 		Consultas.setName("Consultas");
@@ -189,45 +189,43 @@ public class MedAgende_main extends JFrame {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		JButton Consultas_button = new JButton("Consultas");
-		Consultas_button.setAction(Consultas_show);
-		Consultas_button.setBorder(null);
-		Consultas_button.setFocusable(false);
-		Consultas_button.setFocusTraversalKeysEnabled(false);
-		Consultas_button.setFocusPainted(false);
-		Consultas_button.setBounds(new Rectangle(3, 3, 3, 3));
-		Consultas_button.setBackground(new Color(240, 230, 140));
-		Consultas_button.setBounds(10, 22, 79, 58);
-		panel_2.add(Consultas_button);
+		JButton consultas_button = new JButton("Consultas");
+		consultas_button.setAction(Consultas_show);
+		consultas_button.setBorder(null);
+		consultas_button.setFocusable(false);
+		consultas_button.setFocusTraversalKeysEnabled(false);
+		consultas_button.setFocusPainted(false);
+		consultas_button.setBounds(new Rectangle(3, 3, 3, 3));
+		consultas_button.setBackground(new Color(240, 230, 140));
+		consultas_button.setBounds(10, 22, 79, 58);
+		panel_2.add(consultas_button);
 		
-		JButton Agendamentos_button = new JButton("Agendamentos");
-		Agendamentos_button.setAction(Agendamentos_show);
-		Agendamentos_button.setFocusable(false);
-		Agendamentos_button.setFocusTraversalKeysEnabled(false);
-		Agendamentos_button.setFocusPainted(false);
-		Agendamentos_button.setBounds(new Rectangle(3, 3, 3, 3));
-		Agendamentos_button.setBorder(null);
-		Agendamentos_button.setBackground(new Color(240, 230, 140));
-		Agendamentos_button.setBounds(10, 96, 79, 58);
-		panel_2.add(Agendamentos_button);
+		JButton agendamentos_button = new JButton("Agendamentos");
+		agendamentos_button.setAction(Agendamentos_show);
+		agendamentos_button.setFocusable(false);
+		agendamentos_button.setFocusTraversalKeysEnabled(false);
+		agendamentos_button.setFocusPainted(false);
+		agendamentos_button.setBounds(new Rectangle(3, 3, 3, 3));
+		agendamentos_button.setBorder(null);
+		agendamentos_button.setBackground(new Color(240, 230, 140));
+		agendamentos_button.setBounds(10, 96, 79, 58);
+		panel_2.add(agendamentos_button);
 		
-		JButton Concluídos_button = new JButton("Concluídos");
-		Concluídos_button.setAction(Concluídos_show);
-		Concluídos_button.setFocusable(false);
-		Concluídos_button.setFocusTraversalKeysEnabled(false);
-		Concluídos_button.setFocusPainted(false);
-		Concluídos_button.setBounds(new Rectangle(3, 3, 3, 3));
-		Concluídos_button.setBorder(null);
-		Concluídos_button.setBackground(new Color(240, 230, 140));
-		Concluídos_button.setBounds(10, 165, 79, 58);
-		panel_2.add(Concluídos_button);
-		
+		JButton concluidos_button = new JButton("Concluídos");
+		concluidos_button.setAction(Concluídos_show);
+		concluidos_button.setFocusable(false);
+		concluidos_button.setFocusTraversalKeysEnabled(false);
+		concluidos_button.setFocusPainted(false);
+		concluidos_button.setBounds(new Rectangle(3, 3, 3, 3));
+		concluidos_button.setBorder(null);
+		concluidos_button.setBackground(new Color(240, 230, 140));
+		concluidos_button.setBounds(10, 165, 79, 58);
+		panel_2.add(concluidos_button);
 		
 	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 	}
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
