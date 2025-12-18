@@ -19,14 +19,11 @@ public class TelaHistoricoAgendamentos extends JFrame {
     private static final long serialVersionUID = 1L;
 
     // Labels preenchidos dinamicamente
-    private JLabel lblConfirmacao;
-    private JLabel lblClinicaOlindaEspecialidade;
-    private JLabel lblClinicaRecifeEspecialidade;
+    private JLabel lblConsulta1;
+    private JLabel lblConsulta2;
+    private JLabel lblConsulta3;
 
-    private String cpfPaciente;
-
-    public TelaHistoricoAgendamentos(String cpfPaciente) {
-        this.cpfPaciente = cpfPaciente;
+    public TelaHistoricoAgendamentos() {
 
         setBounds(100, 100, 742, 454);
         getContentPane().setBackground(new Color(170, 255, 255));
@@ -38,9 +35,9 @@ public class TelaHistoricoAgendamentos extends JFrame {
         getContentPane().add(panel);
         panel.setLayout(null);
 
-        JLabel lblTitulo = new JLabel("Histórico de Consultas do paciente");
+        JLabel lblTitulo = new JLabel("Histórico de Consultas");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitulo.setBounds(127, 31, 441, 54);
+        lblTitulo.setBounds(215, 31, 350, 54);
         panel.add(lblTitulo);
 
         JButton btnConfirmar = new JButton("Confirmar");
@@ -65,116 +62,88 @@ public class TelaHistoricoAgendamentos extends JFrame {
         btnVoltar.setBounds(98, 349, 84, 20);
         panel.add(btnVoltar);
 
-      
+        // Painel 1
         JPanel panel1 = new JPanel();
-        panel1.setBounds(81, 142, 572, 54);
+        panel1.setBounds(81, 130, 572, 54);
         panel.add(panel1);
         panel1.setLayout(null);
 
-        lblConfirmacao = new JLabel();
-        lblConfirmacao.setBounds(0, 10, 575, 40);
-        lblConfirmacao.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-        panel1.add(lblConfirmacao);
+        lblConsulta1 = new JLabel();
+        lblConsulta1.setBounds(10, 10, 550, 34);
+        lblConsulta1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        panel1.add(lblConsulta1);
 
-       
+        // Painel 2
         JPanel panel2 = new JPanel();
         panel2.setLayout(null);
-        panel2.setBounds(81, 220, 572, 54);
+        panel2.setBounds(81, 200, 572, 54);
         panel.add(panel2);
 
-        lblClinicaOlindaEspecialidade = new JLabel();
-        lblClinicaOlindaEspecialidade.setBounds(0, 10, 575, 40);
-        lblClinicaOlindaEspecialidade.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-        panel2.add(lblClinicaOlindaEspecialidade);
+        lblConsulta2 = new JLabel();
+        lblConsulta2.setBounds(10, 10, 550, 34);
+        lblConsulta2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        panel2.add(lblConsulta2);
 
-      
+        // Painel 3
         JPanel panel3 = new JPanel();
         panel3.setLayout(null);
-        panel3.setBounds(81, 285, 572, 54);
+        panel3.setBounds(81, 270, 572, 54);
         panel.add(panel3);
 
-        lblClinicaRecifeEspecialidade = new JLabel();
-        lblClinicaRecifeEspecialidade.setBounds(0, 10, 575, 40);
-        lblClinicaRecifeEspecialidade.setFont(new Font("Segoe UI", Font.PLAIN, 10));
-        panel3.add(lblClinicaRecifeEspecialidade);
+        lblConsulta3 = new JLabel();
+        lblConsulta3.setBounds(10, 10, 550, 34);
+        lblConsulta3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        panel3.add(lblConsulta3);
 
         carregarHistorico();
     }
 
     private void carregarHistorico() {
 
-        // Validação do CPF
-        if (cpfPaciente == null || cpfPaciente.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "CPF do paciente não informado.",
-                    "Aviso",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        lblConsulta1.setText("");
+        lblConsulta2.setText("");
+        lblConsulta3.setText("");
 
-        // Limpa os labels antes de carregar
-        lblConfirmacao.setText("");
-        lblClinicaOlindaEspecialidade.setText("");
-        lblClinicaRecifeEspecialidade.setText("");
-
-        String sql = """
-            SELECT c.nome_clinica,
-                   e.nome AS especialidade,
-                   m.nome AS medico,
-                   a.data_consulta,
-                   a.horario,
-                   a.status
-            FROM agendamento a
-            JOIN paciente p ON a.id_paciente = p.id
-            JOIN medico m ON a.id_medico = m.id
-            JOIN especialidade e ON m.id_especialidade = e.id
-            JOIN clinica c ON m.id_clinica = c.id
-            WHERE p.cpf = ?
-            ORDER BY a.data_consulta DESC, a.horario DESC
-            LIMIT 3
-        """;
+        String sql =
+            "SELECT " +
+            "p.Nome AS paciente, " +
+            "u.Nome AS medico, " +
+            "e.Nome_Especialidade AS especialidade, " +
+            "c.Data, " +
+            "c.Hora " +
+            "FROM consultas c " +
+            "JOIN paciente p ON c.Id_Paciente = p.Id_Paciente " +
+            "JOIN medico m ON c.Matricula_Med = m.Matricula " +
+            "JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
+            "JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
+            "ORDER BY c.Data DESC, c.Hora DESC " +
+            "LIMIT 3";
 
         try (Connection con = ConnectionFactory.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+             PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
-            ps.setString(1, cpfPaciente);
-            ResultSet rs = ps.executeQuery();
-
-            JLabel[] labels = {
-                lblConfirmacao,
-                lblClinicaOlindaEspecialidade,
-                lblClinicaRecifeEspecialidade
-            };
+            JLabel[] labels = { lblConsulta1, lblConsulta2, lblConsulta3 };
 
             int i = 0;
             while (rs.next() && i < labels.length) {
 
                 labels[i].setText(
-                    " Clínica " + rs.getString("nome_clinica") +
-                    ", especialidade " + rs.getString("especialidade") +
-                    ", com o(a) médico(a) " + rs.getString("medico") +
-                    " no dia " + rs.getDate("data_consulta") +
-                    " às " + rs.getTime("horario")
+                    "Paciente: " + rs.getString("paciente") +
+                    " | Especialidade: " + rs.getString("especialidade") +
+                    " | Médico: " + rs.getString("medico") +
+                    " | Data: " + rs.getDate("Data") +
+                    " | Hora: " + rs.getTime("Hora")
                 );
 
-                String status = rs.getString("status");
-                if ("REALIZADA".equalsIgnoreCase(status)) {
-                    labels[i].setForeground(new Color(0, 128, 0));
-                } else if ("CANCELADA".equalsIgnoreCase(status)) {
-                    labels[i].setForeground(Color.RED);
-                } else {
-                    labels[i].setForeground(Color.BLACK);
-                }
-
+                labels[i].setForeground(Color.BLACK);
                 i++;
             }
 
             if (i == 0) {
-                lblConfirmacao.setText("Nenhuma consulta encontrada para este paciente.");
-                lblConfirmacao.setForeground(Color.GRAY);
+                lblConsulta1.setText("Nenhuma consulta encontrada.");
+                lblConsulta1.setForeground(Color.GRAY);
             }
-
-            rs.close();
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
@@ -185,3 +154,4 @@ public class TelaHistoricoAgendamentos extends JFrame {
         }
     }
 }
+

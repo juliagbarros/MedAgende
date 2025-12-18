@@ -140,9 +140,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public TelaAdministradorCadastroSecretaria() {
 		// INICIALIZA AS BIBLIOTECAS DA API
 		httpClient = new OkHttpClient();
@@ -373,9 +371,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         implementCEPAutoComplete();
 	}
     
-    /**
-     * Método para realizar o cadastro
-     */
+   
     private void realizarCadastro() {
     	
     	Usuario u = new Usuario ();
@@ -467,9 +463,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         }
  
         }
-    /**
-     * Método para abrir a tela de login
-     */
+   
     //private void abrirTelaLogin() {
        //  TelaLogin tela = new TelaLogin();
        // tela.setLocationRelativeTo(null);
@@ -477,9 +471,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
        // dispose();
   //  }
     
-    /**
-     * Avalia a força da senha com base em vários critérios
-     */
+  
     private PasswordStrength checkPasswordStrength(String password) {
         int score = 0;
         
@@ -523,9 +515,7 @@ public class TelaAdministradorCadastroSecretaria extends JFrame {
         }
     }
 
-    /**
-     * Implementa a verificação de força da senha
-     */
+   
     private void implementPasswordStrengthCheck() {
         textSenha.getDocument().addDocumentListener(new DocumentListener() {
             @Override
