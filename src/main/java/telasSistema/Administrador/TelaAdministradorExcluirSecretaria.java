@@ -10,8 +10,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
@@ -29,10 +27,6 @@ public class TelaAdministradorExcluirSecretaria extends JFrame {
     private JFormattedTextField FieldCpf;
     private JTextField FieldEmail;
     private JTextField FieldTelefone;
-    private JPasswordField FieldSENHA;
-    private JPasswordField FieldConfirmarSenha;
-    private JLabel lblStrengthFeedbackNIVELSENHA;
-    private JProgressBar progressBarBARRAdoNIVELSENHA;
     private JTextField FieldCep;
     private JTextField FieldRua;
     private JTextField FieldNum;
@@ -117,6 +111,9 @@ public class TelaAdministradorExcluirSecretaria extends JFrame {
                     FieldBairro.setText(usuarioAtual.getBairro());
                     FieldMunicipio.setText(usuarioAtual.getCidade());
                     FieldCep.setText(usuarioAtual.getCep());
+                    FieldPlanoSaude.setText(usuarioAtual.getPlanoDeSaude());
+                    FieldNum.setText(usuarioAtual.getNumCasa());
+                    FieldEstado.setText(usuarioAtual.getUf());
                     dcDataNascimento.setDate(usuarioAtual.getDataNasc());
 
                     JOptionPane.showMessageDialog(null, "Secretária carregada");
@@ -180,34 +177,6 @@ public class TelaAdministradorExcluirSecretaria extends JFrame {
         FieldPlanoSaude.setBounds(21, 279, 206, 20);
         contentPane.add(FieldPlanoSaude);
         FieldPlanoSaude.setColumns(10);
-
-        JLabel labelSENHA = new JLabel("Nova Senha:");
-        labelSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        labelSENHA.setBounds(21, 315, 100, 14);
-        contentPane.add(labelSENHA);
-
-        FieldSENHA = new JPasswordField();
-        FieldSENHA.setBounds(21, 339, 160, 20);
-        contentPane.add(FieldSENHA);
-
-        JLabel labelConfirmarSenha = new JLabel("Confirmar Senha:");
-        labelConfirmarSenha.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        labelConfirmarSenha.setBounds(200, 315, 124, 14);
-        contentPane.add(labelConfirmarSenha);
-
-        FieldConfirmarSenha = new JPasswordField();
-        FieldConfirmarSenha.setBounds(200, 339, 160, 20);
-        contentPane.add(FieldConfirmarSenha);
-
-        lblStrengthFeedbackNIVELSENHA = new JLabel("Nível:");
-        lblStrengthFeedbackNIVELSENHA.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblStrengthFeedbackNIVELSENHA.setBounds(21, 365, 50, 14);
-        contentPane.add(lblStrengthFeedbackNIVELSENHA);
-
-        progressBarBARRAdoNIVELSENHA = new JProgressBar(0, 5);
-        progressBarBARRAdoNIVELSENHA.setBounds(70, 365, 110, 18);
-        progressBarBARRAdoNIVELSENHA.setStringPainted(true);
-        contentPane.add(progressBarBARRAdoNIVELSENHA);
 
         JLabel lblCep = new JLabel("CEP:");
         lblCep.setFont(new Font("Trebuchet MS", Font.PLAIN, 10));

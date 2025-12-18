@@ -29,6 +29,7 @@ import model.Medico;
 import telasSistema.Administrador.TelaPrincipalAdministrador;
 import telasSistema.Medico.TelaPrincipalMedico;
 import telasSistema.Secretaria.TelaPrincipalSecretaria;
+import javax.swing.ImageIcon;
 
 public class TelaLogin extends JFrame {
 
@@ -190,6 +191,11 @@ public class TelaLogin extends JFrame {
 		gerenciamento.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
 		gerenciamento.setBounds(20, 46, 349, 39);
 		contentPane.add(gerenciamento);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(TelaLogin.class.getResource("/esteto4.png")));
+		lblNewLabel.setBounds(30, 90, 304, 319);
+		contentPane.add(lblNewLabel);
 		
 	} // FECHA O CONSTRUTOR TelaLogin()
 

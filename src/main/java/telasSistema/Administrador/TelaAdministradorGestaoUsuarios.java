@@ -34,11 +34,6 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 		lblGestao.setBounds(229, 10, 231, 54);
 		panel.add(lblGestao);
 		
-		JButton btnAtivarDestivar = new JButton("Ativar/Desativar Usuários do Sistema");
-		btnAtivarDestivar.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-		btnAtivarDestivar.setBounds(212, 91, 266, 70);
-		panel.add(btnAtivarDestivar);
-		
 		
 		
 		JButton btnVoltar = new JButton("Voltar");
@@ -68,7 +63,7 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 				dispose();
 			}
 		});
-		btnEditarUsuarios.setBounds(212, 187, 266, 70);
+		btnEditarUsuarios.setBounds(212, 112, 266, 70);
 		panel.add(btnEditarUsuarios);
 		
 		JButton btnExcluirUsuarios = new JButton("Excluir Usuarios");
@@ -80,7 +75,7 @@ public class TelaAdministradorGestaoUsuarios extends JFrame {
 				dispose();
 			}
 		});
-		btnExcluirUsuarios.setBounds(212, 295, 266, 63);
+		btnExcluirUsuarios.setBounds(212, 232, 266, 63);
 		panel.add(btnExcluirUsuarios);
 		
 
