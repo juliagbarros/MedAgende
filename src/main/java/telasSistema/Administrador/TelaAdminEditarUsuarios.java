@@ -57,26 +57,26 @@ public class TelaAdminEditarUsuarios extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\heito\\OneDrive\\Imagens\\agata2.png"));
-		lblNewLabel_2.setBounds(505, 147, 158, 142);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\Acer\\git\\NovoMedAgende2\\Assets\\agta2.png"));
+		lblNewLabel_2.setBounds(527, 111, 192, 178);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\heito\\OneDrive\\Imagens\\Cartaxo3.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\Acer\\git\\NovoMedAgende2\\Assets\\Cartaxo3.png"));
 		lblNewLabel_1.setBounds(279, 139, 150, 150);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\heito\\OneDrive\\Imagens\\juninho.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Acer\\git\\NovoMedAgende2\\Assets\\juninho.png"));
 		lblNewLabel.setBounds(50, 139, 150, 150);
 		panel.add(lblNewLabel);
 		
 		JButton btnEditarPaciente = new JButton("Editar Paciente");
 		btnEditarPaciente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaSecretariaEditarPaciente telaSecretariaEditarPaciente = new TelaSecretariaEditarPaciente();
-				telaSecretariaEditarPaciente.setLocationRelativeTo(null);
-				telaSecretariaEditarPaciente.setVisible(true);
+				TelaAdministradorEditarPaciente telaAdministradorEditarPaciente = new TelaAdministradorEditarPaciente();
+				telaAdministradorEditarPaciente.setLocationRelativeTo(null);
+				telaAdministradorEditarPaciente.setVisible(true);
 				dispose();
 			}
 		});
@@ -144,3 +144,4 @@ public class TelaAdminEditarUsuarios extends JFrame {
 
 	}
 }
+
