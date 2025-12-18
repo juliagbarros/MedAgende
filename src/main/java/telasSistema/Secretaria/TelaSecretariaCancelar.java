@@ -328,15 +328,18 @@ public class TelaSecretariaCancelar extends JFrame {
             conexao = ConnectionFactory.getConnection();
             if (conexao == null) return;
             
-            String sql = "SELECT a.Id_Agendamento, DATE_FORMAT(a.Data_Consulta, '%d/%m/%Y') as Data, " +
-                        "TIME_FORMAT(a.Hora_Consulta, '%H:%i') as Hora, " +
-                        "m.Nome as Medico, m.Especialidade, a.Status " +
-                        "FROM agenda a " +
-                        "INNER JOIN medico m ON a.Id_Medico = m.Id_Medico " +
-                        "WHERE a.Id_Paciente = ? AND a.Status = 'agendada' " +
-                        "AND (a.Data_Consulta > CURDATE() OR " +
-                        "(a.Data_Consulta = CURDATE() AND a.Hora_Consulta > CURTIME())) " +
-                        "ORDER BY a.Data_Consulta, a.Hora_Consulta";
+            // Consulta ajustada para o banco de dados fornecido
+            String sql = "SELECT c.id_Consultas, DATE_FORMAT(c.Data_Consulta, '%d/%m/%Y') as Data, " +
+                        "TIME_FORMAT(c.Horario_Consulta, '%H:%i') as Hora, " +
+                        "u.Nome as Medico, e.Nome_Especialidade as Especialidade, c.Situacao " +
+                        "FROM consultas c " +
+                        "INNER JOIN medico m ON c.Fk_Matricula_Medico = m.Matricula " +
+                        "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
+                        "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
+                        "WHERE c.Fk_Id_Paciente = ? AND (c.Situacao = 'agendada' OR c.Situacao IS NULL) " +
+                        "AND (c.Data_Consulta > CURDATE() OR " +
+                        "(c.Data_Consulta = CURDATE() AND c.Horario_Consulta > CURTIME())) " +
+                        "ORDER BY c.Data_Consulta, c.Horario_Consulta";
             
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, idPaciente);
@@ -345,12 +348,12 @@ public class TelaSecretariaCancelar extends JFrame {
             int count = 0;
             while (rs.next()) {
                 Object[] row = {
-                    rs.getInt("Id_Agenda"),
+                    rs.getInt("id_Consultas"),
                     rs.getString("Data"),
                     rs.getString("Hora"),
                     rs.getString("Medico"),
                     rs.getString("Especialidade"),
-                    rs.getString("Status")
+                    rs.getString("Situacao") != null ? rs.getString("Situacao") : "agendada"
                 };
                 tableModel.addRow(row);
                 count++;
@@ -411,35 +414,23 @@ public class TelaSecretariaCancelar extends JFrame {
             return;
         }
         
-        // Perguntar motivo do cancelamento
-        String motivo = JOptionPane.showInputDialog(this,
-            "Informe o motivo do cancelamento (opcional):",
-            "Motivo do Cancelamento",
-            JOptionPane.QUESTION_MESSAGE);
-        
-        if (motivo == null) {
-            motivo = "Cancelado pelo paciente/secretária";
-        }
-        
         Connection conexao = null;
         PreparedStatement ps = null;
         
         try {
             conexao = ConnectionFactory.getConnection();
             
-            // Atualizar o status da consulta para 'cancelada'
-            String sql = "UPDATE agenda SET Status = 'cancelada', Observacoes = ? WHERE Id_Agenda = ?";
+            // Atualizar o status da consulta para 'cancelada' - usando a tabela consultas do banco
+            String sql = "UPDATE consultas SET Situacao = 'cancelada' WHERE id_Consultas = ?";
             ps = conexao.prepareStatement(sql);
-            ps.setString(1, motivo);
-            ps.setInt(2, consultaId);
+            ps.setInt(1, consultaId);
             
             int rowsAffected = ps.executeUpdate();
             
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(this,
                     "Consulta cancelada com sucesso!\n" +
-                    "ID da consulta: " + consultaId + "\n" +
-                    "Motivo: " + motivo,
+                    "ID da consulta: " + consultaId,
                     "Cancelamento Realizado",
                     JOptionPane.INFORMATION_MESSAGE);
                 
@@ -448,9 +439,6 @@ public class TelaSecretariaCancelar extends JFrame {
                 
                 // Desabilitar o botão se não houver mais consultas ativas
                 verificarConsultasAtivas();
-                
-                // Registrar no histórico
-                registrarHistoricoCancelamento(consultaId, motivo);
                 
             } else {
                 JOptionPane.showMessageDialog(this,
@@ -480,43 +468,13 @@ public class TelaSecretariaCancelar extends JFrame {
         
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             String status = tableModel.getValueAt(i, 5).toString();
-            if ("agendada".equals(status)) {
+            if ("agendada".equals(status) || status == null || status.isEmpty()) {
                 hasActiveConsultas = true;
                 break;
             }
         }
         
         btnCancelarConsulta.setEnabled(hasActiveConsultas);
-    }
-    
-    private void registrarHistoricoCancelamento(int consultaId, String motivo) {
-        Connection conexao = null;
-        PreparedStatement ps = null;
-        
-        try {
-            conexao = ConnectionFactory.getConnection();
-            
-            // Inserir no histórico de cancelamentos (se tiver uma tabela específica)
-            // Ou apenas atualizar a consulta com data de cancelamento
-            String sql = "INSERT INTO historico_cancelamentos (Id_Agenda, Data_Cancelamento, Motivo, Usuario) " +
-                        "VALUES (?, NOW(), ?, 'Secretaria')";
-            
-            ps = conexao.prepareStatement(sql);
-            ps.setInt(1, consultaId);
-            ps.setString(2, motivo);
-            ps.executeUpdate();
-            
-        } catch (SQLException e) {
-            System.err.println("Erro ao registrar histórico: " + e.getMessage());
-            // Não mostrar erro para o usuário, pois o cancelamento já foi feito
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conexao != null) conexao.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
     
     private void abrirTelaCadastroPaciente(String cpf) {
