@@ -208,6 +208,7 @@ public class TelaLogin extends JFrame {
 	        
 	        // 3. Compara com o hash armazenado no banco
 	        pst.setString(2, senhaCriptografada);
+	        //System.out.println("[DUBUG Logar] Senha criptografada: " + senhaCriptografada);
 	        
 	        // 4. Executa a consulta
 	        rs = pst.executeQuery();
