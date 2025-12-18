@@ -199,6 +199,15 @@ public class TelaInfosAgendamento extends JFrame {
 		panel.add(lblCadastroPaciente);
 		
 		JButton btnCadastrarPaciente = new JButton("Cadastrar Paciente");
+		btnCadastrarPaciente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaSecretariaCadastrarPaciente tela= new TelaSecretariaCadastrarPaciente();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				dispose();
+			}
+		});
 		btnCadastrarPaciente.setFont(new Font("Segoe UI", Font.PLAIN, 10));
 		btnCadastrarPaciente.setBounds(71, 283, 137, 20);
 		panel.add(btnCadastrarPaciente);

@@ -210,7 +210,7 @@ public class TelaEmitirPrescricao extends JFrame {
         JButton btnImprimir = new JButton("EMITIR PRESCRIÇÃO");
         btnImprimir.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnImprimir.setBackground(new Color(255, 255, 255));
-        btnImprimir.setForeground(Color.WHITE);
+        btnImprimir.setForeground(new Color(0, 0, 0));
         btnImprimir.setBounds(550, 440, 200, 40);
         btnImprimir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -223,7 +223,7 @@ public class TelaEmitirPrescricao extends JFrame {
         JButton btnVoltar = new JButton("VOLTAR");
         btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnVoltar.setBackground(new Color(255, 255, 255));
-        btnVoltar.setForeground(Color.WHITE);
+        btnVoltar.setForeground(new Color(0, 0, 0));
         btnVoltar.setBounds(150, 440, 150, 40);
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -238,7 +238,7 @@ public class TelaEmitirPrescricao extends JFrame {
         JButton btnLimpar = new JButton("LIMPAR CAMPOS");
         btnLimpar.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnLimpar.setBackground(new Color(255, 255, 255));
-        btnLimpar.setForeground(Color.WHITE);
+        btnLimpar.setForeground(new Color(0, 0, 0));
         btnLimpar.setBounds(350, 440, 150, 40);
         btnLimpar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

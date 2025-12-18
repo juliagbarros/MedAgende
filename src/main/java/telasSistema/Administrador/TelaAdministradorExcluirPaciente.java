@@ -254,7 +254,7 @@ public class TelaAdministradorExcluirPaciente extends JFrame {
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TelaAdminEditarUsuarios tela = new TelaAdminEditarUsuarios();
+        		TelaAdminExcluirUsuarios tela = new TelaAdminExcluirUsuarios();
 				tela.setLocationRelativeTo(null);
         		tela.setVisible(true);
 				 dispose();
