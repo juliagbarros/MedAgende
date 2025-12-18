@@ -57,17 +57,17 @@ public class TelaAdminExcluirUsuarios extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/agta2.png")));
+		//lblNewLabel_2.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/agta2.png")));
 		lblNewLabel_2.setBounds(503, 147, 160, 150);
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/Cartaxo3.png")));
+		//lblNewLabel_1.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/Cartaxo3.png")));
 		lblNewLabel_1.setBounds(279, 139, 166, 166);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/juninho.png")));
+		//lblNewLabel.setIcon(new ImageIcon(TelaAdminExcluirUsuarios.class.getResource("/juninho.png")));
 		lblNewLabel.setBounds(50, 139, 160, 158);
 		panel.add(lblNewLabel);
 		

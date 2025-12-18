@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import telasSistema.Administrador.TelaAdminEditarUsuarios;
 import telasSistema.Administrador.TelaAdminExcluirUsuarios;
 
 import javax.swing.JComboBox;
@@ -175,7 +176,7 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel LabelCadastroPaciente = new JLabel("Excluir Paciente:");
-		LabelCadastroPaciente.setBounds(272, 0, 387, 67);
+		LabelCadastroPaciente.setBounds(351, 0, 387, 67);
 		LabelCadastroPaciente.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
 		contentPane.add(LabelCadastroPaciente);
 		
@@ -244,7 +245,7 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
         btnExcluir.setForeground(new Color(0, 0, 0));
         btnExcluir.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-							
+							excluir();
                }
                
         });
@@ -254,7 +255,7 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
+        		TelaAdminEditarUsuarios tela = new TelaAdminEditarUsuarios();
 				tela.setLocationRelativeTo(null);
         		tela.setVisible(true);
 				 dispose();
@@ -336,7 +337,7 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
         
         JLabel lblPreenchaOsDados = new JLabel("Digite o CPF para buscar o(a) paciente para excluir: ");
         lblPreenchaOsDados.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblPreenchaOsDados.setBounds(237, 53, 331, 14);
+        lblPreenchaOsDados.setBounds(298, 53, 331, 14);
         contentPane.add(lblPreenchaOsDados);
         
         JLabel lblDigiteOTelefone = new JLabel("Digite o Telefone:");
@@ -419,116 +420,160 @@ public class TelaSecretariaExcluirPaciente extends JFrame {
         contentPane.add(btnNewButton);
 
         
-        // ADICIONA LISTENER PARA BUSCA AUTOMÁTICA DE CEP
         implementCEPAutoComplete();
 	}
-	public void editarDadosPaciente() throws SQLException {
-		Connection conexao = null;
+	public void excluir() {
+	    Connection conexao = null;
 	    PreparedStatement pstPaciente = null;
-	    PreparedStatement pstUpdateAlergia=null;
-	    PreparedStatement pstInsertAlergia=null;
-	    PreparedStatement pstUpdateComorbidade=null;
-	    PreparedStatement pstInsertComorbidade = null;
+	    PreparedStatement pstAlergia = null;
+	    PreparedStatement pstComorbidade = null;
+	    PreparedStatement pstConsulta = null;
+	    PreparedStatement pstProntuario = null;
+	    ResultSet rs = null;
 	    
 	    try {
-	    	 conexao = ConnectionFactory.getConnection();
-	    	 conexao.setAutoCommit(false);
-	        String sqlPaciente = "UPDATE paciente SET Email=?, Nome=?, Data_Nasc= ?, Bairro=?, Rua=?, Num_Casa=?, Municipio=?, Plano_De_Saude=?, CEP=?,Telefone=?, Estado=?, Profissao=?, Sexo=? WHERE CPF =?";
-	        pstPaciente = conexao.prepareStatement(sqlPaciente);
-	      //o metodo abaixo ele utiliza a tabela de paciente como referencia
-	        pstPaciente.setString(1, FieldEmail.getText());
-	        pstPaciente.setString(2, FieldNome.getText());
+	        conexao = ConnectionFactory.getConnection();
+	        conexao.setAutoCommit(false); 
+	        String cpf = FieldCpf.getText().trim();
 	        
-	        // Data de nascimento
-	        java.util.Date dataUtil = dcDataNascimento.getDate();
-	        if (dataUtil != null) {
-	            java.sql.Date dataSql = new java.sql.Date(dataUtil.getTime());
-	            pstPaciente.setDate(3, dataSql);
-	        } else {
-	            pstPaciente.setNull(3, java.sql.Types.DATE);
+	        if (cpf.isEmpty()) {
+	            JOptionPane.showMessageDialog(null, 
+	                "Digite o CPF do paciente para excluir!",
+	                "CPF Vazio",
+	                JOptionPane.WARNING_MESSAGE);
+	            return;
 	        }
-	        
-	        pstPaciente.setString(4, FieldBairro.getText());
-	        pstPaciente.setString(5, FieldRua.getText());
-	        pstPaciente.setString(6, FieldNumero.getText());
-	        pstPaciente.setString(7, FieldMunicipio.getText());
-	        pstPaciente.setString(8, FieldPlanoSaude.getText());
-	        pstPaciente.setString(9, FieldCep.getText());
-	        pstPaciente.setString(10, FieldTelefone.getText());
-	        pstPaciente.setString(11, FieldEstado.getText());
-	        pstPaciente.setString(12, FieldProfissao.getText());
-	        String sexo = (String) boxSexo.getSelectedItem();
-	        pstPaciente.setString(13, sexo != null ? sexo : "");
-	        pstPaciente.setString(14, FieldCpf.getText());
 	        
 	       
-	        int linhasAfetadas = pstPaciente.executeUpdate();
-	        if (linhasAfetadas == 0) {
-	            throw new SQLException("Nenhum paciente enocontrado!");
+	        cpf = cpf.replaceAll("[^0-9]", "");
+	        
+	        String sqlBuscarPaciente = "SELECT Id_Paciente, Nome FROM paciente WHERE CPF = ?";
+	        pstPaciente = conexao.prepareStatement(sqlBuscarPaciente);
+	        pstPaciente.setString(1, cpf);
+	        rs = pstPaciente.executeQuery();
+	        
+	        if (!rs.next()) {
+	            JOptionPane.showMessageDialog(null,
+	                "Paciente com CPF " + (cpf) + " não encontrado!",
+	                "Paciente não encontrado",
+	                JOptionPane.WARNING_MESSAGE);
+	            return;
 	        }
 	        
-	        String alergia = FieldAlergia.getText().trim();
-	        if (!alergia.isEmpty()) {
-	        String sqlUpdateAlergia = "UPDATE Alergias SET Alergia =? WHERE Id_Paciente=?";
-	        pstUpdateAlergia=conexao.prepareStatement(sqlUpdateAlergia);
-	        pstUpdateAlergia.setString(1, alergia);
-            pstUpdateAlergia.setInt(2, idPaciente);
-            int linhasAlergia = pstUpdateAlergia.executeUpdate();
-            
-            if (linhasAlergia==0) {
-            	 String sqlInsertAlergia = "INSERT INTO Alergias (Id_Paciente, Alergia) VALUES (?, ?)";
-                 pstInsertAlergia = conexao.prepareStatement(sqlInsertAlergia);
-                 pstInsertAlergia.setInt(1, idPaciente);
-                 pstInsertAlergia.setString(2, alergia);
-                 pstInsertAlergia.executeUpdate();	
-            }
-	        }
+	        int idPaciente = rs.getInt("Id_Paciente");
+	        String nomePaciente = rs.getString("Nome");
 	        
-	        String comorbidade = FieldComorbidade.getText().trim();
-	        if (!comorbidade.isEmpty()) {
-	        	 String sqlUpdateComorbidade = "UPDATE Comorbidades SET Comorbidade=? WHERE Id_Paciente=?";
-	             pstUpdateComorbidade = conexao.prepareStatement(sqlUpdateComorbidade);
-	             pstUpdateComorbidade.setString(1, comorbidade);
-	             pstUpdateComorbidade.setInt(2, idPaciente);
-	             int linhasComorbidade = pstUpdateComorbidade.executeUpdate();
-	             
-	             if (linhasComorbidade == 0) {
-	                 String sqlInsertComorbidade = "INSERT INTO Comorbidades (Id_Paciente, Comorbidade) VALUES (?, ?)";
-	                 pstInsertComorbidade = conexao.prepareStatement(sqlInsertComorbidade);
-	                 pstInsertComorbidade.setInt(1, idPaciente);
-	                 pstInsertComorbidade.setString(2, comorbidade);
-	                 pstInsertComorbidade.executeUpdate();
-	                 }
+	        rs.close();
+	        pstPaciente.close();
+	        
+	        int confirmacao = JOptionPane.showConfirmDialog(null,
+	            "Tem certeza que deseja excluir o paciente:\n" +
+	            "Nome: " + nomePaciente + "\n" +
+	            "CPF: " + (cpf) + "\n\n" +
+	            "Esta ação NÃO pode ser desfeita!\n" +
+	            "Todos os dados relacionados serão excluídos permanentemente.",
+	            "Confirmação de Exclusão",
+	            JOptionPane.YES_NO_OPTION,
+	            JOptionPane.WARNING_MESSAGE);
+	        
+	        if (confirmacao != JOptionPane.YES_OPTION) {
+	            return;
 	        }
 	        
 	        
-	        conexao.commit();
+	        String sqlAlergia = "DELETE FROM alergias WHERE Id_Paciente = ?";
+	        pstAlergia = conexao.prepareStatement(sqlAlergia);
+	        pstAlergia.setInt(1, idPaciente);
+	        pstAlergia.executeUpdate();
+	        pstAlergia.close();
 	        
-	        JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+	        String sqlComorbidade = "DELETE FROM comorbidades WHERE Id_Paciente = ?";
+	        pstComorbidade = conexao.prepareStatement(sqlComorbidade);
+	        pstComorbidade.setInt(1, idPaciente);
+	        pstComorbidade.executeUpdate();
+	        pstComorbidade.close();
 	        
-	    } catch (Exception e) {
-	        if (conexao != null) {
-	            try {
+	        try {
+	            String sqlProntuario = "DELETE FROM prontuarios WHERE Id_Paciente = ?";
+	            pstProntuario = conexao.prepareStatement(sqlProntuario);
+	            pstProntuario.setInt(1, idPaciente);
+	            pstProntuario.executeUpdate();
+	            pstProntuario.close();
+	        } catch (SQLException e) {
+	            System.out.println("Info: Nenhum prontuário para excluir ou tabela não existe");
+	        }
+	        
+	        String sqlConsulta = "DELETE FROM consultas WHERE Id_Paciente = ?";
+	        pstConsulta = conexao.prepareStatement(sqlConsulta);
+	        pstConsulta.setInt(1, idPaciente);
+	        int consultasExcluidas = pstConsulta.executeUpdate();
+	        pstConsulta.close();
+	        
+	        String sqlDeletePaciente = "DELETE FROM paciente WHERE Id_Paciente = ?";
+	        pstPaciente = conexao.prepareStatement(sqlDeletePaciente);
+	        pstPaciente.setInt(1, idPaciente);
+	        int resultado = pstPaciente.executeUpdate();
+	        
+	        if (resultado > 0) {
+	            conexao.commit();
+	            
+	            limparCampos();
+	            
+	            JOptionPane.showMessageDialog(null,
+	                "✅ Paciente excluído com sucesso!\n" +
+	                "Nome: " + nomePaciente + "\n" +
+	                "CPF: " + (cpf) + "\n" +
+	                (consultasExcluidas > 0 ? "Consultas excluídas: " + consultasExcluidas + "\n" : "") +
+	                "Todos os dados relacionados foram removidos.",
+	                "Exclusão Concluída",
+	                JOptionPane.INFORMATION_MESSAGE);
+	        } else {
+	            conexao.rollback();
+	            JOptionPane.showMessageDialog(null,
+	                "Erro ao excluir paciente. Nenhum registro foi afetado.",
+	                "Erro",
+	                JOptionPane.ERROR_MESSAGE);
+	        }
+	        
+	    } catch (SQLException e) {
+	        try {
+	            if (conexao != null) {
 	                conexao.rollback();
-	            } catch (SQLException ex) {
-	                ex.printStackTrace();
 	            }
+	        } catch (SQLException ex) {
+	            ex.printStackTrace();
+	            JOptionPane.showMessageDialog(null,
+		                "❌ Erro ao excluir paciente: " + e.getMessage() + 
+		                "\nCódigo: " + e.getErrorCode(),
+		                "Erro no Banco de Dados",
+		                JOptionPane.ERROR_MESSAGE);
 	        }
 	        
-	        JOptionPane.showMessageDialog(null,
-	            "Erro ao atualizar paciente: " + e.getMessage(),
-	            "Erro na Atualização", JOptionPane.ERROR_MESSAGE);
-	        throw e;
+	       
+	        e.printStackTrace();
 	        
 	    } finally {
-	        if (pstPaciente != null) try { 
-	        	conexao.close(); 
-	        	} catch (SQLException e) {
-	        		e.printStackTrace();
-	        	}
-	       
+	        fecharRecurso(rs);
+	        fecharRecurso(pstProntuario);
+	        fecharRecurso(pstConsulta);
+	        fecharRecurso(pstComorbidade);
+	        fecharRecurso(pstAlergia);
+	        fecharRecurso(pstPaciente);
+	        fecharRecurso(conexao);
 	    }
 	}
+    
+	
+    
+	private void fecharRecurso(AutoCloseable recurso) {
+        if (recurso != null) {
+            try {
+                recurso.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 	private void limparCampos() {
 	    FieldNome.setText("");

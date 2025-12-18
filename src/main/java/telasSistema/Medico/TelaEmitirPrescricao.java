@@ -72,14 +72,13 @@ public class TelaEmitirPrescricao extends JFrame {
     }
     
     private void inicializarComponentes() {
-        // Título
+        
         JLabel lblTitulo = new JLabel("EMITIR PRESCRIÇÃO MÉDICA");
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 19));
         lblTitulo.setBounds(300, 20, 300, 30);
         contentPane.add(lblTitulo);
         
-        // Número da Prescrição
         JLabel lblNumeroPrescricao = new JLabel("Nº da Prescrição:");
         lblNumeroPrescricao.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblNumeroPrescricao.setBounds(50, 70, 130, 25);
@@ -90,7 +89,6 @@ public class TelaEmitirPrescricao extends JFrame {
         textNumeroPrescricao.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         contentPane.add(textNumeroPrescricao);
         
-        // Paciente
         JLabel lblPaciente = new JLabel("Paciente:");
         lblPaciente.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblPaciente.setBounds(350, 70, 100, 25);
@@ -101,7 +99,6 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textPaciente);
         textPaciente.setColumns(10);
         
-        // Frequência
         JLabel lblFrequencia = new JLabel("Frequência:");
         lblFrequencia.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblFrequencia.setBounds(600, 70, 100, 25);
@@ -112,7 +109,6 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textFrequencia);
         textFrequencia.setColumns(10);
         
-        // Diagnóstico
         JLabel lblDiagnostico = new JLabel("Diagnóstico:");
         lblDiagnostico.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblDiagnostico.setBounds(50, 120, 100, 25);
@@ -123,13 +119,11 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textDiagnostico);
         textDiagnostico.setColumns(10);
         
-        // Data de Início
         JLabel lblDataInicio = new JLabel("Data de início:");
         lblDataInicio.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblDataInicio.setBounds(430, 120, 120, 25);
         contentPane.add(lblDataInicio);
         
-        // Comboboxes para data de início
         comboBoxDiaInicio = new JComboBox<>();
         comboBoxDiaInicio.setBounds(550, 120, 50, 25);
         contentPane.add(comboBoxDiaInicio);
@@ -142,13 +136,11 @@ public class TelaEmitirPrescricao extends JFrame {
         comboBoxAnoInicio.setBounds(680, 120, 70, 25);
         contentPane.add(comboBoxAnoInicio);
         
-        // Data de Término
         JLabel lblDataTermino = new JLabel("Data de término:");
         lblDataTermino.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblDataTermino.setBounds(430, 160, 120, 25);
         contentPane.add(lblDataTermino);
         
-        // Comboboxes para data de término
         comboBoxDiaTermino = new JComboBox<>();
         comboBoxDiaTermino.setBounds(550, 160, 50, 25);
         contentPane.add(comboBoxDiaTermino);
@@ -161,7 +153,6 @@ public class TelaEmitirPrescricao extends JFrame {
         comboBoxAnoTermino.setBounds(680, 160, 70, 25);
         contentPane.add(comboBoxAnoTermino);
         
-        // Medicamentos
         JLabel lblMedicamentos = new JLabel("Medicamento(s):");
         lblMedicamentos.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblMedicamentos.setBounds(50, 200, 130, 25);
@@ -174,7 +165,6 @@ public class TelaEmitirPrescricao extends JFrame {
         textMedicamentos.setWrapStyleWord(true);
         contentPane.add(textMedicamentos);
         
-        // Descrição
         JLabel lblDescricao = new JLabel("Descrição/Instruções:");
         lblDescricao.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblDescricao.setBounds(430, 200, 150, 25);
@@ -187,7 +177,6 @@ public class TelaEmitirPrescricao extends JFrame {
         textDescricao.setWrapStyleWord(true);
         contentPane.add(textDescricao);
         
-        // Médico
         JLabel lblMedico = new JLabel("Médico:");
         lblMedico.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblMedico.setBounds(50, 350, 100, 25);
@@ -198,7 +187,6 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textMedico);
         textMedico.setColumns(10);
         
-        // Convênio
         JLabel lblConvenio = new JLabel("Convênio:");
         lblConvenio.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblConvenio.setBounds(350, 350, 100, 25);
@@ -209,7 +197,6 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textConvenio);
         textConvenio.setColumns(10);
         
-        // Alergias
         JLabel lblAlergias = new JLabel("Alergia(s):");
         lblAlergias.setFont(new Font("Segoe UI", Font.BOLD, 14));
         lblAlergias.setBounds(50, 390, 100, 25);
@@ -220,10 +207,9 @@ public class TelaEmitirPrescricao extends JFrame {
         contentPane.add(textAlergias);
         textAlergias.setColumns(10);
         
-        // Botão Imprimir
         JButton btnImprimir = new JButton("EMITIR PRESCRIÇÃO");
         btnImprimir.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnImprimir.setBackground(new Color(34, 139, 34));
+        btnImprimir.setBackground(new Color(255, 255, 255));
         btnImprimir.setForeground(Color.WHITE);
         btnImprimir.setBounds(550, 440, 200, 40);
         btnImprimir.addActionListener(new ActionListener() {
@@ -233,10 +219,9 @@ public class TelaEmitirPrescricao extends JFrame {
         });
         contentPane.add(btnImprimir);
         
-        // Botão Voltar
         JButton btnVoltar = new JButton("VOLTAR");
         btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnVoltar.setBackground(new Color(220, 20, 60));
+        btnVoltar.setBackground(new Color(255, 255, 255));
         btnVoltar.setForeground(Color.WHITE);
         btnVoltar.setBounds(150, 440, 150, 40);
         btnVoltar.addActionListener(new ActionListener() {
@@ -246,10 +231,9 @@ public class TelaEmitirPrescricao extends JFrame {
         });
         contentPane.add(btnVoltar);
         
-        // Botão Limpar
         JButton btnLimpar = new JButton("LIMPAR CAMPOS");
         btnLimpar.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnLimpar.setBackground(new Color(255, 140, 0));
+        btnLimpar.setBackground(new Color(255, 255, 255));
         btnLimpar.setForeground(Color.WHITE);
         btnLimpar.setBounds(350, 440, 150, 40);
         btnLimpar.addActionListener(new ActionListener() {
@@ -261,14 +245,12 @@ public class TelaEmitirPrescricao extends JFrame {
     }
     
     private void preencherComboboxDatas() {
-        // Preencher dias (1-31)
         for (int i = 1; i <= 31; i++) {
             String dia = String.format("%02d", i);
             comboBoxDiaInicio.addItem(dia);
             comboBoxDiaTermino.addItem(dia);
         }
         
-        // Preencher meses
         String[] meses = {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", 
                          "Jul", "Ago", "Set", "Out", "Nov", "Dez"};
         for (String mes : meses) {
@@ -276,25 +258,22 @@ public class TelaEmitirPrescricao extends JFrame {
             comboBoxMesTermino.addItem(mes);
         }
         
-        // Preencher anos (2020-2030)
         for (int i = 2020; i <= 2030; i++) {
             String ano = String.valueOf(i);
             comboBoxAnoInicio.addItem(ano);
             comboBoxAnoTermino.addItem(ano);
         }
         
-        // Selecionar data atual aproximada
         comboBoxDiaInicio.setSelectedIndex(15);
-        comboBoxMesInicio.setSelectedIndex(5); // Junho
+        comboBoxMesInicio.setSelectedIndex(5); 
         comboBoxAnoInicio.setSelectedItem("2024");
         
         comboBoxDiaTermino.setSelectedIndex(30);
-        comboBoxMesTermino.setSelectedIndex(5); // Junho
+        comboBoxMesTermino.setSelectedIndex(5); 
         comboBoxAnoTermino.setSelectedItem("2024");
     }
     
     private void emitirPrescricao() {
-        // Coletar dados dos campos
         String paciente = textPaciente.getText().trim();
         String diagnostico = textDiagnostico.getText().trim();
         String medicamentos = textMedicamentos.getText().trim();
@@ -304,7 +283,6 @@ public class TelaEmitirPrescricao extends JFrame {
         String frequencia = textFrequencia.getText().trim();
         String descricao = textDescricao.getText().trim();
         
-        // Montar datas
         String dataInicio = comboBoxDiaInicio.getSelectedItem() + "/" + 
                            comboBoxMesInicio.getSelectedItem() + "/" + 
                            comboBoxAnoInicio.getSelectedItem();
@@ -313,7 +291,6 @@ public class TelaEmitirPrescricao extends JFrame {
                             comboBoxMesTermino.getSelectedItem() + "/" + 
                             comboBoxAnoTermino.getSelectedItem();
         
-        // Validar campos obrigatórios
         if (paciente.isEmpty()) {
             JOptionPane.showMessageDialog(this, 
                 "Informe o nome do paciente!", 
@@ -345,23 +322,19 @@ public class TelaEmitirPrescricao extends JFrame {
             medico = "Dr. Não Informado";
         }
         
-        // Se não houver alergias específicas, colocar "Nenhuma conhecida"
         if (alergias.isEmpty()) {
             alergias = "Nenhuma conhecida";
         }
         
-        // Se não houver convênio, colocar padrão
         if (convenio.isEmpty()) {
             convenio = "Particular";
         }
         
-        // Se não houver frequência, colocar padrão
         if (frequencia.isEmpty()) {
             frequencia = "Conforme orientação médica";
         }
         
         try {
-            // Criar objeto de prescrição
             Back.EmitirPrescricao prescricao = new Back.EmitirPrescricao(
                 medico,
                 paciente,
@@ -373,10 +346,9 @@ public class TelaEmitirPrescricao extends JFrame {
                 dataTermino,
                 convenio,
                 alergias,
-                "" // CRM pode ser adicionado se tiver
+                "" 
             );
             
-            // Emitir a prescrição
             boolean sucesso = prescricao.emitir();
             
             if (sucesso) {
@@ -419,7 +391,6 @@ public class TelaEmitirPrescricao extends JFrame {
         textDescricao.setText("");
         textNumeroPrescricao.setText("");
         
-        // Resetar comboboxes para valores padrão
         comboBoxDiaInicio.setSelectedIndex(15);
         comboBoxMesInicio.setSelectedIndex(5);
         comboBoxAnoInicio.setSelectedItem("2024");
@@ -439,14 +410,11 @@ public class TelaEmitirPrescricao extends JFrame {
             JOptionPane.QUESTION_MESSAGE);
         
         if (confirmacao == JOptionPane.YES_OPTION) {
-            // Aqui você coloca o código para voltar para a tela anterior
-            // Por exemplo:
-            // new TelaMenuMedico().setVisible(true);
+           
             dispose();
         }
     }
     
-    // Métodos para preencher automaticamente (se necessário)
     public void preencherDadosPaciente(String nome, String convenio, String alergias) {
         textPaciente.setText(nome);
         textConvenio.setText(convenio);

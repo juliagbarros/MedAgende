@@ -42,7 +42,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 		listOpcoes.setBackground(new Color(255, 255, 255));
 		listOpcoes.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		listOpcoes.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Agendar Consulta", "Cancelar Consulta", "Reagendar Consulta", "Visualizar Histórico de Consultas", "Cadastrar Novo Paciente", "Editar dados do Paciente", "Excluir Paciente"};
+			String[] values = new String[] {"Agendar Consulta", "Cancelar Consulta", "Visualizar Histórico de Consultas", "Cadastrar Novo Paciente", "Editar dados do Paciente", "Excluir Paciente"};
 			public int getSize() {
 				return values.length;
 			}

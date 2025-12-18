@@ -21,10 +21,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import conexao.ConnectionFactory;
 import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
-import java.awt.SystemColor;
 
 public class TelaSecretariaCancelar extends JFrame {
 
@@ -147,8 +148,8 @@ public class TelaSecretariaCancelar extends JFrame {
         lblConsultasAgendadas.setBounds(108, 250, 300, 25);
         panel.add(lblConsultasAgendadas);
         
-        // Modelo da tabela
-        String[] colunas = {"ID", "Data", "Hora", "Médico", "Especialidade", "Status"};
+        // Modelo da tabela - SEM CIDADE E SITUAÇÃO (pois não existem na tabela)
+        String[] colunas = {"ID", "Data", "Hora", "Médico", "Especialidade"};
         tableModel = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -161,11 +162,10 @@ public class TelaSecretariaCancelar extends JFrame {
         tableConsultas.getTableHeader().setReorderingAllowed(false);
         tableConsultas.setRowHeight(25);
         tableConsultas.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableConsultas.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tableConsultas.getColumnModel().getColumn(2).setPreferredWidth(60);
-        tableConsultas.getColumnModel().getColumn(3).setPreferredWidth(150);
-        tableConsultas.getColumnModel().getColumn(4).setPreferredWidth(120);
-        tableConsultas.getColumnModel().getColumn(5).setPreferredWidth(80);
+        tableConsultas.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tableConsultas.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tableConsultas.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tableConsultas.getColumnModel().getColumn(4).setPreferredWidth(150);
         
         JScrollPane scrollPane = new JScrollPane(tableConsultas);
         scrollPane.setBounds(108, 280, 670, 200);
@@ -328,39 +328,58 @@ public class TelaSecretariaCancelar extends JFrame {
             conexao = ConnectionFactory.getConnection();
             if (conexao == null) return;
             
-            // Consulta ajustada para o banco de dados fornecido
-            String sql = "SELECT c.id_Consultas, DATE_FORMAT(c.Data_Consulta, '%d/%m/%Y') as Data, " +
-                        "TIME_FORMAT(c.Horario_Consulta, '%H:%i') as Hora, " +
-                        "u.Nome as Medico, e.Nome_Especialidade as Especialidade, c.Situacao " +
+            // CONSULTA CORRIGIDA para o seu banco de dados
+            String sql = "SELECT " +
+                        "c.Id_Consulta, " +           // Nome correto da coluna
+                        "c.Data AS data_consulta, " +  // Nome correto: Data (não Data_Consulta)
+                        "c.Hora AS hora_consulta, " +  // Nome correto: Hora (não Horario_Consulta)
+                        "u.Nome AS medico_nome, " +
+                        "e.Nome_Especialidade AS especialidade " +
                         "FROM consultas c " +
-                        "INNER JOIN medico m ON c.Fk_Matricula_Medico = m.Matricula " +
+                        "INNER JOIN medico m ON c.Matricula_Med = m.Matricula " +  // Matricula_Med (não Fk_Matricula_Medico)
                         "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
                         "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
-                        "WHERE c.Fk_Id_Paciente = ? AND (c.Situacao = 'agendada' OR c.Situacao IS NULL) " +
-                        "AND (c.Data_Consulta > CURDATE() OR " +
-                        "(c.Data_Consulta = CURDATE() AND c.Horario_Consulta > CURTIME())) " +
-                        "ORDER BY c.Data_Consulta, c.Horario_Consulta";
+                        "WHERE c.Id_Paciente = ? " +  // Id_Paciente (não Fk_Id_Paciente)
+                        "AND c.Data >= CURDATE() " +  // Mostrar apenas consultas futuras ou de hoje
+                        "ORDER BY c.Data ASC, c.Hora ASC";
             
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, idPaciente);
             rs = ps.executeQuery();
             
             int count = 0;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            
             while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("id_Consultas"),
-                    rs.getString("Data"),
-                    rs.getString("Hora"),
-                    rs.getString("Medico"),
-                    rs.getString("Especialidade"),
-                    rs.getString("Situacao") != null ? rs.getString("Situacao") : "agendada"
-                };
+                Object[] row = new Object[5]; // 5 colunas agora (sem situação)
+                row[0] = rs.getInt("Id_Consulta");
+                
+                // Formatar data
+                Date data = rs.getDate("data_consulta");
+                if (data != null) {
+                    row[1] = dateFormat.format(data);
+                } else {
+                    row[1] = "N/A";
+                }
+                
+                // Formatar hora
+                java.sql.Time hora = rs.getTime("hora_consulta");
+                if (hora != null) {
+                    row[2] = timeFormat.format(hora);
+                } else {
+                    row[2] = "N/A";
+                }
+                
+                row[3] = rs.getString("medico_nome");
+                row[4] = rs.getString("especialidade");
+                
                 tableModel.addRow(row);
                 count++;
             }
             
             if (count > 0) {
-                lblNomeEncontrado.setText("Paciente encontrado - " + count + " consulta(s) agendada(s)");
+                lblNomeEncontrado.setText("Paciente encontrado - " + count + " consulta(s) futura(s)");
                 btnCancelarConsulta.setEnabled(true);
             } else {
                 lblNomeEncontrado.setText("Paciente encontrado - Nenhuma consulta futura agendada");
@@ -373,6 +392,7 @@ public class TelaSecretariaCancelar extends JFrame {
                 "Erro ao carregar consultas: " + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         } finally {
             try {
                 if (rs != null) rs.close();
@@ -420,8 +440,9 @@ public class TelaSecretariaCancelar extends JFrame {
         try {
             conexao = ConnectionFactory.getConnection();
             
-            // Atualizar o status da consulta para 'cancelada' - usando a tabela consultas do banco
-            String sql = "UPDATE consultas SET Situacao = 'cancelada' WHERE id_Consultas = ?";
+            // COMO NÃO TEMOS COLUNA SITUAÇÃO, VAMOS EXCLUIR A CONSULTA OU ADICIONAR UMA COLUNA
+            // Opção 1: Excluir a consulta
+            String sql = "DELETE FROM consultas WHERE Id_Consulta = ?";
             ps = conexao.prepareStatement(sql);
             ps.setInt(1, consultaId);
             
@@ -434,11 +455,15 @@ public class TelaSecretariaCancelar extends JFrame {
                     "Cancelamento Realizado",
                     JOptionPane.INFORMATION_MESSAGE);
                 
-                // Atualizar a tabela
-                tableModel.setValueAt("cancelada", selectedRow, 5);
+                // Remover a linha da tabela
+                tableModel.removeRow(selectedRow);
                 
-                // Desabilitar o botão se não houver mais consultas ativas
-                verificarConsultasAtivas();
+                // Desabilitar o botão se não houver mais consultas
+                if (tableModel.getRowCount() == 0) {
+                    btnCancelarConsulta.setEnabled(false);
+                    lblNomeEncontrado.setText("Paciente encontrado - Nenhuma consulta futura agendada");
+                    lblNomeEncontrado.setForeground(Color.ORANGE);
+                }
                 
             } else {
                 JOptionPane.showMessageDialog(this,
@@ -463,37 +488,23 @@ public class TelaSecretariaCancelar extends JFrame {
         }
     }
     
-    private void verificarConsultasAtivas() {
-        boolean hasActiveConsultas = false;
-        
-        for (int i = 0; i < tableModel.getRowCount(); i++) {
-            String status = tableModel.getValueAt(i, 5).toString();
-            if ("agendada".equals(status) || status == null || status.isEmpty()) {
-                hasActiveConsultas = true;
-                break;
-            }
-        }
-        
-        btnCancelarConsulta.setEnabled(hasActiveConsultas);
-    }
-    
     private void abrirTelaCadastroPaciente(String cpf) {
         try {
-            // Fechar a tela atual
             dispose();
             
-            TelaSecretariaCadastrarPaciente telaSecretariaCadastrar = new TelaSecretariaCadastrarPaciente();
-            telaSecretariaCadastrar.setLocationRelativeTo(null);
-            telaSecretariaCadastrar.setVisible(true);
+       
             
             JOptionPane.showMessageDialog(this,
+                "Funcionalidade de cadastro de paciente será implementada.\n" +
                 "CPF para cadastro: " + formatarCPF(cpf),
                 "Cadastro de Paciente",
                 JOptionPane.INFORMATION_MESSAGE);
             
+            voltarParaTelaPrincipal();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Erro ao abrir tela de cadastro: " + e.getMessage(),
+                "Erro: " + e.getMessage(),
                 "Erro",
                 JOptionPane.ERROR_MESSAGE);
         }
@@ -525,16 +536,37 @@ public class TelaSecretariaCancelar extends JFrame {
     
     private void voltarParaTelaPrincipal() {
         try {
-            TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
-            tela.setLocationRelativeTo(this);
+            Class<?> secretariaClass = Class.forName("telasSistema.Secretaria.TelaPrincipalSecretaria");
+            JFrame tela = (JFrame) secretariaClass.getDeclaredConstructor().newInstance();
+            tela.setLocationRelativeTo(null);
             tela.setVisible(true);
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                "Erro ao voltar para tela principal: " + e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+            System.out.println("Não foi possível abrir a tela anterior: " + e.getMessage());
+            dispose(); 
+        }
+    }
+    
+    private void verificarEstruturaConsulta() {
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            String sql = "SHOW COLUMNS FROM consultas";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            System.out.println("=== ESTRUTURA DA TABELA CONSULTAS ===");
+            while (rs.next()) {
+                System.out.println(rs.getString("Field") + " - " + rs.getString("Type"));
+            }
+            System.out.println("====================================");
+            
+            rs.close();
+            ps.close();
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try { if (con != null) con.close(); } catch (Exception e) {}
         }
     }
     
@@ -544,5 +576,8 @@ public class TelaSecretariaCancelar extends JFrame {
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
+        
+        // Para debug - verificar estrutura da tabela
+        tela.verificarEstruturaConsulta();
     }
 }

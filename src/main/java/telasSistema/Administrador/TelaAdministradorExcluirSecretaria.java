@@ -61,13 +61,13 @@ public class TelaAdministradorExcluirSecretaria extends JFrame {
         contentPane.setLayout(null);
 
         JLabel LabelTitulo = new JLabel("Excluir Secretaria");
-        LabelTitulo.setBounds(315, 0, 320, 67);
+        LabelTitulo.setBounds(359, 0, 320, 67);
         LabelTitulo.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
         contentPane.add(LabelTitulo);
         
         JLabel lblPreenchaOsDados = new JLabel("Digite o CPF para buscar a secretára para excluir: ");
         lblPreenchaOsDados.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblPreenchaOsDados.setBounds(297, 53, 331, 14);
+        lblPreenchaOsDados.setBounds(307, 53, 331, 14);
         contentPane.add(lblPreenchaOsDados);
 
         JLabel labelCPF = new JLabel("CPF (Digite para buscar):");

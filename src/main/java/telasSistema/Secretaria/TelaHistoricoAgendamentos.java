@@ -13,52 +13,54 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
+import java.sql.Time;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import conexao.ConnectionFactory;
 
 public class TelaHistoricoAgendamentos extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
-    // Labels preenchidos dinamicamente
-    private JLabel lblConsulta1;
-    private JLabel lblConsulta2;
-    private JLabel lblConsulta3;
-    private JLabel lblStatusBusca;
     private JTextField txtCPFBusca;
     private JButton btnBuscarCPF;
     private JButton btnLimparBusca;
+    private JLabel lblStatusBusca;
+    private JTable tabelaConsultas;
+    private DefaultTableModel modeloTabela;
+    private JScrollPane scrollPane;
 
     public TelaHistoricoAgendamentos() {
         setTitle("Histórico de Consultas");
-        setBounds(100, 100, 800, 550);
+        setBounds(100, 100, 1000, 650);
         getContentPane().setBackground(new Color(170, 255, 255));
         getContentPane().setLayout(null);
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(204, 253, 255));
-        panel.setBounds(0, 1, 786, 513);
+        panel.setBounds(0, 1, 986, 613);
         getContentPane().add(panel);
         panel.setLayout(null);
 
         JLabel lblTitulo = new JLabel("Histórico de Consultas");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblTitulo.setBounds(250, 20, 350, 54);
+        lblTitulo.setBounds(350, 20, 350, 54);
         panel.add(lblTitulo);
 
-        // Adicionando campo de busca por CPF
         JLabel lblBuscaCPF = new JLabel("Buscar por CPF:");
         lblBuscaCPF.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblBuscaCPF.setBounds(100, 85, 100, 20);
+        lblBuscaCPF.setBounds(50, 85, 100, 20);
         panel.add(lblBuscaCPF);
 
         txtCPFBusca = new JTextField();
-        txtCPFBusca.setBounds(180, 85, 200, 25);
+        txtCPFBusca.setBounds(140, 85, 200, 25);
         txtCPFBusca.setColumns(10);
         panel.add(txtCPFBusca);
 
         btnBuscarCPF = new JButton("Buscar");
         btnBuscarCPF.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        btnBuscarCPF.setBounds(390, 85, 80, 25);
+        btnBuscarCPF.setBounds(350, 85, 80, 25);
         btnBuscarCPF.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buscarConsultasPorCPF();
@@ -68,7 +70,7 @@ public class TelaHistoricoAgendamentos extends JFrame {
 
         btnLimparBusca = new JButton("Limpar");
         btnLimparBusca.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        btnLimparBusca.setBounds(480, 85, 80, 25);
+        btnLimparBusca.setBounds(440, 85, 80, 25);
         btnLimparBusca.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 limparBusca();
@@ -79,255 +81,115 @@ public class TelaHistoricoAgendamentos extends JFrame {
         lblStatusBusca = new JLabel("");
         lblStatusBusca.setFont(new Font("Segoe UI", Font.ITALIC, 10));
         lblStatusBusca.setForeground(Color.BLUE);
-        lblStatusBusca.setBounds(180, 110, 400, 20);
+        lblStatusBusca.setBounds(140, 110, 700, 20);
         panel.add(lblStatusBusca);
-
-        JButton btnConfirmar = new JButton("Confirmar");
-        btnConfirmar.addActionListener(e -> {
-            TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
-            tela.setLocationRelativeTo(null);
-            tela.setVisible(true);
-            dispose();
-        });
-        btnConfirmar.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnConfirmar.setBounds(600, 450, 95, 25);
-        panel.add(btnConfirmar);
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(e -> {
-            TelaPrincipalSecretaria tela = new TelaPrincipalSecretaria();
-            tela.setLocationRelativeTo(null);
-            tela.setVisible(true);
-            dispose();
+            voltarParaMenu();
         });
         btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        btnVoltar.setBounds(100, 450, 84, 25);
+        btnVoltar.setBounds(50, 550, 100, 30);
         panel.add(btnVoltar);
 
-        // Painel 1
-        JPanel panel1 = new JPanel();
-        panel1.setBounds(100, 140, 600, 60);
-        panel.add(panel1);
-        panel1.setLayout(null);
+        JButton btnAtualizar = new JButton("Atualizar");
+        btnAtualizar.addActionListener(e -> {
+            carregarTodasConsultas();
+        });
+        btnAtualizar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        btnAtualizar.setBounds(850, 550, 100, 30);
+        panel.add(btnAtualizar);
 
-        lblConsulta1 = new JLabel();
-        lblConsulta1.setBounds(10, 10, 580, 40);
-        lblConsulta1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        panel1.add(lblConsulta1);
+        criarTabelaConsultas();
+        scrollPane = new JScrollPane(tabelaConsultas);
+        scrollPane.setBounds(50, 140, 900, 390);
+        panel.add(scrollPane);
 
-        // Painel 2
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(null);
-        panel2.setBounds(100, 210, 600, 60);
-        panel.add(panel2);
-
-        lblConsulta2 = new JLabel();
-        lblConsulta2.setBounds(10, 10, 580, 40);
-        lblConsulta2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        panel2.add(lblConsulta2);
-
-        // Painel 3
-        JPanel panel3 = new JPanel();
-        panel3.setLayout(null);
-        panel3.setBounds(100, 280, 600, 60);
-        panel.add(panel3);
-
-        lblConsulta3 = new JLabel();
-        lblConsulta3.setBounds(10, 10, 580, 40);
-        lblConsulta3.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        panel3.add(lblConsulta3);
-
-        // Painel 4 (para mais consultas)
-        JPanel panel4 = new JPanel();
-        panel4.setLayout(null);
-        panel4.setBounds(100, 350, 600, 60);
-        panel.add(panel4);
-
-        JLabel lblMaisConsultas = new JLabel("<html><i>Para ver todas as consultas, busque por um CPF específico</i></html>");
-        lblMaisConsultas.setBounds(10, 10, 580, 40);
-        lblMaisConsultas.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblMaisConsultas.setForeground(Color.GRAY);
-        panel4.add(lblMaisConsultas);
-
-        // Carregar histórico geral inicial
-        carregarHistorico();
+        carregarTodasConsultas();
     }
 
-    private void carregarHistorico() {
-        carregarHistorico(null);
+    private void criarTabelaConsultas() {
+        String[] colunas = {
+            "ID", "Paciente", "CPF", "Médico", "Especialidade", 
+            "Data", "Hora"
+        };
+        
+        modeloTabela = new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        tabelaConsultas = new JTable(modeloTabela);
+        tabelaConsultas.setRowHeight(25);
+        tabelaConsultas.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tabelaConsultas.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        
+        tabelaConsultas.getColumnModel().getColumn(0).setPreferredWidth(40);
+        tabelaConsultas.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tabelaConsultas.getColumnModel().getColumn(2).setPreferredWidth(120);
+        tabelaConsultas.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tabelaConsultas.getColumnModel().getColumn(4).setPreferredWidth(120);
+        tabelaConsultas.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tabelaConsultas.getColumnModel().getColumn(6).setPreferredWidth(80);
     }
 
-    private void carregarHistorico(String cpfFiltro) {
-        // Limpar labels
-        lblConsulta1.setText("");
-        lblConsulta2.setText("");
-        lblConsulta3.setText("");
-
-        // Construir SQL com ou sem filtro de CPF
-        String sql;
+    private void carregarTodasConsultas() {
+        limparTabela();
+        
+        Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        Connection con = null;
-
+        
         try {
             con = ConnectionFactory.getConnection();
             
-            if (cpfFiltro != null && !cpfFiltro.trim().isEmpty()) {
-                // Buscar paciente pelo CPF primeiro para obter o ID
-                String cpfFormatado = formatarCPFNumeros(cpfFiltro);
-                
-                // Verificar se o paciente existe
-                String sqlPaciente = "SELECT Id_Paciente, Nome FROM paciente WHERE CPF = ?";
-                ps = con.prepareStatement(sqlPaciente);
-                ps.setString(1, cpfFormatado);
-                rs = ps.executeQuery();
-                
-                if (rs.next()) {
-                    int idPaciente = rs.getInt("Id_Paciente");
-                    String nomePaciente = rs.getString("Nome");
-                    
-                    // Fechar ResultSet atual
-                    rs.close();
-                    ps.close();
-                    
-                    // Agora buscar as consultas deste paciente (todas, não apenas 3)
-                    sql = "SELECT " +
-                          "p.Nome AS paciente_nome, " +
-                          "u.Nome AS medico_nome, " +
-                          "e.Nome_Especialidade AS especialidade_nome, " +
-                          "c.Data_Consulta AS data_consulta, " +
-                          "c.Horario_Consulta AS horario_consulta, " +
-                          "c.Situacao AS situacao_consulta, " +
-                          "c.Cidade_Consulta AS cidade_consulta " +
-                          "FROM consultas c " +
-                          "INNER JOIN paciente p ON c.Fk_Id_Paciente = p.Id_Paciente " +
-                          "INNER JOIN medico m ON c.Fk_Matricula_Medico = m.Matricula " +
-                          "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
-                          "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
-                          "WHERE p.Id_Paciente = ? " +
-                          "ORDER BY c.Data_Consulta DESC, c.Horario_Consulta DESC " +
-                          "LIMIT 10";
-                    
-                    ps = con.prepareStatement(sql);
-                    ps.setInt(1, idPaciente);
-                    rs = ps.executeQuery();
-                    
-                    lblStatusBusca.setText("Mostrando consultas para: " + nomePaciente + " (CPF: " + formatarCPF(cpfFormatado) + ")");
-                    lblStatusBusca.setForeground(new Color(0, 100, 0));
-                    
-                } else {
-                    // Paciente não encontrado
-                    lblConsulta1.setText("Paciente com CPF " + formatarCPF(cpfFormatado) + " não encontrado.");
-                    lblConsulta1.setForeground(Color.RED);
-                    lblStatusBusca.setText("Paciente não encontrado");
-                    lblStatusBusca.setForeground(Color.RED);
-                    return;
-                }
-            } else {
-                // Histórico geral (sem filtro) - mostrar apenas últimas consultas
-                sql = "SELECT " +
-                      "p.Nome AS paciente_nome, " +
-                      "u.Nome AS medico_nome, " +
-                      "e.Nome_Especialidade AS especialidade_nome, " +
-                      "c.Data_Consulta AS data_consulta, " +
-                      "c.Horario_Consulta AS horario_consulta, " +
-                      "c.Situacao AS situacao_consulta, " +
-                      "c.Cidade_Consulta AS cidade_consulta, " +
-                      "p.CPF AS paciente_cpf " +
-                      "FROM consultas c " +
-                      "INNER JOIN paciente p ON c.Fk_Id_Paciente = p.Id_Paciente " +
-                      "INNER JOIN medico m ON c.Fk_Matricula_Medico = m.Matricula " +
-                      "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
-                      "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
-                      "ORDER BY c.Data_Consulta DESC, c.Horario_Consulta DESC " +
-                      "LIMIT 3";
-                
-                ps = con.prepareStatement(sql);
-                rs = ps.executeQuery();
-                
-                lblStatusBusca.setText("Mostrando últimas 3 consultas gerais");
-                lblStatusBusca.setForeground(Color.BLUE);
-            }
-
-            JLabel[] labels = { lblConsulta1, lblConsulta2, lblConsulta3 };
-            int i = 0;
             
-            while (rs.next() && i < labels.length) {
-                String situacao = rs.getString("situacao_consulta");
-                Color corSituacao = Color.BLACK;
+            String sql = "SELECT " +
+                        "c.Id_Consulta, " +
+                        "p.Nome AS paciente_nome, " +
+                        "p.CPF AS paciente_cpf, " +
+                        "u.Nome AS medico_nome, " +
+                        "e.Nome_Especialidade AS especialidade, " +
+                        "c.Data, " +          
+                        "c.Hora " +           
+                        "FROM consultas c " +
+                        "INNER JOIN paciente p ON c.Id_Paciente = p.Id_Paciente " +
+                        "INNER JOIN medico m ON c.Matricula_Med = m.Matricula " +
+                        "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
+                        "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
+                        "ORDER BY c.Data DESC, c.Hora DESC";
+            
+            System.out.println("Executando SQL: " + sql);
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            
+            int count = 0;
+            while (rs.next()) {
+                Object[] linha = new Object[7]; 
+                linha[0] = rs.getInt("Id_Consulta");
+                linha[1] = rs.getString("paciente_nome");
+                linha[2] = formatarCPF(rs.getString("paciente_cpf"));
+                linha[3] = rs.getString("medico_nome");
+                linha[4] = rs.getString("especialidade");
+                linha[5] = rs.getDate("Data");
+                linha[6] = formatarHora(rs.getTime("Hora"));
                 
-                // Definir cor baseada na situação
-                if (situacao != null) {
-                    String situacaoLower = situacao.toLowerCase();
-                    if (situacaoLower.contains("agenda") || situacaoLower.contains("marcada")) {
-                        corSituacao = new Color(0, 100, 0); // Verde escuro
-                    } else if (situacaoLower.contains("cancela") || situacaoLower.contains("cancelada")) {
-                        corSituacao = Color.RED;
-                    } else if (situacaoLower.contains("realiza") || situacaoLower.contains("concluída") || 
-                               situacaoLower.contains("finalizada")) {
-                        corSituacao = Color.BLUE;
-                    } else if (situacaoLower.contains("pendente") || situacaoLower.contains("aguardando")) {
-                        corSituacao = Color.ORANGE;
-                    }
-                }
-                
-                String pacienteNome = rs.getString("paciente_nome");
-                String medicoNome = rs.getString("medico_nome");
-                String especialidade = rs.getString("especialidade_nome");
-                String dataConsulta = rs.getDate("data_consulta") != null ? 
-                    rs.getDate("data_consulta").toString() : "N/A";
-                
-                String horario = "N/A";
-                if (rs.getTime("horario_consulta") != null) {
-                    String horaCompleta = rs.getTime("horario_consulta").toString();
-                    horario = horaCompleta.length() >= 5 ? horaCompleta.substring(0, 5) : horaCompleta;
-                }
-                
-                String cidade = rs.getString("cidade_consulta");
-                if (cidade == null || cidade.trim().isEmpty()) {
-                    cidade = "Não informada";
-                }
-                
-                String textoConsulta = String.format(
-                    "<html>" +
-                    "<b>Paciente:</b> %s" +
-                    " | <b>Especialidade:</b> %s" +
-                    " | <b>Médico:</b> %s" +
-                    "<br/><b>Data:</b> %s" +
-                    " | <b>Hora:</b> %s" +
-                    " | <b>Cidade:</b> %s" +
-                    " | <b>Situação:</b> <font color='%s'>%s</font>" +
-                    "</html>",
-                    pacienteNome,
-                    especialidade,
-                    medicoNome,
-                    dataConsulta,
-                    horario,
-                    cidade,
-                    getColorHex(corSituacao),
-                    (situacao != null ? situacao : "Não informada")
-                );
-                
-                labels[i].setText(textoConsulta);
-                labels[i].setForeground(Color.BLACK);
-                i++;
+                modeloTabela.addRow(linha);
+                count++;
             }
-
-            if (i == 0 && cpfFiltro != null) {
-                lblConsulta1.setText("Nenhuma consulta encontrada para este CPF.");
-                lblConsulta1.setForeground(Color.GRAY);
-            } else if (i == 0) {
-                lblConsulta1.setText("Nenhuma consulta encontrada no sistema.");
-                lblConsulta1.setForeground(Color.GRAY);
-            }
-
+            
+            lblStatusBusca.setText("Mostrando " + count + " consulta(s)");
+            lblStatusBusca.setForeground(Color.BLUE);
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar histórico de consultas: " + e.getMessage(),
+                    "Erro ao carregar consultas: " + e.getMessage(),
                     "Erro",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-            lblStatusBusca.setText("Erro ao buscar consultas");
+            lblStatusBusca.setText("Erro ao carregar consultas");
             lblStatusBusca.setForeground(Color.RED);
         } finally {
             try {
@@ -352,10 +214,8 @@ public class TelaHistoricoAgendamentos extends JFrame {
             return;
         }
         
-        // Formatar CPF (remover caracteres não numéricos)
         String cpfFormatado = formatarCPFNumeros(cpf);
         
-        // Validar formato do CPF
         if (cpfFormatado.length() != 11) {
             JOptionPane.showMessageDialog(this,
                 "CPF inválido! Deve conter 11 dígitos.\n" +
@@ -366,7 +226,6 @@ public class TelaHistoricoAgendamentos extends JFrame {
             return;
         }
         
-        // Validar se todos os dígitos são iguais (CPF inválido)
         if (cpfFormatado.matches("(\\d)\\1{10}")) {
             JOptionPane.showMessageDialog(this,
                 "CPF inválido!",
@@ -376,34 +235,127 @@ public class TelaHistoricoAgendamentos extends JFrame {
             return;
         }
         
-        // Desabilitar botão durante a busca
         btnBuscarCPF.setEnabled(false);
         btnBuscarCPF.setText("Buscando...");
         
-        // Carregar histórico filtrado por CPF
-        carregarHistorico(cpfFormatado);
+        buscarConsultasDoPaciente(cpfFormatado);
         
-        // Reabilitar botão
         btnBuscarCPF.setEnabled(true);
         btnBuscarCPF.setText("Buscar");
         
-        // Formatar visualmente o CPF no campo
         txtCPFBusca.setText(formatarCPF(cpfFormatado));
+    }
+
+    private void buscarConsultasDoPaciente(String cpf) {
+        limparTabela();
+        
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            con = ConnectionFactory.getConnection();
+            
+            String nomePaciente = "";
+            String sqlPaciente = "SELECT Nome FROM paciente WHERE CPF = ?";
+            PreparedStatement psPaciente = con.prepareStatement(sqlPaciente);
+            psPaciente.setString(1, cpf);
+            ResultSet rsPaciente = psPaciente.executeQuery();
+            
+            if (rsPaciente.next()) {
+                nomePaciente = rsPaciente.getString("Nome");
+            }
+            rsPaciente.close();
+            psPaciente.close();
+            
+            if (nomePaciente.isEmpty()) {
+                lblStatusBusca.setText("Paciente com CPF " + formatarCPF(cpf) + " não encontrado!");
+                lblStatusBusca.setForeground(Color.RED);
+                return;
+            }
+            
+            
+            String sql = "SELECT " +
+                        "c.Id_Consulta, " +
+                        "p.Nome AS paciente_nome, " +
+                        "p.CPF AS paciente_cpf, " +
+                        "u.Nome AS medico_nome, " +
+                        "e.Nome_Especialidade AS especialidade, " +
+                        "c.Data, " +          
+                        "c.Hora " +          
+                        "FROM consultas c " +
+                        "INNER JOIN paciente p ON c.Id_Paciente = p.Id_Paciente " +
+                        "INNER JOIN medico m ON c.Matricula_Med = m.Matricula " +
+                        "INNER JOIN usuarios u ON m.Id_Usuario = u.Id_Usuario " +
+                        "INNER JOIN especialidades e ON m.Especialidade = e.Id_Especialidade " +
+                        "WHERE p.CPF = ? " +
+                        "ORDER BY c.Data DESC, c.Hora DESC";
+            
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cpf);
+            rs = ps.executeQuery();
+            
+            int count = 0;
+            while (rs.next()) {
+                Object[] linha = new Object[7]; 
+                linha[0] = rs.getInt("Id_Consulta");
+                linha[1] = rs.getString("paciente_nome");
+                linha[2] = formatarCPF(rs.getString("paciente_cpf"));
+                linha[3] = rs.getString("medico_nome");
+                linha[4] = rs.getString("especialidade");
+                linha[5] = rs.getDate("Data");
+                linha[6] = formatarHora(rs.getTime("Hora"));
+                
+                modeloTabela.addRow(linha);
+                count++;
+            }
+            
+            if (count > 0) {
+                lblStatusBusca.setText("Mostrando " + count + " consulta(s) para " + nomePaciente + " (" + formatarCPF(cpf) + ")");
+                lblStatusBusca.setForeground(new Color(0, 100, 0));
+            } else {
+                lblStatusBusca.setText("Nenhuma consulta encontrada para " + nomePaciente + " (" + formatarCPF(cpf) + ")");
+                lblStatusBusca.setForeground(Color.ORANGE);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao buscar consultas: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            lblStatusBusca.setText("Erro ao buscar consultas");
+            lblStatusBusca.setForeground(Color.RED);
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void limparBusca() {
         txtCPFBusca.setText("");
         lblStatusBusca.setText("");
-        carregarHistorico(); // Carregar histórico geral
+        carregarTodasConsultas();
         txtCPFBusca.requestFocus();
     }
 
+    private void limparTabela() {
+        modeloTabela.setRowCount(0);
+    }
+
     private String formatarCPF(String cpf) {
-        if (cpf.length() == 11) {
-            return cpf.substring(0, 3) + "." + 
-                   cpf.substring(3, 6) + "." + 
-                   cpf.substring(6, 9) + "-" + 
-                   cpf.substring(9, 11);
+        if (cpf == null) return "";
+        String cpfNumeros = cpf.replaceAll("[^0-9]", "");
+        if (cpfNumeros.length() == 11) {
+            return cpfNumeros.substring(0, 3) + "." + 
+                   cpfNumeros.substring(3, 6) + "." + 
+                   cpfNumeros.substring(6, 9) + "-" + 
+                   cpfNumeros.substring(9, 11);
         }
         return cpf;
     }
@@ -411,12 +363,65 @@ public class TelaHistoricoAgendamentos extends JFrame {
     private String formatarCPFNumeros(String cpf) {
         return cpf.replaceAll("[^0-9]", "");
     }
+    
+    private String formatarHora(Time hora) {
+        if (hora == null) return "";
+        String horaStr = hora.toString();
+        return horaStr.length() >= 5 ? horaStr.substring(0, 5) : horaStr;
+    }
 
-    private String getColorHex(Color color) {
-        return String.format("#%02x%02x%02x", 
-            color.getRed(), 
-            color.getGreen(), 
-            color.getBlue());
+    private void voltarParaMenu() {
+        dispose();
+        
+        try {
+            Class<?> secretariaClass = Class.forName("telasSistema.Secretaria.TelaPrincipalSecretaria");
+            JFrame tela = (JFrame) secretariaClass.getDeclaredConstructor().newInstance();
+            tela.setLocationRelativeTo(null);
+            tela.setVisible(true);
+        } catch (Exception e) {
+            System.out.println("Não foi possível abrir a tela anterior: " + e.getMessage());
+        }
+    }
+
+    private void testarConsultaSQL() {
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getConnection();
+            
+            String sql = "SELECT Id_Consulta, Data, Hora FROM consultas LIMIT 5";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            System.out.println("=== TESTE DE CONSULTA ===");
+            System.out.println("SQL: " + sql);
+            
+            int count = 0;
+            while (rs.next()) {
+                System.out.println("Consulta " + (++count) + ":");
+                System.out.println("  ID: " + rs.getInt("Id_Consulta"));
+                System.out.println("  Data: " + rs.getDate("Data"));
+                System.out.println("  Hora: " + rs.getTime("Hora"));
+            }
+            
+            if (count == 0) {
+                System.out.println("Nenhuma consulta encontrada na tabela!");
+            }
+            
+            System.out.println("========================");
+            
+            rs.close();
+            ps.close();
+            
+        } catch (Exception e) {
+            System.out.println("Erro no teste SQL: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -424,5 +429,7 @@ public class TelaHistoricoAgendamentos extends JFrame {
         tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         tela.setLocationRelativeTo(null);
         tela.setVisible(true);
+        
+        tela.testarConsultaSQL();
     }
 }

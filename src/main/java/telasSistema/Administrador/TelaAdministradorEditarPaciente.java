@@ -171,7 +171,7 @@ public class TelaAdministradorEditarPaciente extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel LabelCadastroPaciente = new JLabel("Editar dados do Paciente:");
-		LabelCadastroPaciente.setBounds(272, 0, 387, 67);
+		LabelCadastroPaciente.setBounds(288, 0, 387, 67);
 		LabelCadastroPaciente.setFont(new Font("Trebuchet MS", Font.PLAIN, 24));
 		contentPane.add(LabelCadastroPaciente);
 		
@@ -349,7 +349,7 @@ public class TelaAdministradorEditarPaciente extends JFrame {
         
         JLabel lblPreenchaOsDados = new JLabel("Preencha os dados do(a) paciente. Comece pelo CPF.");
         lblPreenchaOsDados.setFont(new Font("Trebuchet MS", Font.PLAIN, 12));
-        lblPreenchaOsDados.setBounds(261, 56, 331, 14);
+        lblPreenchaOsDados.setBounds(271, 53, 331, 14);
         contentPane.add(lblPreenchaOsDados);
         
         JLabel lblDigiteOTelefone = new JLabel("Digite o Telefone:");
