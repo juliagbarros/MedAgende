@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 
@@ -47,6 +49,11 @@ public class TelaConfirmar extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ConsultaDAO.cadastrarconsulta(Nome_Med, Nome_Pac, Data_Consulta, Horario_Consulta);
 				
+				JOptionPane.showMessageDialog(btnConfirmar,
+	                    "Consulta cadastrada com sucesso!",
+	                    "Sucesso",
+	                    JOptionPane.INFORMATION_MESSAGE);
+				
 			}
 		});
 		btnConfirmar.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -56,7 +63,12 @@ public class TelaConfirmar extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ConsultaDAO.cadastrarconsulta(Nome_Med, Nome_Pac, Data_Consulta, Horario_Consulta);
+				TelaInfosAgendamento tela=new TelaInfosAgendamento();
+				tela.setLocationRelativeTo(null);
+				tela.setVisible(true);
+				dispose();
+				
+				
 			}
 		});
 		btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 12));
