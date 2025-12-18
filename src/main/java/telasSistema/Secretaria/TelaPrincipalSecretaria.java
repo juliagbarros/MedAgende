@@ -78,15 +78,7 @@ public class TelaPrincipalSecretaria extends JFrame {
 					 dispose();
 				
 					break;
-					
-				case "Reagendar Consulta":
-					TelaSecretariaReagendar telaSecretariaReagendar= new TelaSecretariaReagendar();
-					telaSecretariaReagendar.setLocationRelativeTo(null);
-					telaSecretariaReagendar.setVisible(true);
-					 dispose();
-					
-					break;
-				
+		
 				case "Visualizar Histórico de Consultas":
 					TelaHistoricoAgendamentos telaHistoricoAgendamentos = new TelaHistoricoAgendamentos();
 					telaHistoricoAgendamentos.setLocationRelativeTo(null);
