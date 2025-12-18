@@ -96,7 +96,7 @@ public class TelaPrincipalMedico extends JFrame {
 		JButton btnEmitirPrescricao = new JButton("Emitir prescrição");
 		btnEmitirPrescricao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaEmitirPrescrição telaemitirprescicao = new TelaEmitirPrescrição();				
+				TelaEmitirPrescricao telaemitirprescicao = new TelaEmitirPrescricao();				
 				telaemitirprescicao.setVisible(true);
 				dispose();
 			}
