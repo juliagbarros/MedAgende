@@ -219,6 +219,7 @@ public class TelaEmitirPrescricao extends JFrame {
         });
         contentPane.add(btnImprimir);
         
+     // Botão Voltar
         JButton btnVoltar = new JButton("VOLTAR");
         btnVoltar.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnVoltar.setBackground(new Color(255, 255, 255));
@@ -226,7 +227,10 @@ public class TelaEmitirPrescricao extends JFrame {
         btnVoltar.setBounds(150, 440, 150, 40);
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                voltarParaTelaAnterior();
+                TelaPrincipalMedico tela= new TelaPrincipalMedico();
+                tela.setLocationRelativeTo(null);
+                tela.setVisible(true);
+                dispose();
             }
         });
         contentPane.add(btnVoltar);
